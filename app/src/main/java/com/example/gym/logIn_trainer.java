@@ -10,14 +10,14 @@ public class logIn_trainer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in_trainer);
+        setContentView(R.layout.activity_log_in_);
 
-        configBackButt();
+        backButt();
     }
 
-    private void configBackButt(){
-        Button trainee = (Button) findViewById(R.id.back2);
-        trainee.setOnClickListener(new View.OnClickListener() {
+    private void backButt(){
+        Button trainer = (Button) findViewById(R.id.back_trainer);
+        trainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
