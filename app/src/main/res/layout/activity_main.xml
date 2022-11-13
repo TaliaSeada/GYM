@@ -10,6 +10,7 @@
         android:id="@+id/Trainee"
         android:layout_width="407dp"
         android:layout_height="64dp"
+        android:onClick="disable"
         android:text="Trainee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
