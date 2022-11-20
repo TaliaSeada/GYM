@@ -33,6 +33,13 @@ public class Person {
         this.mail = mail;
     }
 
+    // manager constructor
+    public Person(String name, int id, int number) {
+        this.name = name;
+        this.ID = id;
+        this.phoneNumber = number;
+    }
+
     public String getName(){
         return this.name;
     }
