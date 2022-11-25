@@ -4,8 +4,5 @@ public class Manager extends Person{
         super(name, id, number);
     }
 
-    // TODO link to DataBase
-    public void addPersonToDB(Person p){
 
-    }
 }
