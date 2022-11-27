@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    public Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,29 +15,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        configNextButt();
-        configNextButt2();
-    }
-    private void configNextButt(){
-        Button trainee = (Button) findViewById(R.id.Trainee);
-        trainee.setOnClickListener(new View.OnClickListener() {
+        button=(Button) findViewById(R.id.send);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, logIn_trainee.class));
+                Intent intent=new Intent(MainActivity.this, HomePageTrainee.class);
+                startActivity(intent);
             }
         });
-    }
-    private void configNextButt2(){
-        Button trainer = (Button) findViewById(R.id.Trainer);
-        trainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, logIn_trainer.class));
-            }
-        });
+//        getSupportActionBar().hide();
+//        int SPLASH_TIME_OUT = 3000;
+//        new Handler().postDelayed(() -> {
+//            // This method will be executed once the timer is over
+//            // Start your app main activity
+//            Intent i = new Intent(MainActivity.this, HomePage.class);
+//            startActivity(i);
+//            // close this activity
+//            finish();
+//        }, SPLASH_TIME_OUT);
     }
 
-    public void disable(View v){
-        v.setEnabled(true);
-    }
+
 }
