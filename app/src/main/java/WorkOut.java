@@ -1,15 +1,10 @@
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.LinkedList;
 
 public class WorkOut {
     private LinkedList<exercise> exercises;
-    private DatabaseReference mDatabase;
 
     public WorkOut(){
         this.exercises = new LinkedList<exercise>();
-        this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public LinkedList getExe(){
@@ -19,7 +14,6 @@ public class WorkOut {
     public void addExe(String name, int sets, int rep, double weight) {
         exercise new_ex = new exercise(name, sets, rep, weight);
         exercises.add(new_ex);
-        this.mDatabase.child(name).child(exercises.size() + "").setValue(new_ex);
     }
 
     public void removeExe(exercise name){
