@@ -49,9 +49,9 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_firebase_ui);
+        setContentView(R.layout.activity_login);
 
-        Button login_btn = (Button) findViewById(R.id.login);
+        Button login_btn = (Button) findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
