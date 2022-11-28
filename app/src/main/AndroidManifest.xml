@@ -62,13 +62,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".HomePageTrainee"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".GroupWorkout"
             android:exported="false">
             <meta-data
@@ -100,7 +93,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
