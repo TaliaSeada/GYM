@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,5 +53,13 @@ public class UserManager {
         DocumentReference u = db.collection("users").document(email);
         Task<DocumentSnapshot> t = u.get();
         return t;
+    }
+
+    public String getConnectedUserMail(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            return "";
+        }
+        return user.getEmail();
     }
 }

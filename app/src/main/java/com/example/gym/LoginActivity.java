@@ -73,7 +73,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Create and launch sign-in intent
         Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder().setLogo(R.drawable.logo)
+                .createSignInIntentBuilder()
+//                .setLogo(R.drawable.logo)
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
@@ -94,13 +95,16 @@ public class LoginActivity extends AppCompatActivity {
                         String role = (String) doc.getData().get("role");
                         switch (role){
                             case "manager":
-                                // move to manager page
+                                //Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
+                                //startActivity(intent1);
                                 break;
                             case "trainer":
-
+                                Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
+                                startActivity(intent2);
                                 break;
                             case "trainee":
-
+                                Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
+                                startActivity(intent3);
                                 break;
                         }
                     } else {
