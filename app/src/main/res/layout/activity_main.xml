@@ -42,7 +42,7 @@
     <Button
         android:id="@+id/send"
         android:layout_width="181dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:onClick="disable"
         android:text="Send"
         android:textStyle="bold"
