@@ -1,12 +1,12 @@
 //public class Trainee extends Person {
 //    private Calender calender;
-//    private WorkOut workOut;
+//    private com.example.gym.WorkOut workOut;
 //
 //
 //    public Trainee(String name, int id, int number, double age, double weight, double hight, int gender, int tag, String mail){
 //        super(name, id, number, age, weight, hight, gender, tag, mail);
 //        calender = new Calender();
-//        workOut = new WorkOut();
+//        workOut = new com.example.gym.WorkOut();
 //    }
 //
 //    public Calender getCalender(){
@@ -16,10 +16,10 @@
 //        this.calender = c;
 //    }
 //
-//    public WorkOut getWorkOut(){
+//    public com.example.gym.WorkOut getWorkOut(){
 //        return this.workOut;
 //    }
-//    public void setWorkOut(WorkOut wo){
+//    public void setWorkOut(com.example.gym.WorkOut wo){
 //        this.workOut = wo;
 //    }
 //
