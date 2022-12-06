@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/manger1"
-    tools:context=".HomePageTrainee"
+    tools:context=".HomePageTrainer"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -50,5 +50,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/activity_page" />
+        app:menu="@menu/trainer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

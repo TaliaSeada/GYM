@@ -34,7 +34,29 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".MessageT"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".PrivateAreaTrainee"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".AddWorkoutTrainer"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".PrivateAreaTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
