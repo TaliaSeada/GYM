@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class GroupWorkout extends AppCompatActivity {
+public class Messages extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_workout);
+        setContentView(R.layout.active_messages);
         findViewById(R.id.imageBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
