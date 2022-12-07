@@ -13,6 +13,13 @@
         android:theme="@style/Theme.GYM"
         tools:targetApi="31">
         <activity
+            android:name=".newScrennW"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".HomePageTrainer"
             android:exported="false">
             <meta-data
@@ -40,7 +47,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".PrivateAreaTrainee"
             android:exported="false">
