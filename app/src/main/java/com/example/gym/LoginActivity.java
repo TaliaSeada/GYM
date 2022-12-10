@@ -1,5 +1,6 @@
 package com.example.gym;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     UserManager userManager = new UserManager();
+    ProgressDialog progressDialog;
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
         new FirebaseAuthUIActivityResultContract(),
@@ -58,8 +60,10 @@ public class LoginActivity extends AppCompatActivity {
                 createSignInIntent();
             }
         });
-//        UserManager userManager = new UserManager();
-//        userManager.createUser("bfbfb", "adminnnn");
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Connecting ...");
+        progressDialog.setCancelable(false);
 
     }
 
@@ -81,6 +85,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        progressDialog.show();
+
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
@@ -123,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                         AlertDialog alertDialog = builder1.create();
                         alertDialog.show();
                     }
+                    progressDialog.dismiss();
                 }
             });
         } else {
