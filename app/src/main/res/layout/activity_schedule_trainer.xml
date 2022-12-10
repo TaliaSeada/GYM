@@ -12,26 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="-16dp">
-
-            <ImageView
-                android:id="@+id/imageMenu"
-                android:layout_width="61dp"
-                android:layout_height="42dp"
-                android:src="@drawable/ic_menu" />
-        </LinearLayout>
         <CalendarView
             android:id="@+id/calender"
             android:layout_width="match_parent"

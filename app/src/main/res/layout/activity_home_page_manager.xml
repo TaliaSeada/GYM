@@ -2,33 +2,36 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/manger1"
-    tools:context=".HomePageTrainee"
-    >
+    tools:context=".HomePageManager"
+    android:id="@+id/home_manager_page"
+    tools:openDrawer="start">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <CalendarView
-            android:id="@+id/calender"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="299dp"
-            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Manager"
+            android:textAlignment="center"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.196"
-            android:layoutMode="clipBounds"
-            tools:ignore="MissingConstraints"
-            />
+            tools:layout_editor_absoluteX="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_manager"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/activity_page" />
+        app:menu="@menu/manager_menu"
+        tools:ignore="MissingConstraints" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

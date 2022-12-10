@@ -99,17 +99,15 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MAddUser"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".HomePageManager"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".PageManger"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".ManageUsers"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

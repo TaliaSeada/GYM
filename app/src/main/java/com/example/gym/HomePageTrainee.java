@@ -17,26 +17,28 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
+    ActionBarDrawerToggle toggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_trainee);
         DrawerLayout drawer = findViewById(R.id.drawerLayout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawer.openDrawer(GravityCompat.START);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-            }
-        });
-
-
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -27,13 +27,14 @@ public class UserManager {
     /**
      * This function if for the manager. He adds user to the db by email address and role
      */
-    public void createUser(String email, String role) {
+    public Task<Void> createUser(String email, String role, String full_name) {
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
         user.put("role", role);
+        user.put("full_name", full_name);
 
         // Add a new document with user email ID
-        db.collection("users").document(email)
+        return db.collection("users").document(email)
             .set(user) //add new user to db
             .addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
                 @Override

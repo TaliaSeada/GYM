@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                         String role = (String) doc.getData().get("role");
                         switch (role){
                             case "manager":
-                                //Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
-                                //startActivity(intent1);
+                                Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
+                                startActivity(intent1);
                                 break;
                             case "trainer":
                                 Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
