@@ -1,12 +1,12 @@
 package com.example.gym;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class newScrennW extends AppCompatActivity {
     ImageView add;
@@ -21,7 +21,7 @@ public class newScrennW extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddWorkoutTrainer.class));
+                startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainee.class));
             }
         });
         Back = findViewById(R.id.imageBack);

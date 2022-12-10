@@ -1,21 +1,18 @@
 package com.example.gym;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +23,7 @@ public class GroupWorkout extends AppCompatActivity {
     static ListView listView;
     static ArrayList<String> items;
     static ListViewGroupW adapter;
-
-
+    static String nameTR;
 
 
     @Override
@@ -45,6 +41,7 @@ public class GroupWorkout extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = items.get(i);
+                nameTR = items.get(i);
                 makeToast(name);
             }
         });
@@ -78,7 +75,7 @@ public class GroupWorkout extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i=new Intent(GroupWorkout.this, newScrennW.class);
+                Intent i = new Intent(GroupWorkout.this, newScrennW.class);
                 startActivity(i);
             }
         });
@@ -111,8 +108,9 @@ public class GroupWorkout extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     @Override
-    protected  void onDestroy() {
+    protected void onDestroy() {
         File path = getApplicationContext().getFilesDir();
         try {
             FileOutputStream writer = new FileOutputStream(new File(path, "list.txt"));
@@ -123,17 +121,21 @@ public class GroupWorkout extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public static void  removeItem(int remove){
+    public static void removeItem(int remove) {
         items.remove(remove);
         listView.setAdapter(adapter);
     }
+
     Toast t;
-    private  void makeToast(String s){
-        if(t!= null) t.cancel();;
-        t=Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT);
+
+    private void makeToast(String s) {
+        if (t != null) t.cancel();
+        ;
+        t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }
-    public static void addItem(String item){
+
+    public static void addItem(String item) {
         items.add(item);
         listView.setAdapter(adapter);
     }
