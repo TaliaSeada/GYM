@@ -16,35 +16,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddNewWorkoutTrainee extends AppCompatActivity implements Serializable {
+public class AddNewWorkoutTrainee extends AppCompatActivity {
     EditText input_exe;
     EditText input_set;
     EditText input_weight;
     EditText input_reps;
     Button ADD;
-    String email;
+    static String email;
     String Gworkout;
 
 
     private static final String TAG = "DBWorkOut";
-    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    public void removeWorkOut(String email, String wo_name) {
-        // create exercise
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name).delete();
-    }
-
-    public void removeExe(String email, String wo_name, String exe_name) {
-        // create exercise
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name)
-                .collection("exercises").document(exe_name).delete();
-    }
+    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
@@ -55,8 +42,8 @@ public class AddNewWorkoutTrainee extends AppCompatActivity implements Serializa
 
         db.collection("user-info").document(email)
                 .collection("workouts").document(wo_name)
-                .collection("exercises").document(exe_name).set(exe).
-                addOnSuccessListener(new OnSuccessListener<Void>() {
+                .collection("exercises").document(exe_name).set(exe)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
@@ -70,25 +57,6 @@ public class AddNewWorkoutTrainee extends AppCompatActivity implements Serializa
                 });
     }
 
-//    public void addWorkOut(String email, String wo_name) {
-//        // create work out
-//        WorkOut wo = new WorkOut();
-//        db.collection("user-info").document(email)
-//                .collection("workouts").add(wo)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot successfully written!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
-//    }
-
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
@@ -101,7 +69,6 @@ public class AddNewWorkoutTrainee extends AppCompatActivity implements Serializa
         input_weight = findViewById(R.id.weight);
         input_exe = findViewById(R.id.editWorkout);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail();
 
 
@@ -112,11 +79,12 @@ public class AddNewWorkoutTrainee extends AppCompatActivity implements Serializa
                 double weight = Double.parseDouble(input_weight.getText().toString());
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
-
-                Gworkout = GroupWorkout.nameTR; // TODO check null
-                // TODO get the workout name
+                try{
+                    Gworkout = GroupWorkout.nameTR;
                 addExe(email, Gworkout, exercise, set, reps, weight);
-
+                } catch (NullPointerException e){
+                    e.printStackTrace();
+                }
                 finish();
 
             }

@@ -41,7 +41,6 @@ public class GroupWorkout extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = items.get(i);
-                nameTR = items.get(i);
                 makeToast(name);
             }
         });
@@ -77,6 +76,7 @@ public class GroupWorkout extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent i = new Intent(GroupWorkout.this, newScrennW.class);
                 startActivity(i);
+                nameTR = items.get(pos);
             }
         });
     }
