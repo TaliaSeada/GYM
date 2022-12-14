@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,28 +14,35 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class newScrennW extends AppCompatActivity {
     static ListView listView;
-    static ArrayList<String> items;
+//    static ArrayList<String> items;
     static ListViewGroupW adapter;
     static String nameExe;
 
     ImageView add;
     ImageView Back;
 
+    private static List<String> items = new ArrayList<>();
+
+    private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        loadContent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_screnn_w);
         listView = findViewById(R.id.list_item_in);
@@ -54,6 +62,8 @@ public class newScrennW extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), GroupWorkout.class));
             }
         });
+        loadContent();
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,10 +81,8 @@ public class newScrennW extends AppCompatActivity {
                 return false;
             }
         });
-        adapter = new ListViewGroupW(getApplicationContext(), items);
-        listView.setAdapter(adapter);
 
-        loadContent();
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,30 +95,22 @@ public class newScrennW extends AppCompatActivity {
     }
 
     public void loadContent() {
-        File path = getApplicationContext().getFilesDir();
-        File readFrom = new File(path, "list2.txt");
-        byte[] content = new byte[(int) readFrom.length()];
+        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+                .collection("workouts").document(GroupWorkout.nameTR)
+                .collection("exercises")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        items.clear();
+                        for(DocumentSnapshot snapshot : documentSnapshots){
+                            items.add(snapshot.getString("name"));
+                        }
+                        ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
+                        adap.notifyDataSetChanged();
+                        listView.setAdapter(adap);
+                    }
+                });
 
-        FileInputStream stream = null;
-        try {
-            stream = new FileInputStream(readFrom);
-            stream.read(content);
-
-            String s = new String(content);
-            // [Apple, Banana, Kiwi, Strawberry]
-            s = s.substring(1, s.length() - 1);
-            String split[] = s.split(", ");
-
-            // There may be no items in the grocery list.
-            if (split.length == 1 && split[0].isEmpty())
-                items = new ArrayList<>();
-            else items = new ArrayList<>(Arrays.asList(split));
-
-            adapter = new ListViewGroupW(this, items);
-            listView.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static void removeItem(int remove) {
@@ -131,4 +131,6 @@ public class newScrennW extends AppCompatActivity {
         items.add(item);
         listView.setAdapter(adapter);
     }
+
+
 }

@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddNewWorkoutTrainee extends AppCompatActivity {
     EditText input_exe;
@@ -33,12 +34,40 @@ public class AddNewWorkoutTrainee extends AppCompatActivity {
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+    public static void addWO(String wo_name) {
+        // create workout
+        Map<String, Object> name = new HashMap<>();
+        name.put("name", wo_name);
+
+        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+                .collection("workouts").document(wo_name).set(name)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
+
     public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
         exe.put("reps", reps);
         exe.put("sets", sets);
         exe.put("weight", weight_kg);
+        exe.put("name", exe_name);
+
+        Map<String, Object> name = new HashMap<>();
+        name.put("name", wo_name);
+
+        db.collection("user-info").document(email)
+                .collection("workouts").document(wo_name).set(name);
 
         db.collection("user-info").document(email)
                 .collection("workouts").document(wo_name)
