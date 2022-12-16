@@ -38,6 +38,8 @@ public class UserManager {
         user.put("role", role);
         user.put("full_name", full_name);
 
+        email = email.toLowerCase();
+
         // Add a new document with user email ID
         return db.collection("users").document(email)
             .set(user) //add new user to db
