@@ -13,6 +13,12 @@
             android:id="@+id/nav_manage_trainees"
             android:icon="@drawable/ic_add_task"
             android:title="ניהול מתאמנים" />
+
+        <item
+            android:id="@+id/nav_manage_managers"
+            android:icon="@drawable/ic_add_task"
+            android:title="ניהול מנהלים" />
+
         <item
             android:id="@+id/nav_manage_updates"
             android:icon="@drawable/ic_message"

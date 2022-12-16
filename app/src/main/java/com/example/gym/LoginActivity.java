@@ -1,5 +1,9 @@
 package com.example.gym;
 
+import static com.example.gym.auth.UserManager.ROLE_MANAGER;
+import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
+import static com.example.gym.auth.UserManager.ROLE_TRAINER;
+
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -100,15 +104,15 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG,"User exists");
                         String role = (String) doc.getData().get("role");
                         switch (role){
-                            case "manager":
+                            case ROLE_MANAGER:
                                 Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
                                 startActivity(intent1);
                                 break;
-                            case "trainer":
+                            case ROLE_TRAINER:
                                 Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
                                 startActivity(intent2);
                                 break;
-                            case "trainee":
+                            case ROLE_TRAINEE:
                                 Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
                                 startActivity(intent3);
                                 break;
@@ -117,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG,"User Not exists");
                         delete(); // Delete the user from the firebase auth
 
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(findViewById(android.R.id.content).getContext());
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                         builder1.setMessage("The user not exist.\nPlease talk to the manager");
                         builder1.setCancelable(true);
                         builder1.setPositiveButton(
@@ -138,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
             // sign-in flow using the back button. Otherwise check
             // response.getError().getErrorCode() and handle the error.
 
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(findViewById(android.R.id.content).getContext());
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
             builder1.setMessage("Login failed.\nTry again later");
             builder1.setCancelable(true);
             builder1.setPositiveButton(
@@ -149,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                     });
             AlertDialog alert11 = builder1.create();
             alert11.show();
+            progressDialog.dismiss();
         }
     }
 
