@@ -120,7 +120,6 @@
         </activity>
         <activity
             android:name=".HomePageManager"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
