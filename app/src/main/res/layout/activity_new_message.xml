@@ -7,27 +7,43 @@
     android:layout_height="match_parent"
     tools:context=".NewMessage">
 
-    <TextView
-        android:id="@+id/Searchbyemail"
-        android:layout_width="299dp"
-        android:layout_height="46dp"
-        android:text="Search by email"
-        android:textSize="25dp"
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.704"
+        tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/imageMenu"
-        android:layout_width="71dp"
-        android:layout_height="47dp"
-        android:src="@drawable/ic_search"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="315dp"
-        tools:layout_editor_absoluteY="67dp" />
+    <EditText
+        android:id="@+id/message"
+        android:layout_width="217dp"
+        android:layout_height="163dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.267" />
 
-
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.082" />
 </androidx.constraintlayout.widget.ConstraintLayout>
