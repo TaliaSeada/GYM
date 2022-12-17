@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.gym.auth.UserManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,6 +88,12 @@ public class HomePageManager extends AppCompatActivity implements NavigationView
                 Intent intent4=new Intent(HomePageManager.this, ManageUsers.class);
                 intent4.putExtra("role", ROLE_MANAGER);
                 startActivity(intent4);
+                break;
+            }
+            case R.id.nav_logout: {
+                UserManager userManager = new UserManager();
+                userManager.signOutUser();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             }
         }

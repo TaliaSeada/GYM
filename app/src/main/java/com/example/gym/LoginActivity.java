@@ -69,6 +69,12 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Connecting ...");
         progressDialog.setCancelable(false);
 
+        // Check if the user already signed in and transfer to the correct page
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            progressDialog.show();
+            transferUserToPage();
+        }
+
     }
 
     // Make google connection page work with- login with google and with email
@@ -83,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
 //                .setLogo(R.drawable.logo)
+                .setTheme(R.style.Theme_GYM)
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
@@ -94,48 +101,8 @@ public class LoginActivity extends AppCompatActivity {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            String email = user.getEmail();
+            transferUserToPage();
 
-            userManager.getUserDoc(email).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot doc) {
-                    if(doc.exists()){
-                        Log.d(TAG,"User exists");
-                        String role = (String) doc.getData().get("role");
-                        switch (role){
-                            case ROLE_MANAGER:
-                                Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
-                                startActivity(intent1);
-                                break;
-                            case ROLE_TRAINER:
-                                Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
-                                startActivity(intent2);
-                                break;
-                            case ROLE_TRAINEE:
-                                Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
-                                startActivity(intent3);
-                                break;
-                        }
-                    } else {
-                        Log.d(TAG,"User Not exists");
-                        delete(); // Delete the user from the firebase auth
-
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-                        builder1.setMessage("The user not exist.\nPlease talk to the manager");
-                        builder1.setCancelable(true);
-                        builder1.setPositiveButton(
-                            "Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                        AlertDialog alertDialog = builder1.create();
-                        alertDialog.show();
-                    }
-                    progressDialog.dismiss();
-                }
-            });
         } else {
 
             // Sign in failed. If response is null the user canceled the
@@ -157,14 +124,49 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void signOut() {
-        AuthUI.getInstance()
-            .signOut(this)
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                public void onComplete(@NonNull Task<Void> task) {
-                    // ...
+    public void transferUserToPage(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user.getEmail();
+
+        userManager.getUserDoc(email).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot doc) {
+                if(doc.exists()){
+                    Log.d(TAG,"User exists");
+                    String role = (String) doc.getData().get("role");
+                    switch (role){
+                        case ROLE_MANAGER:
+                            Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
+                            startActivity(intent1);
+                            break;
+                        case ROLE_TRAINER:
+                            Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
+                            startActivity(intent2);
+                            break;
+                        case ROLE_TRAINEE:
+                            Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
+                            startActivity(intent3);
+                            break;
+                    }
+                } else {
+                    Log.d(TAG,"User Not exists");
+                    delete(); // Delete the user from the firebase auth
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                    builder1.setMessage("The user not exist.\nPlease talk to the manager");
+                    builder1.setCancelable(true);
+                    builder1.setPositiveButton(
+                            "Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = builder1.create();
+                    alertDialog.show();
                 }
-            });
+                progressDialog.dismiss();
+            }
+        });
     }
 
     public void delete() {

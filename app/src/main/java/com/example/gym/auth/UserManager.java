@@ -80,4 +80,9 @@ public class UserManager {
                 .whereEqualTo("role", role)
                 .get();
     }
+
+    public void signOutUser() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
 }

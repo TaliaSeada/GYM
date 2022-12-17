@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.gym.auth.UserManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -52,6 +53,12 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
         else if (id == R.id.nav_add_train){
             startActivity(new Intent(getApplicationContext(), AddWorkoutTrainer.class));
         }
+        else if (id== R.id.nav_logout){
+            UserManager userManager = new UserManager();
+            userManager.signOutUser();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
