@@ -87,7 +87,7 @@ public class newScrennW extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(newScrennW.this, newScrennW.class);
+                Intent i = new Intent(newScrennW.this, exeUpdate.class);
                 startActivity(i);
                 nameExe = items.get(pos);
             }

@@ -30,11 +30,10 @@ public class GroupWorkout extends AppCompatActivity {
     EditText input;
     ImageView add;
     static ListView listView;
-//    static ArrayList<String> items;
     static ListViewGroupW adapter;
     static String nameTR;
 
-    private static List<String> items = new ArrayList<>();
+    private static final List<String> items = new ArrayList<>();
 
     private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -67,8 +66,6 @@ public class GroupWorkout extends AppCompatActivity {
                 return false;
             }
         });
-//        adapter = new ListViewGroupW(getApplicationContext(), items);
-//        listView.setAdapter(adapter);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,44 +96,22 @@ public class GroupWorkout extends AppCompatActivity {
 
 
     public void loadContent() {
-        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+        String email = Objects.requireNonNull(user.getEmail());
+        db.collection("user-info").document(email)
                 .collection("workouts")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                         items.clear();
-                        for(DocumentSnapshot snapshot : documentSnapshots){
+                        assert documentSnapshots != null;
+                        for (DocumentSnapshot snapshot : documentSnapshots) {
                             items.add(snapshot.getString("name"));
                         }
-                        ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
+                        ArrayAdapter<String> adap = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
                         adap.notifyDataSetChanged();
                         listView.setAdapter(adap);
                     }
                 });
-//        File path = getApplicationContext().getFilesDir();
-//        File readFrom = new File(path, "list.txt");
-//        byte[] content = new byte[(int) readFrom.length()];
-//
-//        FileInputStream stream = null;
-//        try {
-//            stream = new FileInputStream(readFrom);
-//            stream.read(content);
-//
-//            String s = new String(content);
-//            // [Apple, Banana, Kiwi, Strawberry]
-//            s = s.substring(1, s.length() - 1);
-//            String split[] = s.split(", ");
-//
-//            // There may be no items in the grocery list.
-//            if (split.length == 1 && split[0].isEmpty())
-//                items = new ArrayList<>();
-//            else items = new ArrayList<>(Arrays.asList(split));
-//
-//            adapter = new ListViewGroupW(this, items);
-//            listView.setAdapter(adapter);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
