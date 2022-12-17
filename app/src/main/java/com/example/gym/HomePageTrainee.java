@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.gym.auth.UserManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
@@ -53,6 +54,11 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
             }
             else if (id == R.id.nav_message){
                 startActivity(new Intent(getApplicationContext(), Messages.class));
+            }
+            else if (id== R.id.nav_logout){
+                UserManager userManager = new UserManager();
+                userManager.signOutUser();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);

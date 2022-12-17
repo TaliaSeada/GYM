@@ -1,5 +1,9 @@
 package com.example.gym;
 
+import static com.example.gym.auth.UserManager.ROLE_MANAGER;
+import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
+import static com.example.gym.auth.UserManager.ROLE_TRAINER;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.gym.auth.UserManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,20 +68,32 @@ public class HomePageManager extends AppCompatActivity implements NavigationView
         switch (item.getItemId()) {
             case R.id.nav_manage_trainers: {
                 Intent intent1=new Intent(HomePageManager.this, ManageUsers.class);
-                intent1.putExtra("role","trainer");
+                intent1.putExtra("role", ROLE_TRAINER);
                 startActivity(intent1);
                 break;
             }
             case R.id.nav_manage_trainees: {
                 Intent intent2=new Intent(HomePageManager.this, ManageUsers.class);
-                intent2.putExtra("role","trainee");
+                intent2.putExtra("role", ROLE_TRAINEE);
                 startActivity(intent2);
                 break;
             }
             case R.id.nav_manage_updates: {
-                Intent intent3=new Intent(HomePageManager.this, ManageUsers.class);
-                intent3.putExtra("role","updates");
-                startActivity(intent3);
+//                Intent intent3=new Intent(HomePageManager.this, ManageUsers.class);
+//                intent3.putExtra("role","updates");
+//                startActivity(intent3);
+                break;
+            }
+            case R.id.nav_manage_managers: {
+                Intent intent4=new Intent(HomePageManager.this, ManageUsers.class);
+                intent4.putExtra("role", ROLE_MANAGER);
+                startActivity(intent4);
+                break;
+            }
+            case R.id.nav_logout: {
+                UserManager userManager = new UserManager();
+                userManager.signOutUser();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             }
         }
