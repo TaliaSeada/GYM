@@ -32,6 +32,7 @@ public class exeUpdate extends AppCompatActivity {
     EditText input_weight;
     EditText input_reps;
     Button UPDATE;
+    Button DELETE;
     static String email;
     String Gworkout;
 
@@ -55,7 +56,6 @@ public class exeUpdate extends AppCompatActivity {
         email = user.getEmail();
         UPDATE = findViewById(R.id.updateExe);
 
-
         UPDATE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +66,27 @@ public class exeUpdate extends AppCompatActivity {
                 try {
                     Gworkout = GroupWorkout.nameTR;
                     UpdateExe(email, Gworkout, exercise, set, reps, weight);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+                loadContent();
+                finish();
+
+            }
+        });
+
+        DELETE = findViewById(R.id.delete);
+
+        DELETE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String exercise = input_exe.getText().toString();
+                double weight = Double.parseDouble(input_weight.getText().toString());
+                int reps = Integer.parseInt(input_reps.getText().toString());
+                int set = Integer.parseInt(input_set.getText().toString());
+                try {
+                    Gworkout = GroupWorkout.nameTR;
+                    DeleteExe(email, Gworkout, exercise, set, reps, weight);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -134,6 +155,24 @@ public class exeUpdate extends AppCompatActivity {
         db.collection("user-info").document(email)
                 .collection("workouts").document(wo_name)
                 .collection("exercises").document(exe_name).set(exe)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
+
+    public void DeleteExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
+        db.collection("user-info").document(email)
+                .collection("workouts").document(wo_name)
+                .collection("exercises").document(exe_name).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

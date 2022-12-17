@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,12 +27,12 @@ import java.util.Objects;
 
 public class newScrennW extends AppCompatActivity {
     static ListView listView;
-//    static ArrayList<String> items;
     static ListViewGroupW adapter;
     static String nameExe;
 
     ImageView add;
     ImageView Back;
+    Button DELETE;
 
     private static List<String> items = new ArrayList<>();
 
@@ -90,6 +91,17 @@ public class newScrennW extends AppCompatActivity {
                 Intent i = new Intent(newScrennW.this, exeUpdate.class);
                 startActivity(i);
                 nameExe = items.get(pos);
+            }
+        });
+
+        DELETE = findViewById(R.id.delete2);
+        DELETE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+                        .collection("workouts").document(GroupWorkout.nameTR).delete();
+                loadContent();
+                finish();
             }
         });
     }
