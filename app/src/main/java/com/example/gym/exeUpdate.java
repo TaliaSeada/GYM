@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,36 +34,27 @@ public class exeUpdate extends AppCompatActivity {
     Button UPDATE;
     static String email;
     String Gworkout;
-    DocumentReference docRef;
 
-    static Long reps = Long.valueOf(0);
-    static Long sets = Long.valueOf(0);
-    static double weight = 0;
+    static Long reps;
+    static Long sets;
+    static double weight;
 
     private static final String TAG = "DBExercise";
+    @SuppressLint("StaticFieldLeak")
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         loadContent();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exe_update);
         email = user.getEmail();
         UPDATE = findViewById(R.id.updateExe);
 
-        input_reps = findViewById(R.id.reps);
-        input_reps.setText(reps + "");
-
-        input_set = findViewById(R.id.sets);
-        input_set.setText(sets + "");
-
-        input_weight = findViewById(R.id.weight);
-        input_weight.setText(weight + "");
-
-        input_exe = findViewById(R.id.titleExe);
-        input_exe.setText(newScrennW.nameExe);
 
         UPDATE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +82,7 @@ public class exeUpdate extends AppCompatActivity {
                 .collection("workouts").document(GroupWorkout.nameTR)
                 .collection("exercises").document(newScrennW.nameExe).
                 addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -100,15 +91,26 @@ public class exeUpdate extends AppCompatActivity {
                         }
 
                         if (snapshot != null && snapshot.exists()) {
-                            exeUpdate.reps = snapshot.getLong("reps");
-                            exeUpdate.sets = snapshot.getLong("sets");
-                            exeUpdate.weight = snapshot.getDouble("weight");
+                            reps = snapshot.getLong("reps");
+                            sets = snapshot.getLong("sets");
+                            weight = snapshot.getDouble("weight");
                             Log.d(TAG, "Current data: " + snapshot.getData());
                         } else {
                             Log.d(TAG, "Current data: null");
                         }
+                        input_reps = findViewById(R.id.reps);
+                        input_reps.setText(reps + "");
 
+                        input_set = findViewById(R.id.sets);
+                        input_set.setText(sets + "");
+
+                        input_weight = findViewById(R.id.weight);
+                        input_weight.setText(weight + "");
+
+                        input_exe = findViewById(R.id.titleExe);
+                        input_exe.setText(newScrennW.nameExe);
                     }
+
 
                 });
 
