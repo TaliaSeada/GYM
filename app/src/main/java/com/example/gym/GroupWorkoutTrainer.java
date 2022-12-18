@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,18 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GroupWorkout extends AppCompatActivity {
+public class GroupWorkoutTrainer extends AppCompatActivity {
     EditText input;
     ImageView add;
     static ListView listView;
     static ListViewGroupW adapter;
     static String nameTR;
-
+    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
     private static final List<String> items = new ArrayList<>();
 
     private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +68,7 @@ public class GroupWorkout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String text = input.getText().toString();
-                AddNewWorkoutTrainee.addWO(user.getEmail(), text);
+                AddNewWorkoutTrainee.addWO(email, text);
                 if (text == null || text.length() == 0) {
                     makeToast("Enter item");
                 } else {
@@ -86,7 +84,7 @@ public class GroupWorkout extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(GroupWorkout.this, newScrennW.class);
+                Intent i = new Intent(GroupWorkoutTrainer.this, newScreanTrainer.class);
                 startActivity(i);
                 nameTR = items.get(pos);
             }
@@ -95,7 +93,6 @@ public class GroupWorkout extends AppCompatActivity {
 
 
     public void loadContent() {
-        String email = Objects.requireNonNull(user.getEmail());
         db.collection("user-info").document(email)
                 .collection("workouts")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

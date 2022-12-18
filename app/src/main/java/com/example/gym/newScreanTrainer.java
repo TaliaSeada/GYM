@@ -1,54 +1,69 @@
 package com.example.gym;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GroupWorkout extends AppCompatActivity {
-    EditText input;
-    ImageView add;
+public class newScreanTrainer extends AppCompatActivity {
     static ListView listView;
     static ListViewGroupW adapter;
-    static String nameTR;
+    static String nameExe;
 
-    private static final List<String> items = new ArrayList<>();
+    ImageView add;
+    ImageView Back;
+    Button DELETE;
+    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
+
+    private static List<String> items = new ArrayList<>();
 
     private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_workout);
-
-        listView = findViewById(R.id.list_item);
-        input = findViewById(R.id.Input);
-        add = findViewById(R.id.imageMenu); //add
-
         loadContent();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_screnn_w);
+        listView = findViewById(R.id.list_item_in);
+        items = new ArrayList<>();
+
+        add = findViewById(R.id.imageMenu);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainer.class));
+            }
+        });
+        Back = findViewById(R.id.imageBack);
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), GroupWorkoutTrainer.class));
+            }
+        });
+        loadContent();
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -66,63 +81,46 @@ public class GroupWorkout extends AppCompatActivity {
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = input.getText().toString();
-                AddNewWorkoutTrainee.addWO(user.getEmail(), text);
-                if (text == null || text.length() == 0) {
-                    makeToast("Enter item");
-                } else {
-                    addItem(text);
-                    input.setText("");
-                    makeToast("added " + text);
-                }
-                loadContent();
-            }
-        });
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(GroupWorkout.this, newScrennW.class);
+                Intent i = new Intent(newScreanTrainer.this, exeUpdateTrainer.class);
                 startActivity(i);
-                nameTR = items.get(pos);
+                nameExe = items.get(pos);
+            }
+        });
+
+        DELETE = findViewById(R.id.delete2);
+        DELETE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.collection("user-info").document(Objects.requireNonNull(email))
+                        .collection("workouts").document(GroupWorkout.nameTR).delete();
+                loadContent();
+                finish();
             }
         });
     }
 
-
     public void loadContent() {
-        String email = Objects.requireNonNull(user.getEmail());
-        db.collection("user-info").document(email)
-                .collection("workouts")
+        db.collection("user-info").document(Objects.requireNonNull(email))
+                .collection("workouts").document(GroupWorkoutTrainer.nameTR)
+                .collection("exercises")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                         items.clear();
-                        assert documentSnapshots != null;
-                        for (DocumentSnapshot snapshot : documentSnapshots) {
+                        for(DocumentSnapshot snapshot : documentSnapshots){
                             items.add(snapshot.getString("name"));
                         }
-                        ArrayAdapter<String> adap = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
+                        ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
                         adap.notifyDataSetChanged();
                         listView.setAdapter(adap);
                     }
                 });
-    }
 
-    @Override
-    protected void onDestroy() {
-        File path = getApplicationContext().getFilesDir();
-        try {
-            FileOutputStream writer = new FileOutputStream(new File(path, "list.txt"));
-            writer.write(items.toString().getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        super.onDestroy();
     }
 
     public static void removeItem(int remove) {
@@ -139,8 +137,5 @@ public class GroupWorkout extends AppCompatActivity {
         t.show();
     }
 
-    public static void addItem(String item) {
-        items.add(item);
-        listView.setAdapter(adapter);
-    }
+
 }

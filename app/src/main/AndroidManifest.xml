@@ -13,6 +13,34 @@
         android:theme="@style/Theme.GYM"
         tools:targetApi="31">
         <activity
+            android:name=".AddNewWorkoutTrainer"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".exeUpdateTrainer"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".newScreanTrainer"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".GroupWorkoutTrainer"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".exeUpdate"
             android:exported="false">
             <meta-data
