@@ -22,12 +22,12 @@ import java.util.List;
 public class AddWorkoutTrainer extends AppCompatActivity {
     private static final List<String> items = new ArrayList<>();
     static ListView listView;
+    private static final List<String> names = new ArrayList<>();
     static String nameTR;
 
 
     private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     @SuppressLint("MissingInflatedId")
@@ -53,12 +53,14 @@ public class AddWorkoutTrainer extends AppCompatActivity {
                 addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        names.clear();
                         items.clear();
                         assert documentSnapshots != null;
                         for (DocumentSnapshot snapshot : documentSnapshots) {
+                            names.add(snapshot.getString("full_name"));
                             items.add(snapshot.getId());
                         }
-                        ArrayAdapter<String> adap = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
+                        ArrayAdapter<String> adap = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_selectable_list_item, names);
                         adap.notifyDataSetChanged();
                         listView.setAdapter(adap);
                     }
