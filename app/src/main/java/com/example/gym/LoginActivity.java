@@ -39,42 +39,43 @@ public class LoginActivity extends AppCompatActivity {
     UserManager userManager = new UserManager();
     ProgressDialog progressDialog;
 
+    // Launcher of the sign in screen (with google or email)
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
         new FirebaseAuthUIActivityResultContract(),
         new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
             @Override
             public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
+                // What happened when done with the login screen (success or failed)
                 onSignInResult(result);
             }
         }
     );
 
-    // The screen create
+    // The login screen create (with the login button)
     @Override
     protected void onCreate(Bundle savedInstanceState) { // Called when the activity created
 
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login); // put the correct xml layout
 
         Button login_btn = (Button) findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createSignInIntent();
+                createSignInIntent(); // create the sign in page
             }
         });
 
+        // The connecting box for user waiting
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Connecting ...");
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(false); // cant cancel it
 
         // Check if the user already signed in and transfer to the correct page
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
             progressDialog.show();
             transferUserToPage();
         }
-
     }
 
     // Make google connection page work with- login with google and with email
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             new AuthUI.IdpConfig.GoogleBuilder().build()
         );
 
-        // Create and launch sign-in intent
+        // Create and launch page for sign-in intent
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
 //                .setLogo(R.drawable.logo)
@@ -95,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         signInLauncher.launch(signInIntent);
     }
 
+    // After user try to connect with email or google
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         progressDialog.show();
 
@@ -103,31 +105,27 @@ public class LoginActivity extends AppCompatActivity {
             // Successfully signed in
             transferUserToPage();
 
-        } else {
-
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-            builder1.setMessage("Login failed.\nTry again later");
-            builder1.setCancelable(true);
-            builder1.setPositiveButton(
-                    "Ok", new DialogInterface.OnClickListener() {
+        } else { // Sign in failed. If response is null the user canceled the sign-in flow using the back button.
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this); // Create alert dialog
+            builder.setMessage("Login failed.\nTry again later");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
                     });
-            AlertDialog alert11 = builder1.create();
+            AlertDialog alert11 = builder.create();
             alert11.show();
             progressDialog.dismiss();
         }
     }
 
+    // If the connect with google or email success
     public void transferUserToPage(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
 
+        // check if the user exist
         userManager.getUserDoc(email).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot doc) {
@@ -169,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Delete user that try to connect and not in the DB from the firebase auth
     public void delete() {
         AuthUI.getInstance()
             .delete(this)
