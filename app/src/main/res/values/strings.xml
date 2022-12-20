@@ -18,5 +18,10 @@
     <string name="age">Age</string>
     <string name="first_name">First Name</string>
     <string name="add">add</string>
+    <string name="personal_detail">Personal Detail</string>
+    <string name="training">Training</string>
+    <string name="messages">Messages</string>
+    <string name="logout">Logout</string>
+    <string name="adding_a_workout_to_a_trainee">Adding a workout to a trainee</string>
 
 </resources>

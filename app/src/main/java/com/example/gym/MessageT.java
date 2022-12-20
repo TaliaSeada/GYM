@@ -21,8 +21,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +55,10 @@ public class MessageT extends AppCompatActivity  {
                                 String r = (String) document.getData().get("trainer");
                                 String b = (String) document.getData().get("message");
                                 String a = (String) document.getData().get("answer");
-                                object_massege om = new object_massege(id,title, s,r,b,a);
+                                Date date = document.getTimestamp("date").toDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String strDate = sdf.format(date.getTime());
+                                object_massege om = new object_massege(id,title, s,r,b,a, strDate);
                                 m.put("mess",om);
                                 mess.add(m);
                             }

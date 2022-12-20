@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.gym.auth.UserManager;
 import com.google.android.material.navigation.NavigationView;
@@ -44,7 +45,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_personal_details){
-          startActivity(new Intent(getApplicationContext(), PrivateArea.class));
+          startActivity(new Intent(getApplicationContext(), PrivateAreaTrainee.class));
         }
         else if (id == R.id.nav_message){
             startActivity(new Intent(getApplicationContext(), MessageT.class));

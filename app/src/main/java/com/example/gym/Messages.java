@@ -19,12 +19,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +44,7 @@ public class Messages extends AppCompatActivity {
     static ListView listview;
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     public void addMess(String email) {
-        // create exercise
+
         db.collection("message")
                 .whereEqualTo("trainee", email)
                 .get()
@@ -57,7 +61,10 @@ public class Messages extends AppCompatActivity {
                                 String r = (String) document.getData().get("trainer");
                                 String b = (String) document.getData().get("message");
                                 String a = (String) document.getData().get("answer");
-                                object_massege om = new object_massege(id,title, s,r,b,a);
+                                Date date = document.getTimestamp("date").toDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String strDate = sdf.format(date.getTime());
+                                object_massege om = new object_massege(id,title, s,r,b,a, strDate);
                                 m.put("mess",om);
                                 mess.add(m);
                             }

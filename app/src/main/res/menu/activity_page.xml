@@ -7,23 +7,23 @@
         <item
             android:id="@+id/nav_personal_details"
             android:icon="@drawable/ic_person"
-            android:title="פרטים אישיים" />
+            android:title="@string/personal_detail" />
 
         <item
             android:id="@+id/nav_tra"
             android:icon="@drawable/ic_add_task"
-            android:title="אימונים" />
+            android:title="@string/training" />
         <item
             android:id="@+id/nav_message"
             android:icon="@drawable/ic_message"
-            android:title="הודעות" />
+            android:title="@string/messages" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/icons8_logout_rounded_100"
-            android:title="Logout" />
+            android:title="@string/logout" />
     </group>
 
 
