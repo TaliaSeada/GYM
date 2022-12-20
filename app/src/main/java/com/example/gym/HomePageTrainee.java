@@ -7,9 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -50,7 +48,7 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
                 startActivity(new Intent(getApplicationContext(), GroupWorkout.class));
             }
             else if (id == R.id.nav_personal_details){
-                startActivity(new Intent(getApplicationContext(), PrivateAreaTrainee.class));
+                startActivity(new Intent(getApplicationContext(), PrivateArea.class));
             }
             else if (id == R.id.nav_message){
                 startActivity(new Intent(getApplicationContext(), Messages.class));

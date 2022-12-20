@@ -3,13 +3,9 @@ package com.example.gym;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +15,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -29,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PrivateAreaTrainer extends AppCompatActivity {
+public class PrivateArea extends AppCompatActivity {
     //personal Details
     EditText input_firstTrainee;
     EditText input_lastTrainee;
@@ -40,8 +35,8 @@ public class PrivateAreaTrainer extends AppCompatActivity {
     static String email;
 
     private static final String TAG = "PrivateAreaT";
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    protected  FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     //create in  Firebase
@@ -67,6 +62,8 @@ public class PrivateAreaTrainer extends AppCompatActivity {
                 });
     }
 
+
+
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,17 +72,18 @@ public class PrivateAreaTrainer extends AppCompatActivity {
         findViewById(R.id.imageBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), HomePageTrainer.class));
+                finish();
             }
         });
         //
+        email = user.getEmail();
         Add=findViewById(R.id.addP);
         input_ageTrainee=findViewById(R.id.ageTrainee);
         input_heightTrainee=findViewById(R.id.heightTrainee);
         input_weightTrainee=findViewById(R.id.weightTrainee);
         input_firstTrainee=findViewById(R.id.firstTrainee);
         input_lastTrainee=findViewById(R.id.lastTrainee);
-        email = user.getEmail();
+
 
 
         Add.setOnClickListener(new View.OnClickListener() {
@@ -123,10 +121,10 @@ public class PrivateAreaTrainer extends AppCompatActivity {
                     double age = (Double) value.get("age");
                     String ageS=String.valueOf(age);
                     input_ageTrainee.setText(ageS);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
             }
         });
