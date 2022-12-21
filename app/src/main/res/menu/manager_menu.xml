@@ -7,22 +7,22 @@
         <item
             android:id="@+id/nav_manage_trainers"
             android:icon="@drawable/ic_add_task"
-            android:title="ניהול מאמנים" />
+            android:title="Manage Trainers" />
 
         <item
             android:id="@+id/nav_manage_trainees"
             android:icon="@drawable/ic_add_task"
-            android:title="ניהול מתאמנים" />
+            android:title="Manage Trainees" />
 
         <item
             android:id="@+id/nav_manage_managers"
             android:icon="@drawable/ic_add_task"
-            android:title="ניהול מנהלים" />
+            android:title="Manage Managers" />
 
         <item
             android:id="@+id/nav_manage_updates"
             android:icon="@drawable/ic_message"
-            android:title="ניהול עדכונים" />
+            android:title="Manage Updates" />
 
     </group>
 
