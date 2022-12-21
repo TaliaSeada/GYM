@@ -26,6 +26,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
 
 public class NewMessage extends AppCompatActivity {
     private static final String TAG = "DBMess";
@@ -43,6 +45,7 @@ public class NewMessage extends AppCompatActivity {
         exe.put("message", message);
         exe.put("answer", "");
         exe.put("title", title);
+        exe.put("date", Calendar.getInstance().getTime());
         db.collection("message")
                 .document()
                 .set(exe).

@@ -8,17 +8,17 @@
         <item
             android:id="@+id/nav_personal_details"
             android:icon="@drawable/ic_person"
-            android:title="פרטים אישיים" />
+            android:title="@string/personal_detail" />
 
         <item
             android:id="@+id/nav_message"
             android:icon="@drawable/ic_message"
-            android:title="הודעות" />
+            android:title="@string/messages" />
 
         <item
             android:id="@+id/nav_add_train"
             android:icon="@drawable/ic_playlist_add"
-            android:title="הוספת אימון למתאמן" />
+            android:title="@string/adding_a_workout_to_a_trainee" />
 
     </group>
 
@@ -26,7 +26,7 @@
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/icons8_logout_rounded_100"
-            android:title="Logout" />
+            android:title="@string/logout" />
     </group>
 
 

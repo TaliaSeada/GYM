@@ -45,7 +45,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_personal_details){
-          startActivity(new Intent(getApplicationContext(), PrivateAreaTrainer.class));
+          startActivity(new Intent(getApplicationContext(), PrivateAreaTrainee.class));
         }
         else if (id == R.id.nav_message){
             startActivity(new Intent(getApplicationContext(), MessageT.class));

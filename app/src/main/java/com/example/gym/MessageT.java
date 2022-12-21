@@ -1,7 +1,9 @@
 package com.example.gym;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,12 +19,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +37,6 @@ public class MessageT extends AppCompatActivity  {
     private ListView listView;
     final ArrayList<Map<String, object_massege>> mess = new ArrayList<Map<String, object_massege>>();
     SimpleAdapter adapter;
-
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     public void addMess() {
         // create exercise
@@ -52,7 +57,10 @@ public class MessageT extends AppCompatActivity  {
                                 String r = (String) document.getData().get("trainer");
                                 String b = (String) document.getData().get("message");
                                 String a = (String) document.getData().get("answer");
-                                object_massege om = new object_massege(id,title, s,r,b,a);
+                                Date date = document.getTimestamp("date").toDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String strDate = sdf.format(date.getTime());
+                                object_massege om = new object_massege(id,title, s,r,b,a, strDate);
                                 m.put("mess",om);
                                 mess.add(m);
                             }
@@ -70,14 +78,13 @@ public class MessageT extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_message_show);
         listView = findViewById(R.id.list_message);
-
         final String[] fromMapKey = new String[] {"email", "mess"};
         final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
         adapter = new SimpleAdapter(this, mess, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
         final ListView listview = (ListView) findViewById(R.id.list_message);
         listview.setAdapter(adapter);
         addMess();
-        View back = findViewById(R.id.imageBack);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -112,12 +119,7 @@ public class MessageT extends AppCompatActivity  {
             }
             }
         });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), HomePageTrainer.class));
-            }
-        });
+
     }
 
 }
