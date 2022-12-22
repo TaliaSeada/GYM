@@ -1,8 +1,6 @@
 package com.example.gym;
 
-import java.util.Date;
-
-public class object_massege {
+public class object_message {
 
     String id;
     String send;
@@ -13,7 +11,7 @@ public class object_massege {
     String date;
     boolean status;
 
-    public object_massege(String id, String title, String send, String recv, String body, String answer, String date) {
+    public object_message(String id, String title, String send, String recv, String body, String answer, String date) {
         this.id = id;
         this.title = title;
         this.send = send;

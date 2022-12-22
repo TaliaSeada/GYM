@@ -14,20 +14,15 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +31,7 @@ public class Messages extends AppCompatActivity {
 
     private static final String TAG = "DBMess";
     private ListView listView;
-    final ArrayList<Map<String, object_massege>> mess = new ArrayList<Map<String, object_massege>>();
+    final ArrayList<Map<String, object_message>> mess = new ArrayList<Map<String, object_message>>();
     SimpleAdapter adapter;
     String email;
     ImageView add;
@@ -54,7 +49,7 @@ public class Messages extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             mess.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                final Map<String, object_massege> m = new HashMap<>();
+                                final Map<String, object_message> m = new HashMap<>();
                                 String title = (String) document.getData().get("title");
                                 String id = document.getId();
                                 String s = (String) document.getData().get("trainee");
@@ -64,7 +59,7 @@ public class Messages extends AppCompatActivity {
                                 Date date = document.getTimestamp("date").toDate();
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String strDate = sdf.format(date.getTime());
-                                object_massege om = new object_massege(id,title, s,r,b,a, strDate);
+                                object_message om = new object_message(id,title, s,r,b,a, strDate);
                                 m.put("mess",om);
                                 mess.add(m);
                             }

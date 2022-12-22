@@ -34,7 +34,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".newScreanTrainer"
+            android:name=".newScreenTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -69,7 +69,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".newScrennW"
+            android:name=".newScreenW"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

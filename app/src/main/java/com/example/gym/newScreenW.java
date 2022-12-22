@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class newScrennW extends AppCompatActivity {
+public class newScreenW extends AppCompatActivity {
     static ListView listView;
     static ListViewGroupW adapter;
     static String nameExe;
@@ -45,7 +45,7 @@ public class newScrennW extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         loadContent();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_screnn_w);
+        setContentView(R.layout.activity_new_screen_w);
         listView = findViewById(R.id.list_item_in);
         items = new ArrayList<>();
 
@@ -88,7 +88,7 @@ public class newScrennW extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(newScrennW.this, exeUpdate.class);
+                Intent i = new Intent(newScreenW.this, exeUpdate.class);
                 startActivity(i);
                 nameExe = items.get(pos);
             }

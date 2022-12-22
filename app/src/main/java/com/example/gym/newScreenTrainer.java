@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class newScreanTrainer extends AppCompatActivity {
+public class newScreenTrainer extends AppCompatActivity {
     static ListView listView;
     static ListViewGroupW adapter;
     static String nameExe;
@@ -43,7 +43,7 @@ public class newScreanTrainer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         loadContent();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_screnn_w);
+        setContentView(R.layout.activity_new_screen_w);
         listView = findViewById(R.id.list_item_in);
         items = new ArrayList<>();
 
@@ -86,7 +86,7 @@ public class newScreanTrainer extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(newScreanTrainer.this, exeUpdateTrainer.class);
+                Intent i = new Intent(newScreenTrainer.this, exeUpdateTrainer.class);
                 startActivity(i);
                 nameExe = items.get(pos);
             }

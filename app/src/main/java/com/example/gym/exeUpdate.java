@@ -101,7 +101,7 @@ public class exeUpdate extends AppCompatActivity {
     public void loadContent() {
         db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
                 .collection("workouts").document(GroupWorkout.nameTR)
-                .collection("exercises").document(newScrennW.nameExe).
+                .collection("exercises").document(newScreenW.nameExe).
                 addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -129,7 +129,7 @@ public class exeUpdate extends AppCompatActivity {
                         input_weight.setText(weight + "");
 
                         input_exe = findViewById(R.id.titleExe);
-                        input_exe.setText(newScrennW.nameExe);
+                        input_exe.setText(newScreenW.nameExe);
                     }
 
 

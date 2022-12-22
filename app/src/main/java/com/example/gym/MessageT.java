@@ -1,9 +1,7 @@
 package com.example.gym;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,16 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,7 +28,7 @@ import java.util.Map;
 public class MessageT extends AppCompatActivity  {
     private static final String TAG = "DBMess";
     private ListView listView;
-    final ArrayList<Map<String, object_massege>> mess = new ArrayList<Map<String, object_massege>>();
+    final ArrayList<Map<String, object_message>> mess = new ArrayList<Map<String, object_message>>();
     SimpleAdapter adapter;
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     public void addMess() {
@@ -49,7 +42,7 @@ public class MessageT extends AppCompatActivity  {
                         if (task.isSuccessful()) {
                             mess.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                final Map<String, object_massege> m = new HashMap<>();
+                                final Map<String, object_message> m = new HashMap<>();
                                 //m.put("email", document.getId());
                                 String title = (String) document.getData().get("title");
                                 String id = document.getId();
@@ -60,7 +53,7 @@ public class MessageT extends AppCompatActivity  {
                                 Date date = document.getTimestamp("date").toDate();
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String strDate = sdf.format(date.getTime());
-                                object_massege om = new object_massege(id,title, s,r,b,a, strDate);
+                                object_message om = new object_message(id,title, s,r,b,a, strDate);
                                 m.put("mess",om);
                                 mess.add(m);
                             }

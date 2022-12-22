@@ -86,7 +86,7 @@ public class GroupWorkout extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(GroupWorkout.this, newScrennW.class);
+                Intent i = new Intent(GroupWorkout.this, newScreenW.class);
                 startActivity(i);
                 nameTR = items.get(pos);
             }
