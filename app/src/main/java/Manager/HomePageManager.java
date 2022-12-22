@@ -1,4 +1,4 @@
-package com.example.gym;
+package Manager;
 
 import static com.example.gym.auth.UserManager.ROLE_MANAGER;
 import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
@@ -7,14 +7,14 @@ import static com.example.gym.auth.UserManager.ROLE_TRAINER;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.gym.LoginActivity;
+import com.example.gym.R;
 import com.example.gym.auth.UserManager;
 import com.google.android.material.navigation.NavigationView;
 

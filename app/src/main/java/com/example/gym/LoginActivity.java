@@ -4,7 +4,6 @@ import static com.example.gym.auth.UserManager.ROLE_MANAGER;
 import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
 import static com.example.gym.auth.UserManager.ROLE_TRAINER;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +32,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Arrays;
 import java.util.List;
+
+import Manager.HomePageManager;
 
 public class LoginActivity extends AppCompatActivity {
 

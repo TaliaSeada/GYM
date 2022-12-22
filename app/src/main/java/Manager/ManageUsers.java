@@ -1,4 +1,4 @@
-package com.example.gym;
+package Manager;
 
 import static com.example.gym.auth.UserManager.ROLE_MANAGER;
 import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gym.R;
 import com.example.gym.auth.UserManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
