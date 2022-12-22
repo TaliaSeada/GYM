@@ -9,9 +9,10 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/activity_home_page_trainee"
+        layout="@layout/activity_home_trainee"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+         />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
