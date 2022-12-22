@@ -1,13 +1,14 @@
 package com.example.gym;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +30,7 @@ import java.util.Objects;
 public class GroupWorkout extends AppCompatActivity {
     EditText input;
     ImageView add;
-    static ListView listView;
+    static GridView listView;
     static ListViewGroupW adapter;
     static String nameTR;
 
@@ -39,12 +40,13 @@ public class GroupWorkout extends AppCompatActivity {
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_workout);
 
-        listView = findViewById(R.id.list_item);
+        listView = findViewById(R.id.grid_workout);
         input = findViewById(R.id.Input);
         add = findViewById(R.id.imageMenu); //add
 
