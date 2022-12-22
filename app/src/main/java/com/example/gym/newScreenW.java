@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
@@ -29,12 +28,10 @@ import java.util.Objects;
 
 public class newScreenW extends AppCompatActivity {
     static GridView listView;
-    static ListViewGroupW adapter;
     static String nameExe;
 
     ImageView add;
     ImageView Back;
-    Button DELETE;
 
     private static List<String> items = new ArrayList<>();
     final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
@@ -78,16 +75,6 @@ public class newScreenW extends AppCompatActivity {
             }
         });
 
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                makeToast("Remove:" + items.get(i));
-//                removeItem(i);
-//                return false;
-//            }
-//        });
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,17 +84,6 @@ public class newScreenW extends AppCompatActivity {
                 nameExe = items.get(pos);
             }
         });
-
-//        DELETE = findViewById(R.id.delete2);
-//        DELETE.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
-//                        .collection("workouts").document(GroupWorkout.nameTR).delete();
-//                loadContent();
-//                finish();
-//            }
-//        });
     }
 
     public void loadContent() {

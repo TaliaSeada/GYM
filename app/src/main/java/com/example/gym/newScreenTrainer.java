@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
@@ -27,12 +26,10 @@ import java.util.Objects;
 
 public class newScreenTrainer extends AppCompatActivity {
     static GridView listView;
-    static ListViewGroupW adapter;
     static String nameExe;
 
     ImageView add;
     ImageView Back;
-    Button DELETE;
     String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
 
     private static List<String> items = new ArrayList<>();
@@ -76,16 +73,6 @@ public class newScreenTrainer extends AppCompatActivity {
             }
         });
 
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                makeToast("Remove:" + items.get(i));
-//                removeItem(i);
-//                return false;
-//            }
-//        });
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,16 +83,6 @@ public class newScreenTrainer extends AppCompatActivity {
             }
         });
 
-//        DELETE = findViewById(R.id.delete2);
-//        DELETE.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                db.collection("user-info").document(Objects.requireNonNull(email))
-//                        .collection("workouts").document(GroupWorkout.nameTR).delete();
-//                loadContent();
-//                finish();
-//            }
-//        });
     }
 
     public void loadContent() {
@@ -141,7 +118,6 @@ public class newScreenTrainer extends AppCompatActivity {
 
     private void makeToast(String s) {
         if (t != null) t.cancel();
-        ;
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }

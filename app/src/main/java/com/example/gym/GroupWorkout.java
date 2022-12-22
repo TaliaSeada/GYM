@@ -34,7 +34,6 @@ public class GroupWorkout extends AppCompatActivity {
 
     private static final ArrayList<String> items = new ArrayList<String>();
 
-    private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -57,15 +56,6 @@ public class GroupWorkout extends AppCompatActivity {
                 makeToast(name);
             }
         });
-
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                makeToast("Remove:" + items.get(i));
-//                removeItem(i);
-//                return false;
-//            }
-//        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +125,6 @@ public class GroupWorkout extends AppCompatActivity {
 
     private void makeToast(String s) {
         if (t != null) t.cancel();
-        ;
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }

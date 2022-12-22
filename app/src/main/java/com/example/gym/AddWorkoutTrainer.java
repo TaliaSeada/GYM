@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,8 +29,6 @@ public class AddWorkoutTrainer extends AppCompatActivity {
     private static final List<String> names = new ArrayList<>();
     static String nameTR;
 
-
-    private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 

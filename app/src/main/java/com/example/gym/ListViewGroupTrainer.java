@@ -35,14 +35,7 @@ public class ListViewGroupTrainer extends ArrayAdapter<String> {
             number.setText(position + 1 + ".");
             TextView name = converView.findViewById(R.id.name);
             name.setText(list.get(position));
-            ImageView duplicate = converView.findViewById(R.id.copy);
             ImageView remove = converView.findViewById(R.id.remove);
-//            duplicate.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    GroupWorkout.addItem(list.get(position));
-//                }
-//            });
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -32,7 +32,6 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
     String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
     private static final ArrayList<String> items = new ArrayList<>();
 
-    private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -56,14 +55,6 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
             }
         });
 
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                makeToast("Remove:" + items.get(i));
-//                removeItem(i);
-//                return false;
-//            }
-//        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override

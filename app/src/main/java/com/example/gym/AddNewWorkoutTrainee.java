@@ -120,4 +120,3 @@ public class AddNewWorkoutTrainee extends AppCompatActivity {
 
     }
 }
-// kk@gmail.com
