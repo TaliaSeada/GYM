@@ -4,10 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -60,10 +65,42 @@ public class AddWorkoutTrainer extends AppCompatActivity {
                             names.add(snapshot.getString("full_name"));
                             items.add(snapshot.getId());
                         }
+                        CustomAdapter customAdapter = new CustomAdapter();
                         ArrayAdapter<String> adap = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_selectable_list_item, names);
                         adap.notifyDataSetChanged();
-                        listView.setAdapter(adap);
+                        //listView.setAdapter(adap);
+                        listView.setAdapter(customAdapter);
+
                     }
                 });
+    }
+    class CustomAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return names.toArray().length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @SuppressLint("ResourceType")
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = getLayoutInflater().inflate(R.layout.customlayout,null);
+            ImageView imageView= view.findViewById(R.id.imageView2);
+            TextView textView = view.findViewById(R.id.textView9);
+
+//            imageView.setImageResource(R.id.imageView2);
+            textView.setText(names.get(i));
+            return view;
+        }
     }
 }

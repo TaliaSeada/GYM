@@ -62,7 +62,6 @@ public class AddNewWorkoutTrainee extends AppCompatActivity {
         exe.put("sets", sets);
         exe.put("weight", weight_kg);
         exe.put("name", exe_name);
-
         Map<String, Object> name = new HashMap<>();
         name.put("name", wo_name);
 

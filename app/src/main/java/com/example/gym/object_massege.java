@@ -33,7 +33,7 @@ public class object_massege {
         String ans = "title: "+ title +'\n' +
                     "send: " + send + '\n' +
                     "body: " + body + '\n' +
-                    "date" + date +'\n';
+                    "date: " + date +'\n';
         if (!status) {
            ans+=  "answer: " + answer;
         }

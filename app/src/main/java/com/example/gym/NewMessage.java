@@ -39,16 +39,16 @@ public class NewMessage extends AppCompatActivity {
 
 
         public void addMess(String email, String message , String title) {
-        Map<String, Object> exe = new HashMap<>();
-        exe.put("trainee", email);
-        exe.put("trainer", "all");
-        exe.put("message", message);
-        exe.put("answer", "");
-        exe.put("title", title);
-        exe.put("date", Calendar.getInstance().getTime());
+        Map<String, Object> message_map = new HashMap<>();
+            message_map.put("trainee", email);
+            message_map.put("trainer", "all");
+            message_map.put("message", message);
+            message_map.put("answer", "");
+            message_map.put("title", title);
+            message_map.put("date", Calendar.getInstance().getTime());
         db.collection("message")
                 .document()
-                .set(exe).
+                .set(message_map).
                 addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

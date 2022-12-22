@@ -4,6 +4,7 @@ import static com.example.gym.auth.UserManager.ROLE_MANAGER;
 import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
 import static com.example.gym.auth.UserManager.ROLE_TRAINER;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createSignInIntent(); // create the sign in page
+
             }
         });
 
@@ -80,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Make google connection page work with- login with google and with email
     public void createSignInIntent() {
+
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -87,13 +90,18 @@ public class LoginActivity extends AppCompatActivity {
         );
 
         // Create and launch page for sign-in intent
-        Intent signInIntent = AuthUI.getInstance()
+     Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
-//                .setLogo(R.drawable.logo)
+                //############LOGO##############
+                .setLogo(R.drawable.login)
+                //############LOGO##############
                 .setTheme(R.style.Theme_GYM)
                 .setAvailableProviders(providers)
-                .build();
+                .build()
+               ;
+
         signInLauncher.launch(signInIntent);
+
     }
 
     // After user try to connect with email or google

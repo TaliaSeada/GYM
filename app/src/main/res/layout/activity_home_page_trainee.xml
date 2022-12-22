@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/manger1"
     tools:openDrawer="start">
 
     <include
-        layout="@layout/activity_schedule_trainee"
+        layout="@layout/activity_home_page_trainee"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
