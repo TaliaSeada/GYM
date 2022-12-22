@@ -76,14 +76,14 @@ public class newScreenTrainer extends AppCompatActivity {
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                makeToast("Remove:" + items.get(i));
-                removeItem(i);
-                return false;
-            }
-        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                makeToast("Remove:" + items.get(i));
+//                removeItem(i);
+//                return false;
+//            }
+//        });
 
 
 
@@ -96,16 +96,16 @@ public class newScreenTrainer extends AppCompatActivity {
             }
         });
 
-        DELETE = findViewById(R.id.delete2);
-        DELETE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                db.collection("user-info").document(Objects.requireNonNull(email))
-                        .collection("workouts").document(GroupWorkout.nameTR).delete();
-                loadContent();
-                finish();
-            }
-        });
+//        DELETE = findViewById(R.id.delete2);
+//        DELETE.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                db.collection("user-info").document(Objects.requireNonNull(email))
+//                        .collection("workouts").document(GroupWorkout.nameTR).delete();
+//                loadContent();
+//                finish();
+//            }
+//        });
     }
 
     public void loadContent() {
@@ -135,11 +135,6 @@ public class newScreenTrainer extends AppCompatActivity {
                     }
                 });
 
-    }
-
-    public static void removeItem(int remove) {
-        items.remove(remove);
-        listView.setAdapter(adapter);
     }
 
     Toast t;

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class GroupWorkout extends AppCompatActivity {
@@ -34,7 +32,7 @@ public class GroupWorkout extends AppCompatActivity {
     static ListViewGroupW adapter;
     static String nameTR;
 
-    private static final List<String> items = new ArrayList<>();
+    private static final ArrayList<String> items = new ArrayList<String>();
 
     private static final String TAG = "WorkOuts";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,6 +44,7 @@ public class GroupWorkout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_workout);
 
+        adapter = new ListViewGroupW(GroupWorkout.this, items);
         listView = findViewById(R.id.grid_workout);
         input = findViewById(R.id.Input);
         add = findViewById(R.id.imageMenu); //add
@@ -59,14 +58,14 @@ public class GroupWorkout extends AppCompatActivity {
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                makeToast("Remove:" + items.get(i));
-                removeItem(i);
-                return false;
-            }
-        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                makeToast("Remove:" + items.get(i));
+//                removeItem(i);
+//                return false;
+//            }
+//        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +107,8 @@ public class GroupWorkout extends AppCompatActivity {
                         for (DocumentSnapshot snapshot : documentSnapshots) {
                             items.add(snapshot.getString("name"));
                         }
-                        ArrayAdapter<String> adap = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_selectable_list_item, items);
-                        adap.notifyDataSetChanged();
-                        listView.setAdapter(adap);
+                        adapter.notifyDataSetChanged();
+                        listView.setAdapter(adapter);
                     }
                 });
     }
@@ -128,7 +126,8 @@ public class GroupWorkout extends AppCompatActivity {
     }
 
     public static void removeItem(int remove) {
-        items.remove(remove);
+        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+                .collection("workouts").document(items.get(remove)).delete();
         listView.setAdapter(adapter);
     }
 
