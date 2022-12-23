@@ -57,13 +57,13 @@ public class newScreenW extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainee.class));
             }
         });
-        Back = findViewById(R.id.imageBack);
-        Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), GroupWorkout.class));
-            }
-        });
+//        Back = findViewById(R.id.imageBack);
+//        Back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext(), GroupWorkout.class));
+//            }
+//        });
         loadContent();
 
 

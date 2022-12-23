@@ -34,6 +34,7 @@ public class Messages extends AppCompatActivity {
     ArrayList<Integer> image_array = new ArrayList<Integer>();
     ArrayList<String> answer_array = new ArrayList<String>();
     ImageView add;
+    ImageView refresh;
 
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint({"MissingInflatedId", "CutPasteId"})
@@ -47,23 +48,29 @@ public class Messages extends AppCompatActivity {
         email = user.getEmail();
         add = findViewById(R.id.imageAdd);
         addMess(email);
-
+        refresh = findViewById(R.id.imageRefresh);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), NewMessage.class));
             }
         });
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Messages.class));
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent senderIntent = new Intent(Messages.this, ShowMessage.class);
-                senderIntent.putExtra("key_sender",message_array.get(pos));
+                senderIntent.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos)});
                 Intent answerIntent = new Intent(Messages.this, ShowMessage.class);
                 answerIntent.putExtra("key_answer",answer_array.get(pos));
 
                 startActivity(senderIntent);
-                startActivity(answerIntent);
+//                startActivity(answerIntent);
             }
         });
     }

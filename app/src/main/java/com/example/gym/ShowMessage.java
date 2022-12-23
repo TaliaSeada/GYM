@@ -22,11 +22,11 @@ public class ShowMessage extends AppCompatActivity {
         Answer=findViewById(R.id.answerMessage);
         allMessage=findViewById(R.id.AllMesssage);
         Intent MessageIntent=getIntent();
-        String MessageValue=MessageIntent.getStringExtra("key_sender");
-        Message.setText(MessageValue);
-        Intent AnswerIntent=getIntent();
-        String AnswerValue=AnswerIntent.getStringExtra("key_answer");
-        Answer.setText(AnswerValue);
+        String [] MessageValue=MessageIntent.getStringArrayExtra("key_sender");
+        Message.setText(MessageValue[0]);
+//        Intent AnswerIntent=getIntent();
+//        String AnswerValue=AnswerIntent.getStringExtra("key_answer");
+        Answer.setText(MessageValue[1]);
         allMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

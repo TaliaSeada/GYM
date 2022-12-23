@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -31,9 +32,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.time.LocalDate;
+import java.time.Period;
 public class PrivateAreaTrainee extends AppCompatActivity {
     //personal Details
     EditText input_firstTrainee;
@@ -41,6 +45,7 @@ public class PrivateAreaTrainee extends AppCompatActivity {
     EditText input_weightTrainee;
     EditText input_ageTrainee;
     EditText input_heightTrainee;
+    EditText input_PhoneNumber;
     Button Add;
     static String email;
 
@@ -48,15 +53,24 @@ public class PrivateAreaTrainee extends AppCompatActivity {
     protected  FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
+    public int getAge(int year, int month, int dayOfMonth) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Period.between(
+                    LocalDate.of(year, month, dayOfMonth),
+                    LocalDate.now()
+            ).getYears();
+        }
+        return 0;
+    }
     //create in  Firebase
-    public void addDetails(String email,String firstName, String lastName, double height,double age, double weight) {
+    public void addDetails(String email,String firstName, String lastName, double height, double weight,double age, String phone) {
         Map<String, Object> personalDetails = new HashMap<>();
         personalDetails.put("first name", firstName);
         personalDetails.put("last name", lastName);
         personalDetails.put("height", height);
         personalDetails.put("weight", weight);
         personalDetails.put("age", age);
+        personalDetails.put("phone number", phone);
         db.collection("user-info").document(email).collection("PrivateArea")
                 .document("personalDetails").set(personalDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -87,6 +101,7 @@ public class PrivateAreaTrainee extends AppCompatActivity {
         input_weightTrainee=findViewById(R.id.weightTrainee);
         input_firstTrainee=findViewById(R.id.firstTrainee);
         input_lastTrainee=findViewById(R.id.lastTrainee);
+        input_PhoneNumber=findViewById(R.id.editTextPhone);
 
 
 
@@ -95,12 +110,28 @@ public class PrivateAreaTrainee extends AppCompatActivity {
             public void onClick(View view) {
                 String output_firstName = input_firstTrainee.getText().toString();
                 String output_lastName = input_lastTrainee.getText().toString();
-                double output_weight = Double.parseDouble(input_weightTrainee.getText().toString());
-                double output_height = Double.parseDouble(input_heightTrainee.getText().toString());
-                double output_age = Double.parseDouble(input_ageTrainee.getText().toString());
+                double output_weight;
                 try{
+                    output_weight = Double.parseDouble(input_weightTrainee.getText().toString());
+                } catch (NumberFormatException e) {
+                    output_weight = 0;
+                }
+                double output_height;
+                try{
+                    output_height = Double.parseDouble(input_heightTrainee.getText().toString());
+                } catch (NumberFormatException e) {
+                    output_height = 0;
+                }
+                double output_age;
+                try{
+                    output_age = Double.parseDouble(input_ageTrainee.getText().toString());
+                } catch (NumberFormatException e) {
+                    output_age = 0;
+                }
 
-                    addDetails(email, output_firstName, output_lastName, output_weight, output_height,output_age);
+                String output_phone = input_PhoneNumber.getText().toString();
+                try{
+                    addDetails(email, output_firstName, output_lastName, output_height ,output_weight, output_age, output_phone);
                 } catch (NullPointerException e){
                     e.printStackTrace();
                 }
@@ -125,6 +156,7 @@ public class PrivateAreaTrainee extends AppCompatActivity {
                     double age = (Double) value.get("age");
                     String ageS=String.valueOf(age);
                     input_ageTrainee.setText(ageS);
+                    input_PhoneNumber.setText(value.getString("phone number"));
 
                 } catch (Exception e) {
                     e.printStackTrace();
