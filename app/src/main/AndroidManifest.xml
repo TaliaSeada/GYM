@@ -153,14 +153,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="Manager.HomePageManager"
+            android:name=".Manager.HomePageManager"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="Manager.ManageUsers"
+            android:name=".Manager.ManageUsers"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

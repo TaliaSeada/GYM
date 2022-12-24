@@ -1,4 +1,4 @@
-package Manager;
+package com.example.gym.Manager;
 
 import static com.example.gym.auth.UserManager.ROLE_MANAGER;
 import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+// The manager page
 public class ManageUsers extends AppCompatActivity {
 
     private static final String TAG = "ManageUsers";
@@ -41,9 +42,9 @@ public class ManageUsers extends AppCompatActivity {
     UserManager userManager = new UserManager();
     String role;
     final ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
-    SimpleAdapter adapter;
+    SimpleAdapter adapter; // Connect between the view to the list of users
 
-
+    // Take the users from the db and put them in the view
     private void updateUsersList(){
         userManager.getUsersByRole(role)
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -83,23 +84,24 @@ public class ManageUsers extends AppCompatActivity {
                 setTitle("Manage Managers");
                 break;
         }
+        // match the users name and email to the screen
         final String[] fromMapKey = new String[] {"fullname", "email"};
         final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
         adapter = new SimpleAdapter(this, users, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
-
 
         final ListView listview = (ListView) findViewById(R.id.list_users);
         listview.setAdapter(adapter);
         updateUsersList();
 
+        // when click on user, ask if delete this user
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                final String item = (String) ((HashMap) parent.getItemAtPosition(position)).get("email");
-                onDeleteClick(item);
+                final String email = (String) ((HashMap) parent.getItemAtPosition(position)).get("email");
+                onDeleteClick(email); //open window
             }
         });
-
+        //plus button
         FloatingActionButton addUserButton = findViewById(R.id.fab);
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,10 +110,9 @@ public class ManageUsers extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ManageUsers.this);
                 builder.setTitle("Add User");
                 View viewInflated = LayoutInflater.from(ManageUsers.this).inflate(R.layout.add_new_user_window, (ViewGroup) listview, false);
-                // Set up the input
+                // Set up the input box
                 final EditText email = (EditText) viewInflated.findViewById(R.id.email);
                 final EditText full_name = (EditText) viewInflated.findViewById(R.id.name);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 builder.setView(viewInflated);
 
                 // Set up the buttons
@@ -127,8 +128,21 @@ public class ManageUsers extends AppCompatActivity {
                             public void onSuccess(Void documentReference) {
                                 updateUsersList();
                             }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ManageUsers.this);
+                                builder.setMessage("Can't add this user.\nTry again later");
+                                builder.setCancelable(true);
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
                         });
-
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -138,13 +152,12 @@ public class ManageUsers extends AppCompatActivity {
                     }
                 });
 
-                builder.show();
+                builder.show(); //show the add user window
             }
         });
-
     }
 
-    // On click on specific user -> ask ti delete
+    // On click on specific user -> ask to delete
     public void onDeleteClick(String email) {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(ManageUsers.this);
@@ -154,7 +167,7 @@ public class ManageUsers extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
+                userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
                     @Override
                     public void onSuccess(Void documentReference) {
                         updateUsersList();
@@ -162,27 +175,24 @@ public class ManageUsers extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(ManageUsers.this);
-                        builder1.setMessage("Can't delete this user.\nTry again later");
-                        builder1.setCancelable(true);
-                        builder1.setPositiveButton(
-                                "Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                        AlertDialog alertDialog = builder1.create();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ManageUsers.this);
+                        builder.setMessage("Can't delete this user.\nTry again later");
+                        builder.setCancelable(true);
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     }
                 });
-
 
                 dialog.dismiss();
             }
         });
 
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

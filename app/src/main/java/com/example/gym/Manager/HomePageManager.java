@@ -1,4 +1,4 @@
-package Manager;
+package com.example.gym.Manager;
 
 import static com.example.gym.auth.UserManager.ROLE_MANAGER;
 import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
@@ -20,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomePageManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public DrawerLayout drawerLayout;
+    public DrawerLayout drawerLayout; //layout that contains the menu
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -43,19 +43,13 @@ public class HomePageManager extends AppCompatActivity implements NavigationView
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //define that the class handle when choose something in menu
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_manager);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
-    // override the onOptionsItemSelected()
-    // function to implement
-    // the item click listener callback
-    // to open and close the navigation
-    // drawer when the icon is clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

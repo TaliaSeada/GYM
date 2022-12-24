@@ -17,11 +17,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+// This class have all the actions we can do to user
 
 public class UserManager {
-
     private static final String TAG = "DBUserManager";
-
 
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -29,9 +28,8 @@ public class UserManager {
     public static final String ROLE_TRAINER = "trainer";
     public static final String ROLE_TRAINEE = "trainee";
 
-    /**
-     * This function if for the manager. He adds user to the db by email address and role
-     */
+
+    // This function is for the manager. He adds user to the db by email address and role
     public Task<Void> createUser(String email, String role, String full_name) {
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
@@ -41,28 +39,15 @@ public class UserManager {
         email = email.toLowerCase();
 
         // Add a new document with user email ID
-        return db.collection("users").document(email)
-            .set(user) //add new user to db
-            .addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
-                @Override
-                public void onSuccess(Void documentReference) {
-                    Log.d(TAG,"DocumentSnapshot successfully written!");
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "Error adding document", e);
-                }
-            });
-    }
-    // Return the document=contain the role, by email(id= email) from the collection
-    public Task<DocumentSnapshot> getUserDoc(String email) {
-        DocumentReference u = db.collection("users").document(email);
-        Task<DocumentSnapshot> t = u.get();
-        return t;
+        return db.collection("users").document(email).set(user); //add new user to db
     }
 
+    // Return the document= contain the role, by email(id= email) from the collection
+    public Task<DocumentSnapshot> getUserDoc(String email) {
+        return db.collection("users").document(email).get();
+    }
+
+    // Return the email of the connected user
     public String getConnectedUserMail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
@@ -71,10 +56,12 @@ public class UserManager {
         return user.getEmail();
     }
 
+    // Delete user by email
     public Task<Void> deleteUser(String email) {
         return db.collection("users").document(email).delete();
     }
 
+    // Get all the users that exist by specific role
     public Task<QuerySnapshot> getUsersByRole(String role) {
         return db.collection("users")
                 .whereEqualTo("role", role)

@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gym.Manager.HomePageManager;
 import com.example.gym.auth.UserManager;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -33,7 +34,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.Arrays;
 import java.util.List;
 
-import Manager.HomePageManager;
 
 public class LoginActivity extends AppCompatActivity {
 
