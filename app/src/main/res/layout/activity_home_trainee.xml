@@ -16,58 +16,60 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/walkway"
+            android:background="#F2F2F2"
             android:text="address"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:fontFamily="@font/walkway"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.067"
+            app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.429" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintVertical_bias="0.143" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tusj"
             android:text="Welcome to  GYM"
             android:textColor="@color/black"
+            android:textColorHighlight="@color/black"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:fontFamily="@font/tusj"
-            android:textColorHighlight="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.135"
+            app:layout_constraintHorizontal_bias="0.019"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.376" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.076" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="420dp"
-            android:layout_height="281dp"
+            android:layout_width="553dp"
+            android:layout_height="274dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/gym"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-5dp"
-            tools:layout_editor_absoluteY="-1dp" />
+            tools:layout_editor_absoluteY="-4dp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/walkway"
             android:text="updates:"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:fontFamily="@font/walkway"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.527" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            app:layout_constraintVertical_bias="0.179" />
     </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"

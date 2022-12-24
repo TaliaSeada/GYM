@@ -23,5 +23,6 @@
     <string name="messages">Messages</string>
     <string name="logout">Logout</string>
     <string name="adding_a_workout_to_a_trainee">Adding a workout to a trainee</string>
+    <string name="phone_number">phone number</string>
 
 </resources>

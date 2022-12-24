@@ -13,6 +13,13 @@
         android:theme="@style/Theme.GYM"
         tools:targetApi="31">
         <activity
+            android:name=".ShowMessage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".HomePage"
             android:exported="false">
             <meta-data
@@ -56,13 +63,6 @@
         </activity>
         <activity
             android:name=".ResponseMessageTrainer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".sendMessage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -133,13 +133,6 @@
         </activity>
         <activity
             android:name=".HomePageTrainee"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ScheduleTrainee"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

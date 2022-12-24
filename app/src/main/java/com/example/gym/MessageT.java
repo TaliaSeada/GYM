@@ -14,6 +14,8 @@ import android.widget.SimpleAdapter;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,13 +30,14 @@ import java.util.Map;
 public class MessageT extends AppCompatActivity  {
     private static final String TAG = "DBMess";
     private ListView listView;
+    String email;
     final ArrayList<Map<String, object_message>> mess = new ArrayList<Map<String, object_message>>();
     SimpleAdapter adapter;
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public void addMess() {
+    public void addMess(String email) {
         // create exercise
         db.collection("message")
-                .whereIn("trainer", Arrays.asList("all" , "amit"))
+                .whereIn("trainer", Arrays.asList("all" , email))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -76,7 +79,10 @@ public class MessageT extends AppCompatActivity  {
         adapter = new SimpleAdapter(this, mess, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
         final ListView listview = (ListView) findViewById(R.id.list_message);
         listview.setAdapter(adapter);
-        addMess();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        email = user.getEmail();
+        addMess(email);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

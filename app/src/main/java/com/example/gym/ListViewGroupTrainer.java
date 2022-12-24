@@ -14,11 +14,11 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class ListViewGroupW extends ArrayAdapter<String> {
+public class ListViewGroupTrainer extends ArrayAdapter<String> {
     ArrayList<String> list;
     Context context;
 
-    public ListViewGroupW(Context context, ArrayList<String> items) {
+    public ListViewGroupTrainer(Context context, ArrayList<String> items) {
         super(context, R.layout.list_row, items);
         this.context = context;
         list = items;
@@ -39,7 +39,7 @@ public class ListViewGroupW extends ArrayAdapter<String> {
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GroupWorkout.removeItem(position);
+                    GroupWorkoutTrainer.removeItem(position);
                 }
             });
 
