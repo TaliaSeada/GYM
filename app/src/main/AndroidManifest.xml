@@ -97,7 +97,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".PrivateAreaTrainee"
+            android:name=".PrivateArea"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -105,13 +105,6 @@
         </activity>
         <activity
             android:name=".AddWorkoutTrainer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".PrivateAreaTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -3,49 +3,40 @@ package com.example.gym;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.gym.auth.UserManager;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
-import java.time.LocalDate;
-import java.time.Period;
-public class PrivateAreaTrainee extends AppCompatActivity {
+
+public class PrivateArea extends AppCompatActivity {
     //personal Details
     EditText input_firstTrainee;
     EditText input_lastTrainee;
     EditText input_weightTrainee;
     EditText input_ageTrainee;
     EditText input_heightTrainee;
+    EditText input_PhoneNumberPrefix;
     EditText input_PhoneNumber;
+
     Button Add;
     static String email;
 
@@ -70,9 +61,10 @@ public class PrivateAreaTrainee extends AppCompatActivity {
         personalDetails.put("height", height);
         personalDetails.put("weight", weight);
         personalDetails.put("age", age);
+        Log.e("MYAPP", "exception: " +email );
         personalDetails.put("phone number", phone);
-        db.collection("user-info").document(email).collection("PrivateArea")
-                .document("personalDetails").set(personalDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("user-info").document(email)
+                .set(personalDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
@@ -92,7 +84,7 @@ public class PrivateAreaTrainee extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_private_area_trainee);
+        setContentView(R.layout.activity_private_area);
         //
         email = user.getEmail();
         Add=findViewById(R.id.addP);
@@ -102,14 +94,28 @@ public class PrivateAreaTrainee extends AppCompatActivity {
         input_firstTrainee=findViewById(R.id.firstTrainee);
         input_lastTrainee=findViewById(R.id.lastTrainee);
         input_PhoneNumber=findViewById(R.id.editTextPhone);
-
+        input_PhoneNumberPrefix = findViewById(R.id.editTextPhonePrefix);
 
 
         Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String output_firstName = input_firstTrainee.getText().toString();
-                String output_lastName = input_lastTrainee.getText().toString();
+
+                String output_firstName;
+                try {
+                    output_firstName= input_firstTrainee.getText().toString();
+
+                } catch (Exception e) {
+                    output_firstName="";
+                }
+                String output_lastName;
+                try {
+                    output_lastName= input_lastTrainee.getText().toString();
+
+                } catch (Exception e) {
+                    output_lastName="";
+                }
+
                 double output_weight;
                 try{
                     output_weight = Double.parseDouble(input_weightTrainee.getText().toString());
@@ -128,8 +134,10 @@ public class PrivateAreaTrainee extends AppCompatActivity {
                 } catch (NumberFormatException e) {
                     output_age = 0;
                 }
+                String phone_prefix =  input_PhoneNumberPrefix.getText().toString();
+                String phone =  input_PhoneNumber.getText().toString();
 
-                String output_phone = input_PhoneNumber.getText().toString();
+                String output_phone = phone_prefix +phone ;
                 try{
                     addDetails(email, output_firstName, output_lastName, output_height ,output_weight, output_age, output_phone);
                 } catch (NullPointerException e){
@@ -140,7 +148,7 @@ public class PrivateAreaTrainee extends AppCompatActivity {
             }
         });
         //Connecting the data from Firebase to activity_private_area_trainee.xml
-        DocumentReference Reference= db.collection("user-info").document(email).collection("PrivateArea").document("personalDetails");
+        DocumentReference Reference= db.collection("user-info").document(email);
         Reference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -156,7 +164,10 @@ public class PrivateAreaTrainee extends AppCompatActivity {
                     double age = (Double) value.get("age");
                     String ageS=String.valueOf(age);
                     input_ageTrainee.setText(ageS);
-                    input_PhoneNumber.setText(value.getString("phone number"));
+                    String phoneDB = value.getString("phone number");
+                    input_PhoneNumberPrefix.setText(phoneDB.substring(0,3));
+                    input_PhoneNumber.setText(phoneDB.substring(4,10));
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

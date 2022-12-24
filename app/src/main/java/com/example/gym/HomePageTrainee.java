@@ -50,7 +50,7 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
                 startActivity(new Intent(getApplicationContext(), GroupWorkout.class));
             }
             else if (id == R.id.nav_personal_details){
-                startActivity(new Intent(getApplicationContext(), PrivateAreaTrainee.class));
+                startActivity(new Intent(getApplicationContext(), PrivateArea.class));
             }
             else if (id == R.id.nav_message){
                 startActivity(new Intent(getApplicationContext(), Messages.class));

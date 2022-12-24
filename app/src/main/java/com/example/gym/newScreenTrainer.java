@@ -55,13 +55,13 @@ public class newScreenTrainer extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainer.class));
             }
         });
-        Back = findViewById(R.id.imageBack);
-        Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), GroupWorkoutTrainer.class));
-            }
-        });
+//        Back = findViewById(R.id.imageBack);
+//        Back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext(), GroupWorkoutTrainer.class));
+//            }
+//        });
         loadContent();
 
 

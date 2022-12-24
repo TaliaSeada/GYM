@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,12 +28,13 @@ import java.util.Map;
 public class ResponseMessageTrainer extends AppCompatActivity {
     Button send;
     EditText mes;
+    TextView messT;
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     public void addMess(String id, String message, String email) {
         // Update an existing document
         DocumentReference docRef = db.collection("message").document(id);
 
-    // (async) Update one field
+        // (async) Update one field
         docRef.update("answer", message);
         docRef.update("trainer", email);
 
@@ -44,6 +46,10 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         setContentView(R.layout.activity_response_message_trainer);
         send = findViewById(R.id.sendResponse);
         mes = findViewById(R.id.messageResponse);
+        messT=findViewById(R.id.messageTrainee);
+        Intent MessageIntent=getIntent();
+        String MessageValue= MessageIntent.getStringExtra("key_sender");
+        messT.setText(MessageValue);
         //Get the bundle
         Bundle bundle = getIntent().getExtras();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -56,7 +62,7 @@ public class ResponseMessageTrainer extends AppCompatActivity {
             public void onClick(View view) {
                 String mess = mes.getText().toString();
                 addMess(stuff, mess, email);
-                finish();
+                startActivity(new Intent(getApplicationContext(), MessageT.class));
             }
         });
     }
