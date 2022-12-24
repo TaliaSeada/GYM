@@ -56,7 +56,7 @@ public class ResponseMessageTrainer extends AppCompatActivity {
             public void onClick(View view) {
                 String mess = mes.getText().toString();
                 addMess(stuff, mess, email);
-                startActivity(new Intent(getApplicationContext(), MessageT.class));
+                finish();
             }
         });
     }

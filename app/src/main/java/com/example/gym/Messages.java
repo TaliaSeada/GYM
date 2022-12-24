@@ -58,6 +58,7 @@ public class Messages extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(getApplicationContext(), Messages.class));
             }
         });

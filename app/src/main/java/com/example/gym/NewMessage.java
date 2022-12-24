@@ -78,8 +78,7 @@ public class NewMessage extends AppCompatActivity {
                 String mess = mes.getText().toString();
                 String title1 = title.getText().toString();
                 addMess(email, mess,title1);
-                startActivity(new Intent(getApplicationContext(), Messages.class));
-
+                finish();
             }
         });
     }
