@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,12 +24,16 @@ import java.util.Objects;
 
 public class AddNewWorkoutTrainee extends AppCompatActivity {
     EditText input_exe;
-    EditText input_set;
-    EditText input_weight;
-    EditText input_reps;
+    AppCompatTextView input_set;
+    AppCompatTextView input_weight;
+    AppCompatTextView input_reps;
+    static int minteger_sets;
+    static int minteger_reps;
+    static double minteger_weight;
     Button ADD;
     static String email;
     String Gworkout;
+
 
 
     private static final String TAG = "DBWorkOut";
@@ -85,6 +91,52 @@ public class AddNewWorkoutTrainee extends AppCompatActivity {
                 });
     }
 
+    public void increaseInteger_sets(View view) {
+        minteger_sets = minteger_sets + 1;
+        display_sets(minteger_sets);
+    }
+    public void decreaseInteger_sets(View view) {
+        minteger_sets = minteger_sets - 1;
+        display_sets(minteger_sets);
+    }
+    private void display_sets(int number) {
+        TextView displayInteger = (TextView) findViewById(R.id.integer_number_sets);
+        displayInteger.setText("" + number);
+    }
+    public void increaseInteger_reps(View view) {
+        minteger_reps = minteger_reps + 1;
+        display_reps(minteger_reps);
+    }
+    public void decreaseInteger_reps(View view) {
+        minteger_reps = minteger_reps - 1;
+        display_reps(minteger_reps);
+    }
+    private void display_reps(int number) {
+        TextView displayInteger = (TextView) findViewById(R.id.integer_number_reps);
+        displayInteger.setText("" + number);
+    }
+    public void increaseInteger_weight(View view) {
+        minteger_weight = minteger_weight + 1;
+        display_weight(minteger_weight);
+    }
+    public void decreaseInteger_weight(View view) {
+        minteger_weight = minteger_weight - 1;
+        display_weight(minteger_weight);
+    }
+    @SuppressLint("DefaultLocale")
+    private void display_weight(double number) {
+        TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
+        displayDouble.setText(String.format("%.1f" ,number));
+    }
+    public void increaseInteger_weight_(View view) {
+        minteger_weight = minteger_weight + 0.1;
+        display_weight(minteger_weight);
+    }
+    public void decreaseInteger_weight_(View view) {
+        minteger_weight = minteger_weight - 0.1;
+        display_weight(minteger_weight);
+    }
+
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
@@ -92,10 +144,13 @@ public class AddNewWorkoutTrainee extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_workout_trainee);
         ADD = findViewById(R.id.addWorkout);
-        input_reps = findViewById(R.id.reps);
-        input_set = findViewById(R.id.sets);
-        input_weight = findViewById(R.id.weight);
+        input_reps = findViewById(R.id.integer_number_reps);
+        input_set = findViewById(R.id.integer_number_sets);
+        input_weight = findViewById(R.id.integer_number_weight);
         input_exe = findViewById(R.id.editWorkout);
+        minteger_sets = 0;
+        minteger_reps = 0;
+        minteger_weight = 0.0;
 
         email = user.getEmail();
 
