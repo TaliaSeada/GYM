@@ -23,7 +23,7 @@
     <string name="workouts">Workouts</string>
     <string name="messages">Messages</string>
     <string name="logout">Logout</string>
-    <string name="adding_a_workout_to_a_trainee">Adding a workout to a trainee</string>
+    <string name="add_workout_to_trainee">Add Workout To Trainee</string>
     <string name="phone_number">phone number</string>
     <string name="manage_trainers">Manage Trainers</string>
     <string name="manage_trainees">Manage Trainees</string>

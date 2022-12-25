@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
+/***
+ * this class is an implement for the grid adapter we used in the GroupWorkout class
+ */
 public class ListViewGroupW extends ArrayAdapter<String> {
     ArrayList<String> list;
     Context context;
@@ -36,6 +39,7 @@ public class ListViewGroupW extends ArrayAdapter<String> {
             TextView name = converView.findViewById(R.id.name);
             name.setText(list.get(position));
             ImageView remove = converView.findViewById(R.id.remove);
+            // defines the remove click
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

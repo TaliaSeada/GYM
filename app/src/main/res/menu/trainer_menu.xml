@@ -18,7 +18,7 @@
         <item
             android:id="@+id/nav_add_train"
             android:icon="@drawable/ic_playlist_add"
-            android:title="@string/adding_a_workout_to_a_trainee" />
+            android:title="@string/add_workout_to_trainee" />
 
     </group>
 

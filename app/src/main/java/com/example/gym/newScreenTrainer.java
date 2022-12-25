@@ -25,29 +25,32 @@ import java.util.Map;
 import java.util.Objects;
 
 public class newScreenTrainer extends AppCompatActivity {
+    // set toast
+    Toast t;
+    // set fields for data display
     static GridView listView;
     static String nameExe;
-
     ImageView add;
-    ImageView Back;
-    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
-
     private static List<String> items = new ArrayList<>();
     final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
     SimpleAdapter adap;
-
-    private static final String TAG = "WorkOuts";
+    // get relevant trainee email
+    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
+    // get firebase instance
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        loadContent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_screen_w);
+        // load content from firebase
+        loadContent();
+        // set the exercises list
         listView = findViewById(R.id.grid_exe);
         items = new ArrayList<>();
 
+        // set add button action
         add = findViewById(R.id.imageMenu);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,25 +58,8 @@ public class newScreenTrainer extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainer.class));
             }
         });
-//        Back = findViewById(R.id.imageBack);
-//        Back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), GroupWorkoutTrainer.class));
-//            }
-//        });
-        loadContent();
 
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = items.get(i);
-                makeToast(name);
-            }
-        });
-
-
+        // set action for the exercises list
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -85,6 +71,10 @@ public class newScreenTrainer extends AppCompatActivity {
 
     }
 
+    /***
+     * this function load the relevant content from the firebase
+     * to the lists we created in order to show it in the app screen.
+     ***/
     public void loadContent() {
         db.collection("user-info").document(Objects.requireNonNull(email))
                 .collection("workouts").document(GroupWorkoutTrainer.nameTR)
@@ -114,8 +104,10 @@ public class newScreenTrainer extends AppCompatActivity {
 
     }
 
-    Toast t;
-
+    /***
+     * this function raises a massage to the screen
+     * @param s the massage we want to write on the screen
+     */
     private void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);

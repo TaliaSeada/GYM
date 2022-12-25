@@ -1,6 +1,7 @@
 package com.example.gym;
 
 public class exe_object {
+    // set fields
     String name;
     Long reps;
     Long sets;
