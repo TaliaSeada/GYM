@@ -24,8 +24,6 @@ public class ShowMessage extends AppCompatActivity {
         Intent MessageIntent=getIntent();
         String [] MessageValue=MessageIntent.getStringArrayExtra("key_sender");
         Message.setText(MessageValue[0]);
-//        Intent AnswerIntent=getIntent();
-//        String AnswerValue=AnswerIntent.getStringExtra("key_answer");
         Answer.setText(MessageValue[1]);
         allMessage.setOnClickListener(new View.OnClickListener() {
             @Override

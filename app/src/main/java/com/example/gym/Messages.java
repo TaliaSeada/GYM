@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,10 +20,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 
 public class Messages extends AppCompatActivity {
     private static final String TAG = "DBMess";
+    //Defining datasets for extracting the information
     static ListView listView;
     String email;
     ArrayList<String> title_array = new ArrayList<String>();
@@ -33,6 +32,7 @@ public class Messages extends AppCompatActivity {
     ArrayList<String> sub_array = new ArrayList<String>();
     ArrayList<Integer> image_array = new ArrayList<Integer>();
     ArrayList<String> answer_array = new ArrayList<String>();
+
     ImageView add;
     ImageView refresh;
 
@@ -46,15 +46,19 @@ public class Messages extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         email = user.getEmail();
-        add = findViewById(R.id.imageAdd);
         addMess(email);
-        refresh = findViewById(R.id.imageRefresh);
+
+        //Added a new message
+        add = findViewById(R.id.imageAdd);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), NewMessage.class));
             }
         });
+
+        //data refresh
+        refresh = findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,19 +66,19 @@ public class Messages extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Messages.class));
             }
         });
+
+        //Data transfer between departments
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent senderIntent = new Intent(Messages.this, ShowMessage.class);
                 senderIntent.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos)});
-                Intent answerIntent = new Intent(Messages.this, ShowMessage.class);
-                answerIntent.putExtra("key_answer",answer_array.get(pos));
-
                 startActivity(senderIntent);
-//                startActivity(answerIntent);
             }
         });
     }
+
+    //connection to Firebase
     public void addMess(String email) {
         db.collection("message")
                 .whereEqualTo("trainee", email).
@@ -87,6 +91,7 @@ public class Messages extends AppCompatActivity {
                         sub_array.clear();
                         assert documentSnapshots != null;
                         for (DocumentSnapshot snapshot : documentSnapshots) {
+                            //Adding the data to the array
                             String title = (String) snapshot.getData().get("title");
                             title_array.add(title);
                             String id = snapshot.getId();
@@ -97,6 +102,8 @@ public class Messages extends AppCompatActivity {
                             message_array.add(b);
                             String a = (String) snapshot.getData().get("answer");
                             answer_array.add(a);
+
+                            //Indicates whether a new message has been received
                             if (a.isEmpty()){
                                 image_array.add(R.drawable.ic_mail);
                             }
@@ -134,19 +141,16 @@ public class Messages extends AppCompatActivity {
             return 0;
         }
 
+        //Representation of the data in the app
         @SuppressLint({"ResourceType", "ViewHolder", "InflateParams"})
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.activity_list_my_item,null);
+            view = getLayoutInflater().inflate(R.layout.activity_my_item,null);
             TextView titleMess = view.findViewById(R.id.titleMess);
-//            TextView subTitle = view.findViewById(R.id.subTitle);
-            // TextView Messages = view.findViewById(R.id.Messages);
             TextView dateMess = view.findViewById(R.id.dateMess);
             ImageView imageViewMail = view.findViewById(R.id.newMail);
             titleMess.setText(title_array.get(i));
-//            subTitle.setText(sub_array.get(i));
-             imageViewMail.setImageResource(image_array.get(i));
-            //Messages.setText(message_array.get(i));
+            imageViewMail.setImageResource(image_array.get(i));
             dateMess.setText(date_array.get(i));
             return view;
         }

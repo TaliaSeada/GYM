@@ -10,33 +10,47 @@
         android:id="@+id/reciveMessage"
         android:layout_width="392dp"
         android:layout_height="267dp"
+        android:background="@drawable/my_frame"
+        android:gravity="center"
         android:hint="@string/messages"
         android:textColorHint="@color/black"
         android:textSize="20dp"
-        android:gravity="center"
-        android:background="@drawable/my_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.159" />
+        app:layout_constraintVertical_bias="0.299" />
+
+    <TextView
+        android:id="@+id/TrinerResponse"
+        android:layout_width="180dp"
+        android:layout_height="25dp"
+        android:hint="Response Trainer:"
+        android:textColorHint="@color/black"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.017"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.617" />
 
     <TextView
         android:id="@+id/answerMessage"
         android:layout_width="395dp"
         android:layout_height="84dp"
-        android:hint="answer"
-        android:textSize="20dp"
-        android:gravity="center"
         android:background="@drawable/my_frame"
+        android:gravity="center"
+        android:hint="Not yet answered"
         android:textColorHint="@color/black"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558" />
+        app:layout_constraintVertical_bias="0.729" />
 
     <Button
         android:id="@+id/AllMesssage"
@@ -48,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.704"
+        app:layout_constraintVertical_bias="0.852"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
