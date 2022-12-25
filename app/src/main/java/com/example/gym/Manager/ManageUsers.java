@@ -58,7 +58,7 @@ public class ManageUsers extends AppCompatActivity {
                             user.put("fullname", (String) document.getData().get("full_name"));
                             users.add(user);
                         }
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged(); // adapter do refresh to the data
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
@@ -85,11 +85,11 @@ public class ManageUsers extends AppCompatActivity {
                 break;
         }
         // match the users name and email to the screen
-        final String[] fromMapKey = new String[] {"fullname", "email"};
+        final String[] fromMapKey = new String[] {"fullname", "email"}; // the list of the clients
         final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
         adapter = new SimpleAdapter(this, users, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
 
-        final ListView listview = (ListView) findViewById(R.id.list_users);
+        final ListView listview = (ListView) findViewById(R.id.list_users); //the list from xml
         listview.setAdapter(adapter);
         updateUsersList();
 

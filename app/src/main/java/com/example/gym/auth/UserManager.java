@@ -42,12 +42,12 @@ public class UserManager {
         return db.collection("users").document(email).set(user); //add new user to db
     }
 
-    // Return the document= contain the role, by email(id= email) from the collection
+    // Return the document= contain the role&full name, by email(id= email) from the collection
     public Task<DocumentSnapshot> getUserDoc(String email) {
         return db.collection("users").document(email).get();
     }
 
-    // Return the email of the connected user
+    // Return the email of the connected user from fb auth
     public String getConnectedUserMail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
