@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,9 +26,9 @@ import java.util.Objects;
 
 public class exeUpdateTrainer extends AppCompatActivity {
     TextView input_exe;
-    EditText input_set;
-    EditText input_weight;
-    EditText input_reps;
+    AppCompatTextView input_set;
+    AppCompatTextView input_weight;
+    AppCompatTextView input_reps;
     Button UPDATE;
     Button DELETE;
     String Gworkout;
@@ -41,6 +41,52 @@ public class exeUpdateTrainer extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
+
+    public void increaseInteger_sets(View view) {
+        sets = sets + 1;
+        display_sets(sets);
+    }
+    public void decreaseInteger_sets(View view) {
+        sets = sets - 1;
+        display_sets(sets);
+    }
+    private void display_sets(Long number) {
+        TextView displayInteger = (TextView) findViewById(R.id.integer_number_sets);
+        displayInteger.setText("" + number);
+    }
+    public void increaseInteger_reps(View view) {
+        reps = reps + 1;
+        display_reps(reps);
+    }
+    public void decreaseInteger_reps(View view) {
+        reps = reps - 1;
+        display_reps(reps);
+    }
+    private void display_reps(Long number) {
+        TextView displayInteger = (TextView) findViewById(R.id.integer_number_reps);
+        displayInteger.setText("" + number);
+    }
+    public void increaseInteger_weight(View view) {
+        weight = weight + 1;
+        display_weight(weight);
+    }
+    public void decreaseInteger_weight(View view) {
+        weight = weight - 1;
+        display_weight(weight);
+    }
+    @SuppressLint("DefaultLocale")
+    private void display_weight(double number) {
+        TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
+        displayDouble.setText(String.format("%.1f" ,number));
+    }
+    public void increaseInteger_weight_(View view) {
+        weight = weight + 0.1;
+        display_weight(weight);
+    }
+    public void decreaseInteger_weight_(View view) {
+        weight = weight - 0.1;
+        display_weight(weight);
+    }
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
@@ -95,7 +141,7 @@ public class exeUpdateTrainer extends AppCompatActivity {
                 .collection("workouts").document(GroupWorkoutTrainer.nameTR)
                 .collection("exercises").document(newScreenTrainer.nameExe).
                 addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
-                    @SuppressLint("SetTextI18n")
+                    @SuppressLint({"SetTextI18n", "WrongViewCast"})
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -111,13 +157,13 @@ public class exeUpdateTrainer extends AppCompatActivity {
                         } else {
                             Log.d(TAG, "Current data: null");
                         }
-                        input_reps = findViewById(R.id.reps);
+                        input_reps = findViewById(R.id.integer_number_reps);
                         input_reps.setText(reps + "");
 
-                        input_set = findViewById(R.id.sets);
+                        input_set = findViewById(R.id.integer_number_sets);
                         input_set.setText(sets + "");
 
-                        input_weight = findViewById(R.id.weight);
+                        input_weight = findViewById(R.id.integer_number_weight);
                         input_weight.setText(weight + "");
 
                         input_exe = findViewById(R.id.titleExe);

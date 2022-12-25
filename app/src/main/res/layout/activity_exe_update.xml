@@ -18,6 +18,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.101" />
 
+    <!--    <EditText-->
+<!--        android:id="@+id/sets"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.865"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.244" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/reps"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.865"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.389" />-->
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="117dp"
@@ -28,33 +54,50 @@
         app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.262" />
+        app:layout_constraintVertical_bias="0.266" />
 
-    <EditText
-        android:id="@+id/sets"
+    <Button
+        android:id="@+id/decrease_sets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
+        android:onClick="decreaseInteger_sets"
+        android:text="-"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.257"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
 
-    <EditText
-        android:id="@+id/reps"
+    <TextView
+        android:id="@+id/integer_number_sets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
+        android:text="0"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.389" />
+        app:layout_constraintVertical_bias="0.248"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/increase_sets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="increaseInteger_sets"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.257"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
 
     <TextView
         android:id="@+id/textView4"
@@ -67,19 +110,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.38" />
-
-    <EditText
-        android:id="@+id/weight"
+    <Button
+        android:id="@+id/decrease_reps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
+        android:onClick="decreaseInteger_reps"
+        android:text="-"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.546" />
+        app:layout_constraintVertical_bias="0.39"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
+    <TextView
+        android:id="@+id/integer_number_reps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/increase_reps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="increaseInteger_reps"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
+
+<!--    <EditText-->
+<!--        android:id="@+id/weight"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="numberDecimal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.92"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.546" />-->
 
     <TextView
         android:id="@+id/textView5"
@@ -92,6 +175,73 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.534" />
+    <Button
+        android:id="@+id/decrease_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="decreaseInteger_weight"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.534"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
+    <TextView
+        android:id="@+id/integer_number_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.0"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.535"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/increase_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="increaseInteger_weight"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.534"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
+    <Button
+        android:id="@+id/decrease_weight2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="decreaseInteger_weight_"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.604"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
+    <Button
+        android:id="@+id/increase_weight2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="increaseInteger_weight_"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.604"
+        tools:ignore="MissingConstraints,UsingOnClickInXml" />
+
 
     <Button
         android:id="@+id/updateExe"
