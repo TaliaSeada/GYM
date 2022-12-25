@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,14 +30,12 @@ import java.util.Map;
 
 public class PrivateArea extends AppCompatActivity {
     //personal Details
-    EditText input_firstTrainee;
-    EditText input_lastTrainee;
     EditText input_weightTrainee;
     EditText input_ageTrainee;
     EditText input_heightTrainee;
     EditText input_PhoneNumberPrefix;
     EditText input_PhoneNumber;
-
+    TextView full_name_text;
     Button Add;
     static String email;
 
@@ -54,10 +53,8 @@ public class PrivateArea extends AppCompatActivity {
         return 0;
     }
     //create in  Firebase
-    public void addDetails(String email,String firstName, String lastName, double height, double weight,double age, String phone) {
+    public void addDetails(String email, double height, double weight,double age, String phone) {
         Map<String, Object> personalDetails = new HashMap<>();
-        personalDetails.put("first name", firstName);
-        personalDetails.put("last name", lastName);
         personalDetails.put("height", height);
         personalDetails.put("weight", weight);
         personalDetails.put("age", age);
@@ -91,30 +88,13 @@ public class PrivateArea extends AppCompatActivity {
         input_ageTrainee=findViewById(R.id.ageTrainee);
         input_heightTrainee=findViewById(R.id.heightTrainee);
         input_weightTrainee=findViewById(R.id.weightTrainee);
-        input_firstTrainee=findViewById(R.id.firstTrainee);
-        input_lastTrainee=findViewById(R.id.lastTrainee);
         input_PhoneNumber=findViewById(R.id.editTextPhone);
         input_PhoneNumberPrefix = findViewById(R.id.editTextPhonePrefix);
-
+        full_name_text= findViewById(R.id.textViewName);
 
         Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String output_firstName;
-                try {
-                    output_firstName= input_firstTrainee.getText().toString();
-
-                } catch (Exception e) {
-                    output_firstName="";
-                }
-                String output_lastName;
-                try {
-                    output_lastName= input_lastTrainee.getText().toString();
-
-                } catch (Exception e) {
-                    output_lastName="";
-                }
 
                 double output_weight;
                 try{
@@ -139,7 +119,7 @@ public class PrivateArea extends AppCompatActivity {
 
                 String output_phone = phone_prefix +phone ;
                 try{
-                    addDetails(email, output_firstName, output_lastName, output_height ,output_weight, output_age, output_phone);
+                    addDetails(email, output_height ,output_weight, output_age, output_phone);
                 } catch (NullPointerException e){
                     e.printStackTrace();
                 }
@@ -153,8 +133,6 @@ public class PrivateArea extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 try {
-                    input_firstTrainee.setText(value.getString("first name"));
-                    input_lastTrainee.setText(value.getString("last name"));
                     double height = (Double) value.get("height");
                     String heightS=String.valueOf(height);
                     input_heightTrainee.setText(heightS);
@@ -167,8 +145,6 @@ public class PrivateArea extends AppCompatActivity {
                     String phoneDB = value.getString("phone number");
                     input_PhoneNumberPrefix.setText(phoneDB.substring(0,3));
                     input_PhoneNumber.setText(phoneDB.substring(4,10));
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -176,6 +152,18 @@ public class PrivateArea extends AppCompatActivity {
             }
         });
 
+        DocumentReference name= db.collection("users").document(email);
+        name.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                try {
+                    String fullName = (String) value.get("full_name");
+                    full_name_text.setText(fullName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        });
     }
 }
