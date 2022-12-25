@@ -22,28 +22,27 @@
 
     <TextView
         android:id="@+id/messageTrainee"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="163dp"
         android:background="@drawable/my_frame"
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:text="message Trainee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center"
         app:layout_constraintVertical_bias="0.338" />
 
     <EditText
-        android:id="@+id/messageResponse"
+        android:id="@+id/answerTrainer"
         android:layout_width="300dp"
         android:layout_height="140dp"
         android:background="@drawable/my_frame"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Replay"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
