@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.gym.auth.UserManager;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -54,8 +54,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
             startActivity(new Intent(getApplicationContext(), AddWorkoutTrainer.class));
         }
         else if (id== R.id.nav_logout){
-            UserManager userManager = new UserManager();
-            userManager.signOutUser();
+            AuthUI.getInstance().signOut(this);
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 

@@ -15,7 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.LoginActivity;
 import com.example.gym.R;
-import com.example.gym.auth.UserManager;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,8 +85,7 @@ public class HomePageManager extends AppCompatActivity implements NavigationView
                 break;
             }
             case R.id.nav_logout: {
-                UserManager userManager = new UserManager();
-                userManager.signOutUser();
+                AuthUI.getInstance().signOut(this);
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             }

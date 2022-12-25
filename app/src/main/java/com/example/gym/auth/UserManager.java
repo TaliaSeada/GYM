@@ -68,8 +68,4 @@ public class UserManager {
                 .get();
     }
 
-    public void signOutUser() {
-        FirebaseAuth.getInstance().signOut();
-    }
-
 }
