@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -54,8 +56,12 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
             startActivity(new Intent(getApplicationContext(), AddWorkoutTrainer.class));
         }
         else if (id== R.id.nav_logout){
-            AuthUI.getInstance().signOut(this);
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
+            });
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

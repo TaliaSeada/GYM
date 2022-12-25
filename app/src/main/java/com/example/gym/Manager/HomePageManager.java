@@ -16,6 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.gym.LoginActivity;
 import com.example.gym.R;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,8 +87,12 @@ public class HomePageManager extends AppCompatActivity implements NavigationView
                 break;
             }
             case R.id.nav_logout: {
-                AuthUI.getInstance().signOut(this);
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    }
+                });
                 break;
             }
         }
