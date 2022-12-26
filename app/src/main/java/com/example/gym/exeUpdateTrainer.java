@@ -45,7 +45,7 @@ public class exeUpdateTrainer extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     // get relevant trainee email
-    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
+    String email = Objects.requireNonNull(getTrainee.nameTR);
 
     /***
      * the following functions are for the exercise creation and update
@@ -127,7 +127,7 @@ public class exeUpdateTrainer extends AppCompatActivity {
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
                 try {
-                    Gworkout = GroupWorkoutTrainer.nameTR;
+                    Gworkout = WorkoutListTrainer.nameTR;
                     UpdateExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast("Updated Successfully");
                 } catch (NullPointerException e) {
@@ -146,7 +146,7 @@ public class exeUpdateTrainer extends AppCompatActivity {
             public void onClick(View view) {
                 String exercise = input_exe.getText().toString();
                 try {
-                    Gworkout = GroupWorkoutTrainer.nameTR;
+                    Gworkout = WorkoutListTrainer.nameTR;
                     DeleteExe(email, Gworkout, exercise);
                     makeToast("Deleted Successfully");
                 } catch (NullPointerException e) {
@@ -167,8 +167,8 @@ public class exeUpdateTrainer extends AppCompatActivity {
      ***/
     public void loadContent() {
         db.collection("user-info").document(Objects.requireNonNull(email))
-                .collection("workouts").document(GroupWorkoutTrainer.nameTR)
-                .collection("exercises").document(newScreenTrainer.nameExe).
+                .collection("workouts").document(WorkoutListTrainer.nameTR)
+                .collection("exercises").document(ExerciseListTrainer.nameExe).
                 addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
                     @SuppressLint({"SetTextI18n", "WrongViewCast"})
                     @Override
@@ -197,7 +197,7 @@ public class exeUpdateTrainer extends AppCompatActivity {
                         input_weight.setText(weight + "");
 
                         input_exe = findViewById(R.id.titleExe);
-                        input_exe.setText(newScreenTrainer.nameExe);
+                        input_exe.setText(ExerciseListTrainer.nameExe);
                     }
                 });
     }

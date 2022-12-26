@@ -197,7 +197,7 @@ public class AddNewWorkoutTrainee extends AppCompatActivity {
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
                 try {
-                    Gworkout = GroupWorkout.nameTR;
+                    Gworkout = WorkoutList.nameTR;
                     // add the exercise to firebase
                     addExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast(exercise + " Added Successfully");

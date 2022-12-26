@@ -23,7 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddWorkoutTrainer extends AppCompatActivity {
+public class getTrainee extends AppCompatActivity {
     // create list to save the content read from firebase
     private static final List<String> items = new ArrayList<>();
     static ListView listView;
@@ -37,7 +37,7 @@ public class AddWorkoutTrainer extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_workout_trainer);
+        setContentView(R.layout.activity_get_trainee);
         // load content from firebase
         listView = findViewById(R.id.list);
         loadContent();
@@ -46,7 +46,7 @@ public class AddWorkoutTrainer extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(AddWorkoutTrainer.this, GroupWorkoutTrainer.class);
+                Intent i = new Intent(getTrainee.this, WorkoutListTrainer.class);
                 startActivity(i);
                 nameTR = items.get(pos);
             }

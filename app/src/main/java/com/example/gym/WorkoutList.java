@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,29 +23,28 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GroupWorkoutTrainer extends AppCompatActivity {
+public class WorkoutList extends AppCompatActivity {
     // set toast
     Toast t;
     // set fields for data display
     EditText input;
     ImageView add;
     static GridView listView;
-    static ListViewGroupTrainer adapter;
+    static ListViewGroupW adapter;
     static String nameTR;
-    private static final ArrayList<String> items = new ArrayList<>();
-    // get relevant trainee email
-    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
-    // get firebase instance
+    private static final ArrayList<String> items = new ArrayList<String>();
+    // get firebase instances
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_workout);
+        setContentView(R.layout.activity_workout_list);
         // set list adapter
-        adapter = new ListViewGroupTrainer(GroupWorkoutTrainer.this, items);
+        adapter = new ListViewGroupW(WorkoutList.this, items);
         listView = findViewById(R.id.grid_workout);
         // get text
         input = findViewById(R.id.Input);
@@ -55,7 +56,7 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(GroupWorkoutTrainer.this, newScreenTrainer.class);
+                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
                 startActivity(i);
                 nameTR = items.get(pos);
             }
@@ -68,7 +69,7 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     String text = input.getText().toString();
-                    AddNewWorkoutTrainee.addWO(email, text);
+                    AddNewWorkoutTrainee.addWO(user.getEmail(), text);
                     input.setText("");
                     makeToast(text + " Added Successfully");
                     // reload content to show the new workout
@@ -86,6 +87,7 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
      * to the list we created in order to show it in the app screen.
      ***/
     public void loadContent() {
+        String email = Objects.requireNonNull(user.getEmail());
         db.collection("user-info").document(email)
                 .collection("workouts")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -108,14 +110,12 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
      */
     public static void removeItem(int remove) {
         try {
-            String rem = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
-            db.collection("user-info").document(Objects.requireNonNull(rem))
+            db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
                     .collection("workouts").document(items.get(remove)).delete();
             listView.setAdapter(adapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /***
@@ -127,5 +127,4 @@ public class GroupWorkoutTrainer extends AppCompatActivity {
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }
-
 }

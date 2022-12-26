@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class newScreenTrainer extends AppCompatActivity {
+public class ExerciseList extends AppCompatActivity {
     // set toast
     Toast t;
     // set fields for data display
@@ -34,16 +36,15 @@ public class newScreenTrainer extends AppCompatActivity {
     private static List<String> items = new ArrayList<>();
     final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
     SimpleAdapter adap;
-    // get relevant trainee email
-    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
-    // get firebase instance
+    // get firebase instances
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_screen_w);
+        setContentView(R.layout.activity_exercise_list);
         // load content from firebase
         loadContent();
         // set the exercises list
@@ -55,7 +56,7 @@ public class newScreenTrainer extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainer.class));
+                startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainee.class));
             }
         });
 
@@ -63,12 +64,11 @@ public class newScreenTrainer extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(newScreenTrainer.this, exeUpdateTrainer.class);
+                Intent i = new Intent(ExerciseList.this, exeUpdate.class);
                 startActivity(i);
                 nameExe = items.get(pos);
             }
         });
-
     }
 
     /***
@@ -76,8 +76,8 @@ public class newScreenTrainer extends AppCompatActivity {
      * to the lists we created in order to show it in the app screen.
      ***/
     public void loadContent() {
-        db.collection("user-info").document(Objects.requireNonNull(email))
-                .collection("workouts").document(GroupWorkoutTrainer.nameTR)
+        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+                .collection("workouts").document(WorkoutList.nameTR)
                 .collection("exercises")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -97,11 +97,10 @@ public class newScreenTrainer extends AppCompatActivity {
                         }
                         String[] from = {"exercise"};
                         int[] to = {R.id.exe};
-                        adap = new SimpleAdapter(newScreenTrainer.this, show, R.layout.grid_layout, from, to);
+                        adap = new SimpleAdapter(ExerciseList.this, show, R.layout.grid_layout, from, to);
                         listView.setAdapter(adap);
                     }
                 });
-
     }
 
     /***

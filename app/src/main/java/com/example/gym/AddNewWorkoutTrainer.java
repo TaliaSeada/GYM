@@ -33,7 +33,7 @@ public class AddNewWorkoutTrainer extends AppCompatActivity {
     // set button for adding new data to firebase
     Button ADD;
     // get relevant user email
-    String email = Objects.requireNonNull(AddWorkoutTrainer.nameTR);
+    String email = Objects.requireNonNull(getTrainee.nameTR);
     // get firebase instance
     private static final String TAG = "DBWorkOut";
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -164,7 +164,7 @@ public class AddNewWorkoutTrainer extends AppCompatActivity {
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
                 try {
-                    Gworkout = GroupWorkoutTrainer.nameTR;
+                    Gworkout = WorkoutListTrainer.nameTR;
                     // add the exercise to firebase
                     addExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast(exercise + " Added Successfully");

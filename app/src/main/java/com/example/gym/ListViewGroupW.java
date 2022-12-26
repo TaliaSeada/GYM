@@ -43,7 +43,7 @@ public class ListViewGroupW extends ArrayAdapter<String> {
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GroupWorkout.removeItem(position);
+                    WorkoutList.removeItem(position);
                 }
             });
 

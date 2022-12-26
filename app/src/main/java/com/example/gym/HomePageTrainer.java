@@ -9,7 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,7 +59,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
             startActivity(new Intent(getApplicationContext(), MessageT.class));
         }
         else if (id == R.id.nav_add_train){
-            startActivity(new Intent(getApplicationContext(), AddWorkoutTrainer.class));
+            startActivity(new Intent(getApplicationContext(), getTrainee.class));
         }
         else if (id== R.id.nav_logout){
             AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {

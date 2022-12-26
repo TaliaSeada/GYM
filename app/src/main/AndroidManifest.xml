@@ -34,14 +34,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".newScreenTrainer"
+            android:name=".ExerciseListTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".GroupWorkoutTrainer"
+            android:name=".WorkoutListTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -62,7 +62,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".newScreenW"
+            android:name=".ExerciseList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -104,7 +104,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddWorkoutTrainer"
+            android:name=".getTrainee"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -125,7 +125,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".GroupWorkout"
+            android:name=".WorkoutList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

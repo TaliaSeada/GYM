@@ -131,7 +131,7 @@ public class exeUpdate extends AppCompatActivity {
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
                 try {
-                    Gworkout = GroupWorkout.nameTR;
+                    Gworkout = WorkoutList.nameTR;
                     UpdateExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast("Updated Successfully");
                 } catch (NullPointerException e) {
@@ -150,7 +150,7 @@ public class exeUpdate extends AppCompatActivity {
             public void onClick(View view) {
                 String exercise = input_exe.getText().toString();
                 try {
-                    Gworkout = GroupWorkout.nameTR;
+                    Gworkout = WorkoutList.nameTR;
                     DeleteExe(email, Gworkout, exercise);
                     makeToast("Deleted Successfully");
                 } catch (NullPointerException e) {
@@ -171,8 +171,8 @@ public class exeUpdate extends AppCompatActivity {
      ***/
     public void loadContent() {
         db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
-                .collection("workouts").document(GroupWorkout.nameTR)
-                .collection("exercises").document(newScreenW.nameExe).
+                .collection("workouts").document(WorkoutList.nameTR)
+                .collection("exercises").document(ExerciseList.nameExe).
                 addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
                     @SuppressLint({"SetTextI18n", "WrongViewCast"})
                     @Override
@@ -202,7 +202,7 @@ public class exeUpdate extends AppCompatActivity {
                         input_weight.setText(weight + "");
 
                         input_exe = findViewById(R.id.titleExe);
-                        input_exe.setText(newScreenW.nameExe);
+                        input_exe.setText(ExerciseList.nameExe);
                     }
                 });
     }
