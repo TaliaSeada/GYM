@@ -20,7 +20,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
     /**
      * This class is responsible for the trainer's main page.
      * this class contains a menu in which there are transitions to add train for trainee,
-     * personal information, a system of inquiries and disconnection
+     * a system of inquiries and disconnection
      * */
     ActionBarDrawerToggle toggle;
 
@@ -52,10 +52,11 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_personal_details){
-          startActivity(new Intent(getApplicationContext(), PrivateArea.class));
-        }
-        else if (id == R.id.nav_message){
+//        if (id == R.id.nav_personal_details){
+//          startActivity(new Intent(getApplicationContext(), PrivateArea.class));
+//        }
+//        else
+         if (id == R.id.nav_message){
             startActivity(new Intent(getApplicationContext(), MessageT.class));
         }
         else if (id == R.id.nav_add_train){
