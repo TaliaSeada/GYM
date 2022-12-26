@@ -28,7 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * This class is the trainee,
+ * can send message to the trainer
+ * **/
 public class NewMessage extends AppCompatActivity {
     private static final String TAG = "DBMess";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -38,14 +41,34 @@ public class NewMessage extends AppCompatActivity {
     String email;
 
 
-        public void addMess(String email, String message , String title) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_message);
+        send = (Button) findViewById(R.id.send);
+        mes = (EditText) findViewById(R.id.message);
+        title = (EditText) findViewById(R.id.title);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user.getEmail();
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mess = mes.getText().toString();
+                String title1 = title.getText().toString();
+                addMess(email, mess,title1);
+                finish();
+            }
+        });
+    }
+    public void addMess(String email, String message , String title) {
         Map<String, Object> message_map = new HashMap<>();
-            message_map.put("trainee", email);
-            message_map.put("trainer", "all");
-            message_map.put("message", message);
-            message_map.put("answer", "");
-            message_map.put("title", title);
-            message_map.put("date", Calendar.getInstance().getTime());
+        message_map.put("trainee", email);
+        message_map.put("trainer", "all");
+        message_map.put("message", message);
+        message_map.put("answer", "");
+        message_map.put("title", title);
+        message_map.put("date", Calendar.getInstance().getTime());
         db.collection("message")
                 .document()
                 .set(message_map).
@@ -62,24 +85,5 @@ public class NewMessage extends AppCompatActivity {
                     }
                 });
     }
-    @SuppressLint("MissingInflatedId")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_message);
-        send = findViewById(R.id.send);
-        mes = findViewById(R.id.message);
-        title = findViewById(R.id.title);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        email = user.getEmail();
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String mess = mes.getText().toString();
-                String title1 = title.getText().toString();
-                addMess(email, mess,title1);
-                finish();
-            }
-        });
-    }
 }
+

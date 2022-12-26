@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Messages extends AppCompatActivity {
+    /**
+     * This class is an application system where the trainee,
+     * can send an application to the trainers
+     * **/
     private static final String TAG = "DBMess";
     //Defining datasets for extracting the information
     static ListView listView;
@@ -37,19 +41,18 @@ public class Messages extends AppCompatActivity {
     ImageView refresh;
 
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    @SuppressLint({"MissingInflatedId", "CutPasteId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_messages);
-        listView = findViewById(R.id.list_message);
+        listView =(ListView) findViewById(R.id.list_message);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         email = user.getEmail();
         addMess(email);
 
         //Added a new message
-        add = findViewById(R.id.imageAdd);
+        add = (ImageView) findViewById(R.id.imageAdd);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +61,7 @@ public class Messages extends AppCompatActivity {
         });
 
         //data refresh
-        refresh = findViewById(R.id.imageRefresh);
+        refresh = (ImageView) findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +70,7 @@ public class Messages extends AppCompatActivity {
             }
         });
 
-        //Data transfer between departments
+        //Data transfer between actions
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -94,17 +97,15 @@ public class Messages extends AppCompatActivity {
                             //Adding the data to the array
                             String title = (String) snapshot.getData().get("title");
                             title_array.add(title);
-                            String id = snapshot.getId();
-                            String s = (String) snapshot.getData().get("trainee");
-                            String r = (String) snapshot.getData().get("trainer");
-                            sub_array.add(s);
-                            String b = (String) snapshot.getData().get("message");
-                            message_array.add(b);
-                            String a = (String) snapshot.getData().get("answer");
-                            answer_array.add(a);
+                            String trainee = (String) snapshot.getData().get("trainee");
+                            sub_array.add(trainee);
+                            String message = (String) snapshot.getData().get("message");
+                            message_array.add(message);
+                            String answer = (String) snapshot.getData().get("answer");
+                            answer_array.add(answer);
 
                             //Indicates whether a new message has been received
-                            if (a.isEmpty()){
+                            if (answer.isEmpty()){
                                 image_array.add(R.drawable.ic_mail);
                             }
                             else{
@@ -123,7 +124,7 @@ public class Messages extends AppCompatActivity {
     }
 
 
-
+    // This class displays the messages as a list
     class MessageAdapter extends BaseAdapter {
 
         @Override
@@ -142,13 +143,13 @@ public class Messages extends AppCompatActivity {
         }
 
         //Representation of the data in the app
-        @SuppressLint({"ResourceType", "ViewHolder", "InflateParams"})
+        @SuppressLint({"ViewHolder", "InflateParams"})
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_my_item,null);
-            TextView titleMess = view.findViewById(R.id.titleMess);
-            TextView dateMess = view.findViewById(R.id.dateMess);
-            ImageView imageViewMail = view.findViewById(R.id.newMail);
+            TextView titleMess = (TextView) view.findViewById(R.id.titleMess);
+            TextView dateMess = (TextView) view.findViewById(R.id.dateMess);
+            ImageView imageViewMail = (ImageView) view.findViewById(R.id.newMail);
             titleMess.setText(title_array.get(i));
             imageViewMail.setImageResource(image_array.get(i));
             dateMess.setText(date_array.get(i));

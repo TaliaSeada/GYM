@@ -18,6 +18,11 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    /**
+     * This class is responsible for the trainer's main page.
+     * this class contains a menu in which there are transitions to add train for trainee,
+     * personal information, a system of inquiries and disconnection
+     * */
     ActionBarDrawerToggle toggle;
 
     @Override
@@ -41,6 +46,8 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
         }
         return super.onOptionsItemSelected(item);
     }
+    //a menu in which there are transitions to add train for trainee,
+    //  personal information, a system of inquiries and disconnection
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

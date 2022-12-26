@@ -30,5 +30,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/activity_page" />
+        app:menu="@menu/trainee_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

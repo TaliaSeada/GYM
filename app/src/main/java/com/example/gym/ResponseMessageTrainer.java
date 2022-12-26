@@ -18,15 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.WriteResult;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ResponseMessageTrainer extends AppCompatActivity {
+    /**
+     * This class is the trainer,
+     * can response message to the trainee
+     * **/
     Button send;
     EditText answerTrainer;
     TextView messageTrainee;

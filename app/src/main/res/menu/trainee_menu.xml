@@ -10,7 +10,7 @@
             android:title="@string/personal_detail" />
 
         <item
-            android:id="@+id/nav_tra"
+            android:id="@+id/nav_train"
             android:icon="@drawable/ic_add_task"
             android:title="@string/workouts" />
         <item

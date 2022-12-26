@@ -20,6 +20,13 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
+
+    /**
+     * This class is responsible for the trainee's main page.
+     * this class contains a menu in which there are transitions to training,
+     * personal information, a system of inquiries and disconnection
+    * */
+
     ActionBarDrawerToggle toggle;
 
     @Override
@@ -44,11 +51,14 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
         return super.onOptionsItemSelected(item);
     }
 
+
+    //a menu in which there are transitions to training,
+    // personal information, a system of inquiries and disconnection
     @Override
         public boolean onNavigationItemSelected(MenuItem item) {
             // Handle navigation view item clicks here.
             int id = item.getItemId();
-            if (id == R.id.nav_tra) {
+            if (id == R.id.nav_train) {
                 startActivity(new Intent(getApplicationContext(), GroupWorkout.class));
             }
             else if (id == R.id.nav_personal_details){
