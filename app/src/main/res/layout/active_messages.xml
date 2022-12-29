@@ -21,17 +21,17 @@
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" >
 
-        <ImageView
-            android:id="@+id/imageAdd"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="9dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_add"
-            tools:ignore="MissingConstraints" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imageAdd"-->
+<!--            android:layout_width="40sp"-->
+<!--            android:layout_height="40sp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginLeft="9dp"-->
+<!--            android:layout_marginTop="7dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:src="@drawable/ic_add"-->
+<!--            tools:ignore="MissingConstraints" />-->
 
         <ImageView
             android:id="@+id/imageRefresh"
@@ -56,7 +56,26 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="26dp"
         android:layout_marginTop="-43dp"
-        android:layout_marginBottom="21dp" />
-
-
+        android:layout_marginBottom="21dp" >
+    </ListView>
+    <!--    add new user-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="630dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Add Message"
+        android:src="@drawable/ic_add"
+        app:fabCustomSize="70dp"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/list_message"
+        app:layout_constraintVertical_bias="0.975" />
 </RelativeLayout>

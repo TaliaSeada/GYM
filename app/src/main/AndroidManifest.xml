@@ -76,13 +76,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".messages.NewMessage"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".messages.Messages"
             android:exported="false">
             <meta-data

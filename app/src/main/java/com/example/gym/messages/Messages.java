@@ -1,27 +1,44 @@
 package com.example.gym.messages;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gym.Manager.ManageUsers;
 import com.example.gym.R;
+import com.example.gym.auth.UserManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Messages extends AppCompatActivity {
     /**
@@ -29,8 +46,9 @@ public class Messages extends AppCompatActivity {
      * can send an application to the trainers
      * **/
     private static final String TAG = "DBMess";
+    ManageMessages ManageMessages = new ManageMessages();
     //Defining datasets for extracting the information
-    static ListView listView;
+    ListView listView;
     String email;
     ArrayList<String> title_array = new ArrayList<String>();
     ArrayList<String> message_array = new ArrayList<String>();
@@ -39,7 +57,6 @@ public class Messages extends AppCompatActivity {
     ArrayList<Integer> image_array = new ArrayList<Integer>();
     ArrayList<String> answer_array = new ArrayList<String>();
 
-    ImageView add;
     ImageView refresh;
 
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -51,14 +68,58 @@ public class Messages extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         email = user.getEmail();
-        addMess(email);
-
-        //Added a new message
-        add = (ImageView) findViewById(R.id.imageAdd);
-        add.setOnClickListener(new View.OnClickListener() {
+        updateMessagesList();
+        //plus button
+        FloatingActionButton addUserButton = findViewById(R.id.fabAdd);
+        addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), NewMessage.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(Messages.this);
+                builder.setTitle("Add Messages");
+                View viewInflated = LayoutInflater.from(Messages.this).inflate(R.layout.add_new_message_window, (ViewGroup) listView, false);
+                // Set up the input box
+                final EditText title = (EditText) viewInflated.findViewById(R.id.Title);
+                final EditText message = (EditText) viewInflated.findViewById(R.id.message);
+                builder.setView(viewInflated);
+
+                // Set up the buttons
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        String title_val = title.getText().toString();
+                        String message_val = message.getText().toString();
+//                        // Add the new user to the db
+                        ManageMessages.addMessage(email, message_val, title_val).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
+                            @Override
+                            public void onSuccess(Void documentReference) {
+                                updateMessagesList();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Messages.this);
+                                builder.setMessage("Can't add this Message.\nTry again later");
+                                builder.setCancelable(true);
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show(); //show the add user window
             }
         });
 
@@ -83,48 +144,48 @@ public class Messages extends AppCompatActivity {
         });
     }
 
-    //connection to Firebase
-    public void addMess(String email) {
-        db.collection("message")
-                .whereEqualTo("trainee", email).
-                addSnapshotListener(new EventListener<QuerySnapshot>() {
+    // Take the users from the db and put them in the view
+    private void updateMessagesList(){
+        ManageMessages.getMessage(email)
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        title_array.clear();
-                        message_array.clear();
-                        date_array.clear();
-                        sub_array.clear();
-                        assert documentSnapshots != null;
-                        for (DocumentSnapshot snapshot : documentSnapshots) {
-                            //Adding the data to the array
-                            String title = (String) snapshot.getData().get("title");
-                            title_array.add(title);
-                            String trainee = (String) snapshot.getData().get("trainee");
-                            sub_array.add(trainee);
-                            String message = (String) snapshot.getData().get("message");
-                            message_array.add(message);
-                            String answer = (String) snapshot.getData().get("answer");
-                            answer_array.add(answer);
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            title_array.clear();
+                            message_array.clear();
+                            date_array.clear();
+                            sub_array.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //Adding the data to the array
+                                String title = (String) document.getData().get("title");
+                                title_array.add(title);
+                                String trainee = (String) document.getData().get("trainee");
+                                sub_array.add(trainee);
+                                String message = (String) document.getData().get("message");
+                                message_array.add(message);
+                                String answer = (String) document.getData().get("answer");
+                                answer_array.add(answer);
 
-                            //Indicates whether a new message has been received
-                            if (answer.isEmpty()){
-                                image_array.add(R.drawable.ic_mail);
+                                //Indicates whether a new message has been received
+                                if (answer.isEmpty()){
+                                    image_array.add(R.drawable.ic_mail);
+                                }
+                                else{
+                                    image_array.add(R.drawable.ic_mail_read);
+                                }
+                                Date date = document.getTimestamp("date").toDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String strDate = sdf.format(date.getTime());
+                                date_array.add(strDate);
                             }
-                            else{
-                                image_array.add(R.drawable.ic_mail_read);
-                            }
-                            Date date = snapshot.getTimestamp("date").toDate();
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            String strDate = sdf.format(date.getTime());
-                            date_array.add(strDate);
+                            MessageAdapter messageAdapter = new MessageAdapter();
+                            listView.setAdapter(messageAdapter);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                        MessageAdapter messageAdapter = new MessageAdapter();
-                        listView.setAdapter(messageAdapter);
-
                     }
                 });
     }
-
 
     // This class displays the messages as a list
     class MessageAdapter extends BaseAdapter {
