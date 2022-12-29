@@ -42,7 +42,6 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     private ImageView add;
     private RecyclerView rview;
     private myAdapter radapter;
-    private final ArrayList<String> items = new ArrayList<String>();
     private final ArrayList<Item> ritems = new ArrayList<Item>();
     // get firebase instances
     private static final String TAG = "DBWorkOut";
@@ -174,15 +173,11 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        items.clear();
                         ritems.clear();
                         assert documentSnapshots != null;
                         for (DocumentSnapshot snapshot : documentSnapshots) {
-                            items.add(snapshot.getString("name"));
                             ritems.add(new Item(snapshot.getString("name"), R.drawable.im));
                         }
-//                        adapter.notifyDataSetChanged();
-//                        listView.setAdapter(adapter);
                         radapter.notifyDataSetChanged();
                         rview.setAdapter(radapter);
                     }

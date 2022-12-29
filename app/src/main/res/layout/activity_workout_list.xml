@@ -47,20 +47,6 @@
         android:textColorHint="@color/cardview_shadow_start_color"
         tools:ignore="MissingConstraints" />
 
-    <GridView
-        android:id="@+id/grid_workout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="2dp"
-        android:numColumns="1" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="385dp"
