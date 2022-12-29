@@ -13,119 +13,119 @@
         android:theme="@style/Theme.GYM"
         tools:targetApi="31">
         <activity
-            android:name=".ShowMessage"
+            android:name=".messages.ShowMessage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddNewWorkoutTrainer"
+            android:name=".workouts.AddNewWorkoutTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".exeUpdateTrainer"
+            android:name=".workouts.exeUpdateTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ExerciseListTrainer"
+            android:name=".workouts.ExerciseListTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".WorkoutListTrainer"
+            android:name=".workouts.WorkoutListTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".exeUpdate"
+            android:name=".workouts.exeUpdate"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ResponseMessageTrainer"
+            android:name=".messages.ResponseMessageTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ExerciseList"
+            android:name=".workouts.ExerciseList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".HomePageTrainer"
+            android:name=".homePage.HomePageTrainer"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".NewMessage"
+            android:name=".messages.NewMessage"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Messages"
+            android:name=".messages.Messages"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MessageT"
+            android:name=".messages.MessageT"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".PrivateArea"
+            android:name=".homePage.PrivateArea"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".getTrainee"
+            android:name=".workouts.getTrainee"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddNewWorkoutTrainee"
+            android:name=".workouts.AddNewWorkoutTrainee"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".HomePageTrainee"
+            android:name=".homePage.HomePageTrainee"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".WorkoutList"
+            android:name=".workouts.WorkoutList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -146,7 +146,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".homePage.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

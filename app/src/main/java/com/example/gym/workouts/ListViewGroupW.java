@@ -1,4 +1,4 @@
-package com.example.gym;
+package com.example.gym.workouts;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.example.gym.R;
 
 import java.util.ArrayList;
 

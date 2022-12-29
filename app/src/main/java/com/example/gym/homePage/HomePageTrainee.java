@@ -1,4 +1,4 @@
-package com.example.gym;
+package com.example.gym.homePage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.gym.R;
+import com.example.gym.messages.Messages;
+import com.example.gym.workouts.WorkoutList;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

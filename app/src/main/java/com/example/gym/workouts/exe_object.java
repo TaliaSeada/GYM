@@ -1,4 +1,4 @@
-package com.example.gym;
+package com.example.gym.workouts;
 
 public class exe_object {
     // set fields

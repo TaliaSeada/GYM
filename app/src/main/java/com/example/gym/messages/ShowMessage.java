@@ -1,6 +1,4 @@
-package com.example.gym;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.gym.messages;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.gym.R;
 
 public class ShowMessage extends AppCompatActivity {
     TextView Message;
