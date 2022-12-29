@@ -87,12 +87,6 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         switch (direction){
-//                            case ItemTouchHelper.START:
-//                                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
-//                                i.putExtra("role", role);
-//                                startActivity(i);
-//                                nameTR = ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName();
-//                                break;
                             case ItemTouchHelper.END:
                                 db.collection("user-info").document(email).collection("workouts")
                                         .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
