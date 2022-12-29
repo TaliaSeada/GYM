@@ -24,25 +24,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout {
-    int minteger_sets;
-    int minteger_reps;
-    double minteger_weight;
     // set toast
-    Toast t;
+    private Toast t;
     // set fields for data display
-    EditText input_exe;
-    AppCompatTextView input_set;
-    AppCompatTextView input_weight;
-    AppCompatTextView input_reps;
-    String Gworkout;
+    private EditText input_exe;
+    private AppCompatTextView input_set;
+    private AppCompatTextView input_weight;
+    private AppCompatTextView input_reps;
+    private String Gworkout;
+    private int minteger_sets;
+    private int minteger_reps;
+    private double minteger_weight;
     // set button for adding new data to firebase
-    Button ADD;
+    private Button ADD;
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     // get user email
-    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    String email_trainer = getTrainee.nameTR;
+    private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private String email_trainer = getTrainee.nameTR;
 
     /***
      * this function adds new exercise to the trainee and updates the firebase

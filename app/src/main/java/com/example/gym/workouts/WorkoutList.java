@@ -34,18 +34,18 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     // set global variable
     static String nameTR;
     // set toast
-    Toast t;
+    private Toast t;
     // set fields for data display
-    EditText input;
-    ImageView add;
-    GridView listView;
-    ListViewGroupW adapter;
+    private EditText input;
+    private ImageView add;
+    private GridView listView;
+    private ListViewGroupW adapter;
     private final ArrayList<String> items = new ArrayList<String>();
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    String email_trainer = getTrainee.nameTR;
+    private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private String email_trainer = getTrainee.nameTR;
 
     @SuppressLint("MissingInflatedId")
     @Override

@@ -29,25 +29,25 @@ import java.util.Map;
 
 public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     // set toast
-    Toast t;
+    private Toast t;
     // set fields for data display
-    TextView input_exe;
-    AppCompatTextView input_set;
-    AppCompatTextView input_weight;
-    AppCompatTextView input_reps;
-    String Gworkout;
-    Long reps;
-    Long sets;
-    double weight;
+    private TextView input_exe;
+    private AppCompatTextView input_set;
+    private AppCompatTextView input_weight;
+    private AppCompatTextView input_reps;
+    private String Gworkout;
+    private Long reps;
+    private Long sets;
+    private double weight;
     // set buttons for updating and deleting data in firebase
-    Button UPDATE;
-    Button DELETE;
+    private Button UPDATE;
+    private Button DELETE;
     // get firebase instances
     private static final String TAG = "DBExercise";
     @SuppressLint("StaticFieldLeak")
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    String email_trainer = getTrainee.nameTR;
+    private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private String email_trainer = getTrainee.nameTR;
 
     /***
      * the following functions are for the exercise creation and update

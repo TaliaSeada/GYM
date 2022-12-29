@@ -30,17 +30,17 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     // set global variable
     static String nameExe;
     // set toast
-    Toast t;
+    private Toast t;
     // set fields for data display
-    GridView listView;
-    ImageView add;
+    private GridView listView;
+    private ImageView add;
     private List<String> items = new ArrayList<>();
     private final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
-    SimpleAdapter adap;
+    private SimpleAdapter adap;
     // get firebase instances
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    String email_trainer = getTrainee.nameTR;
+    private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private String email_trainer = getTrainee.nameTR;
 
     @SuppressLint("MissingInflatedId")
     @Override

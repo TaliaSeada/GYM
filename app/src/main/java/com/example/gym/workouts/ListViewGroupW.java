@@ -20,8 +20,8 @@ import java.util.ArrayList;
  * this class is an implement for the grid adapter we used in the GroupWorkout class
  */
 public class ListViewGroupW extends ArrayAdapter<String> {
-    ArrayList<String> list;
-    Context context;
+    private ArrayList<String> list;
+    private Context context;
 
     public ListViewGroupW(Context context, ArrayList<String> items) {
         super(context, R.layout.list_row, items);
