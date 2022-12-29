@@ -88,6 +88,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
      * this function load the relevant content from the firebase
      * to the lists we created in order to show it in the app screen.
      ***/
+    @Override
     public void loadContent(String email) {
         db.collection("user-info").document(email)
                 .collection("workouts").document(WorkoutList.nameTR)
@@ -120,6 +121,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
+    @Override
     public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);

@@ -54,57 +54,59 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * they give the user the ability to set the sets, repetitions and weight
      * @param view relevant button (plus or minus)
      */
+    @Override
     public void increaseInteger_sets(View view) {
         sets = sets + 1;
         display_sets(sets);
     }
-
+    @Override
     public void decreaseInteger_sets(View view) {
         sets = sets - 1;
         display_sets(sets);
     }
-
+    @Override
     public void display_sets(Long number) {
         TextView displayInteger = (TextView) findViewById(R.id.integer_number_sets);
         displayInteger.setText("" + number);
     }
-
+    @Override
     public void increaseInteger_reps(View view) {
         reps = reps + 1;
         display_reps(reps);
     }
-
+    @Override
     public void decreaseInteger_reps(View view) {
         reps = reps - 1;
         display_reps(reps);
     }
-
+    @Override
     public void display_reps(Long number) {
         TextView displayInteger = (TextView) findViewById(R.id.integer_number_reps);
         displayInteger.setText("" + number);
     }
-
+    @Override
     public void increaseInteger_weight(View view) {
         weight = weight + 1;
         display_weight(weight);
     }
-
+    @Override
     public void decreaseInteger_weight(View view) {
         weight = weight - 1;
         display_weight(weight);
     }
 
     @SuppressLint("DefaultLocale")
+    @Override
     public void display_weight(double number) {
         TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
         displayDouble.setText(String.format("%.1f", number));
     }
-
+    @Override
     public void increaseInteger_weight_(View view) {
         weight = weight + 0.1;
         display_weight(weight);
     }
-
+    @Override
     public void decreaseInteger_weight_(View view) {
         weight = weight - 0.1;
         display_weight(weight);
@@ -175,6 +177,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * this function load the relevant content from the firebase
      * to the fields we created in order to show it in the app screen.
      ***/
+    @Override
     public void loadContent(String email) {
         db.collection("user-info").document(email)
                 .collection("workouts").document(WorkoutList.nameTR)
@@ -222,6 +225,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * @param reps number of repetition we insert in the app
      * @param weight_kg weight we insert in the app
      */
+    @Override
     public void UpdateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
@@ -258,6 +262,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * @param wo_name the workout name we clicked in the app
      * @param exe_name the exercise name we clicked in the app
      */
+    @Override
     public void DeleteExe(String email, String wo_name, String exe_name) {
         // delete from firebase
         db.collection("user-info").document(email)
@@ -281,6 +286,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
+    @Override
     public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
