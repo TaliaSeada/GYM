@@ -20,36 +20,9 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".workouts.AddNewWorkoutTrainer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".workouts.exeUpdateTrainer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".workouts.ExerciseListTrainer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".workouts.WorkoutListTrainer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".workouts.exeUpdate"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/AppTheme.CustomTheme">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -105,6 +78,7 @@
         </activity>
         <activity
             android:name=".workouts.AddNewWorkout"
+            android:theme="@style/AppTheme.CustomTheme"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

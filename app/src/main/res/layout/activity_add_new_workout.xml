@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/blueBlack">
 
 
     <Button
@@ -38,8 +39,9 @@
         android:id="@+id/textView"
         android:layout_width="193dp"
         android:layout_height="46dp"
-        android:text="Add Workout"
+        android:text="Add Exercise"
         android:textSize="23dp"
+        android:textColor="@color/tanAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.577"
@@ -53,6 +55,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:textColor="@color/tanAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.865"
@@ -66,6 +69,7 @@
         android:layout_width="117dp"
         android:layout_height="29dp"
         android:text="Name"
+        android:textColor="@color/tanAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
@@ -78,6 +82,7 @@
         android:layout_width="117dp"
         android:layout_height="29dp"
         android:text="Sets"
+        android:textColor="@color/tanAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
@@ -138,6 +143,7 @@
         android:layout_width="117dp"
         android:layout_height="29dp"
         android:text="Repetitions"
+        android:textColor="@color/tanAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
@@ -150,12 +156,25 @@
         android:layout_width="117dp"
         android:layout_height="29dp"
         android:text="Weight"
+        android:textColor="@color/tanAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.534" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="117dp"
+        android:layout_height="29dp"
+        android:text="Plus 0.1"
+        android:textColor="@color/tanAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.602" />
 
     <Button
         android:id="@+id/addWorkout"
@@ -167,7 +186,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
+        app:layout_constraintVertical_bias="0.8" />
 
     <Button
         android:id="@+id/increase_sets"
@@ -258,6 +277,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:textColor="@color/tanAccent"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -273,6 +293,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:textColor="@color/tanAccent"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -288,6 +309,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0.0"
+        android:textColor="@color/tanAccent"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

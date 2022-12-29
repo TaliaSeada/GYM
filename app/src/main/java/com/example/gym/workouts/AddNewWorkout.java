@@ -2,6 +2,7 @@ package com.example.gym.workouts;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -152,6 +153,13 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_workout);
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        getWindow().setLayout((int) (width*.9), (int) (height*.8));
+
+
         String role = getIntent().getStringExtra("role");
         String email;
         if(role.equals("trainee")){

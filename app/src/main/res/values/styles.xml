@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-<style name="ListView" parent="@android:style/Widget.ListView">
-<item name="android:background">@color/white</item>
-   <item name="android:textStyle">bold</item>
-   <item name="android:text">@font/alex_font</item>
-<item name="android:cacheColorHint">@android:color/darker_gray</item>
-<item name="android:divider">@android:color/holo_blue_dark</item>
-<item name="android:dividerHeight">0dp</item>
+    </style>
 
-</style>
+    <style name="ListView" parent="@android:style/Widget.ListView">
+        <item name="android:background">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">@font/alex_font</item>
+        <item name="android:cacheColorHint">@android:color/darker_gray</item>
+        <item name="android:divider">@android:color/holo_blue_dark</item>
+        <item name="android:dividerHeight">0dp</item>
 
-   </resources>
+    </style>
+
+    <style name="AppTheme.CustomTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+</resources>
