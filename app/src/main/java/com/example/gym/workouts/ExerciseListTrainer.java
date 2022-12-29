@@ -26,19 +26,20 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ExerciseListTrainer extends AppCompatActivity {
+    // set global variable
+    static String nameExe;
     // set toast
     Toast t;
     // set fields for data display
-    static GridView listView;
-    static String nameExe;
+    GridView listView;
     ImageView add;
-    private static List<String> items = new ArrayList<>();
-    final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
+    private List<String> items = new ArrayList<>();
+    private final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
     SimpleAdapter adap;
     // get relevant trainee email
     String email = Objects.requireNonNull(getTrainee.nameTR);
     // get firebase instance
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @SuppressLint("MissingInflatedId")
     @Override

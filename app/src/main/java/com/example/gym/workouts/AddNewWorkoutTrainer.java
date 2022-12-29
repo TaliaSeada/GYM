@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.gym.R;
+import com.example.gym.workouts.interfaces.I_addNewWorkout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AddNewWorkoutTrainer extends AppCompatActivity {
+public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewWorkout {
     // set toast
     Toast t;
     // set fields for data display
@@ -37,7 +38,7 @@ public class AddNewWorkoutTrainer extends AppCompatActivity {
     String email = Objects.requireNonNull(getTrainee.nameTR);
     // get firebase instance
     private static final String TAG = "DBWorkOut";
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /***
      * this function adds new exercise to the relevant trainee and updates the firebase
@@ -48,6 +49,7 @@ public class AddNewWorkoutTrainer extends AppCompatActivity {
      * @param reps number of repetition we insert in the app
      * @param weight_kg weight we insert in the app
      */
+    @Override
     public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
@@ -83,57 +85,59 @@ public class AddNewWorkoutTrainer extends AppCompatActivity {
      * they give the user the ability to set the sets, repetitions and weight
      * @param view relevant button (plus or minus)
      */
+    @Override
     public void increaseInteger_sets(View view) {
         AddNewWorkoutTrainee.minteger_sets = AddNewWorkoutTrainee.minteger_sets + 1;
         display_sets(AddNewWorkoutTrainee.minteger_sets);
     }
-
+    @Override
     public void decreaseInteger_sets(View view) {
         AddNewWorkoutTrainee.minteger_sets = AddNewWorkoutTrainee.minteger_sets - 1;
         display_sets(AddNewWorkoutTrainee.minteger_sets);
     }
-
-    private void display_sets(int number) {
+    @Override
+    public void display_sets(int number) {
         TextView displayInteger = (TextView) findViewById(R.id.integer_number_sets);
         displayInteger.setText("" + number);
     }
-
+    @Override
     public void increaseInteger_reps(View view) {
         AddNewWorkoutTrainee.minteger_reps = AddNewWorkoutTrainee.minteger_reps + 1;
         display_reps(AddNewWorkoutTrainee.minteger_reps);
     }
-
+    @Override
     public void decreaseInteger_reps(View view) {
         AddNewWorkoutTrainee.minteger_reps = AddNewWorkoutTrainee.minteger_reps - 1;
         display_reps(AddNewWorkoutTrainee.minteger_reps);
     }
-
-    private void display_reps(int number) {
+    @Override
+    public void display_reps(int number) {
         TextView displayInteger = (TextView) findViewById(R.id.integer_number_reps);
         displayInteger.setText("" + number);
     }
-
+    @Override
     public void increaseInteger_weight(View view) {
         AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight + 1;
         display_weight(AddNewWorkoutTrainee.minteger_weight);
     }
-
+    @Override
     public void decreaseInteger_weight(View view) {
         AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight - 1;
         display_weight(AddNewWorkoutTrainee.minteger_weight);
     }
 
     @SuppressLint("DefaultLocale")
-    private void display_weight(double number) {
+    @Override
+    public void display_weight(double number) {
         TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
         displayDouble.setText(String.format("%.1f", number));
     }
-
+    @Override
     public void increaseInteger_weight_(View view) {
         AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight + 0.1;
         display_weight(AddNewWorkoutTrainee.minteger_weight);
     }
-
+    @Override
     public void decreaseInteger_weight_(View view) {
         AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight - 0.1;
         display_weight(AddNewWorkoutTrainee.minteger_weight);
@@ -185,7 +189,8 @@ public class AddNewWorkoutTrainer extends AppCompatActivity {
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
-    private void makeToast(String s) {
+    @Override
+    public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();

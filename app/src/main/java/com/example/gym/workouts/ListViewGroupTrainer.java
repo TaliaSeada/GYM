@@ -45,7 +45,7 @@ public class ListViewGroupTrainer extends ArrayAdapter<String> {
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    WorkoutListTrainer.removeItem(position);
+//                    WorkoutListTrainer.removeItem(position);
                 }
             });
 

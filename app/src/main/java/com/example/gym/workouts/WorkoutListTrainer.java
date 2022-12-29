@@ -29,21 +29,21 @@ import java.util.Map;
 import java.util.Objects;
 
 public class WorkoutListTrainer extends AppCompatActivity {
+    // set global variable
+    static String nameTR;
     // set toast
     Toast t;
     // set fields for data display
     EditText input;
     ImageView add;
-    static GridView listView;
-    static ListViewGroupTrainer adapter;
-    static String nameTR;
-    private static final ArrayList<String> items = new ArrayList<>();
+    GridView listView;
+    ListViewGroupTrainer adapter;
+    private final ArrayList<String> items = new ArrayList<>();
     // get relevant trainee email
     String email = Objects.requireNonNull(getTrainee.nameTR);
     // get firebase instance
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "DBWorkOut";
-
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -140,17 +140,17 @@ public class WorkoutListTrainer extends AppCompatActivity {
      * this function removes an item from the display list and updates the firebase
      * @param remove the index of the item we clicked to remove
      */
-    public static void removeItem(int remove) {
-        try {
-            String rem = Objects.requireNonNull(getTrainee.nameTR);
-            db.collection("user-info").document(Objects.requireNonNull(rem))
-                    .collection("workouts").document(items.get(remove)).delete();
-            listView.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public static void removeItem(int remove) {
+//        try {
+//            String rem = Objects.requireNonNull(getTrainee.nameTR);
+//            db.collection("user-info").document(Objects.requireNonNull(rem))
+//                    .collection("workouts").document(items.get(remove)).delete();
+//            listView.setAdapter(adapter);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     /***
      * this function raises a massage to the screen

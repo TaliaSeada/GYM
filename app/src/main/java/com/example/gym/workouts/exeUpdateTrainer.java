@@ -35,16 +35,16 @@ public class exeUpdateTrainer extends AppCompatActivity {
     AppCompatTextView input_weight;
     AppCompatTextView input_reps;
     String Gworkout;
-    static Long reps;
-    static Long sets;
-    static double weight;
+    Long reps;
+    Long sets;
+    double weight;
     // set buttons for updating and deleting data in firebase
     Button UPDATE;
     Button DELETE;
     // get firebase instances
     private static final String TAG = "DBExercise";
     @SuppressLint("StaticFieldLeak")
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     // get relevant trainee email
     String email = Objects.requireNonNull(getTrainee.nameTR);
 

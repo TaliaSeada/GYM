@@ -25,14 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class getTrainee extends AppCompatActivity {
-    // create list to save the content read from firebase
-    private static final List<String> items = new ArrayList<>();
-    static ListView listView;
-    // create list to show only the names from content read from firebase
-    private static final List<String> names = new ArrayList<>();
+    //set global variable
     static String nameTR;
+    // create list to save the content read from firebase
+    private final List<String> items = new ArrayList<>();
+    ListView listView;
+    // create list to show only the names from content read from firebase
+    private final List<String> names = new ArrayList<>();
     // get firebase instance
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @SuppressLint("MissingInflatedId")
