@@ -151,7 +151,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_workout_trainee);
+        setContentView(R.layout.activity_add_new_workout);
         String role = getIntent().getStringExtra("role");
         String email;
         if(role.equals("trainee")){

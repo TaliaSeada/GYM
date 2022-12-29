@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_workoutList;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -38,14 +40,16 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     // set fields for data display
     private EditText input;
     private ImageView add;
-    private GridView listView;
-    private ListViewGroupW adapter;
+    private RecyclerView rview;
+    private myAdapter radapter;
     private final ArrayList<String> items = new ArrayList<String>();
+    private final ArrayList<Item> ritems = new ArrayList<Item>();
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private String email_trainer = getTrainee.nameTR;
+    private int dragged;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,25 +64,56 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
         else {
             email = email_trainer;
         }
+
+        ItemTouchHelper helper = new ItemTouchHelper(
+                new ItemTouchHelper.Callback() {
+                    @Override
+                    public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                        return makeMovementFlags(
+                                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                               ItemTouchHelper.END | ItemTouchHelper.START
+                        );
+                    }
+
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                        dragged = viewHolder.getAbsoluteAdapterPosition();
+                        int targetI = target.getAbsoluteAdapterPosition();
+                        Collections.swap(ritems, dragged, targetI);
+                        radapter.notifyItemMoved(dragged, targetI);
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        switch (direction){
+                            case ItemTouchHelper.START:
+                                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
+                                i.putExtra("role", role);
+                                startActivity(i);
+                                nameTR = ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName();
+                                break;
+                            case ItemTouchHelper.END:
+                                db.collection("user-info").document(email).collection("workouts")
+                                        .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
+                                radapter.notifyItemRemoved(viewHolder.getAbsoluteAdapterPosition());
+                                makeToast("Item Removed");
+                                break;
+                        }
+                    }
+                }
+        );
         // set list adapter
-        adapter = new ListViewGroupW(WorkoutList.this, items);
-        listView = findViewById(R.id.grid_workout);
+        radapter = new myAdapter(getApplicationContext(), ritems);
+        rview = findViewById(R.id.recyclerView);
+        rview.setLayoutManager(new LinearLayoutManager(this));
+        helper.attachToRecyclerView(rview);
+
         // get text
         input = findViewById(R.id.Input);
 
         // load content from firebase
         loadContent(email);
-
-        // set action for the workouts list
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
-                i.putExtra("role", role);
-                startActivity(i);
-                nameTR = items.get(pos);
-            }
-        });
 
         // set add button action
         add = findViewById(R.id.imageMenu);
@@ -136,32 +171,23 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
         db.collection("user-info").document(email)
                 .collection("workouts")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                         items.clear();
+                        ritems.clear();
                         assert documentSnapshots != null;
                         for (DocumentSnapshot snapshot : documentSnapshots) {
                             items.add(snapshot.getString("name"));
+                            ritems.add(new Item(snapshot.getString("name"), R.drawable.im));
                         }
-                        adapter.notifyDataSetChanged();
-                        listView.setAdapter(adapter);
+//                        adapter.notifyDataSetChanged();
+//                        listView.setAdapter(adapter);
+                        radapter.notifyDataSetChanged();
+                        rview.setAdapter(radapter);
                     }
                 });
     }
-
-    /***
-     * this function removes an item from the display list and updates the firebase
-     * @param remove the index of the item we clicked to remove
-     */
-//    public static void removeItem(int remove) {
-//        try {
-//            db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
-//                    .collection("workouts").document(items.get(remove)).delete();
-//            listView.setAdapter(adapter);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /***
      * this function raises a massage to the screen

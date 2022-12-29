@@ -63,6 +63,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.firebase:firebase-analytics' //add for fb
 
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
     // For firebase login
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:20.4.0'
