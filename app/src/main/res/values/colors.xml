@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="darker_gray">#FF7C8585</color>
     <color name="colorPrimary">#FFFFFFFF</color>
+
+    <color name="blueBlack">#111F28</color>
+    <color name="tanAccent">#e3cdb3</color>
+
 </resources>

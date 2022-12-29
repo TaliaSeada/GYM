@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.R;
+import com.example.gym.workouts.interfaces.I_recyclerView;
 import com.example.gym.workouts.interfaces.I_workoutList;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class WorkoutList extends AppCompatActivity implements I_workoutList {
+public class WorkoutList extends AppCompatActivity implements I_workoutList{
     // set global variable
     static String nameTR;
     // set toast
@@ -70,7 +71,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                         return makeMovementFlags(
                                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                               ItemTouchHelper.END | ItemTouchHelper.START
+                               ItemTouchHelper.END
                         );
                     }
 
@@ -86,12 +87,12 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         switch (direction){
-                            case ItemTouchHelper.START:
-                                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
-                                i.putExtra("role", role);
-                                startActivity(i);
-                                nameTR = ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName();
-                                break;
+//                            case ItemTouchHelper.START:
+//                                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
+//                                i.putExtra("role", role);
+//                                startActivity(i);
+//                                nameTR = ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName();
+//                                break;
                             case ItemTouchHelper.END:
                                 db.collection("user-info").document(email).collection("workouts")
                                         .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
@@ -103,7 +104,15 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                 }
         );
         // set list adapter
-        radapter = new myAdapter(getApplicationContext(), ritems);
+        radapter = new myAdapter(getApplicationContext(), ritems, new I_recyclerView() {
+            @Override
+            public void onItemClick(int position) {
+                Intent i = new Intent(WorkoutList.this, ExerciseList.class);
+                i.putExtra("role", role);
+                startActivity(i);
+                nameTR = ritems.get(position).getName();
+            }
+        });
         rview = findViewById(R.id.recyclerView);
         rview.setLayoutManager(new LinearLayoutManager(this));
         helper.attachToRecyclerView(rview);
@@ -173,10 +182,20 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        int i = 0;
+                        int[] im = {R.drawable.im, R.drawable.im2, R.drawable.im3, R.drawable.im4, R.drawable.im5, R.drawable.im6
+                                , R.drawable.im7, R.drawable.im8, R.drawable.im9, R.drawable.im10, R.drawable.im11, R.drawable.im12
+                                , R.drawable.im13, R.drawable.im14, R.drawable.im15, R.drawable.im16, R.drawable.im17, R.drawable.im18, R.drawable.im19};
                         ritems.clear();
                         assert documentSnapshots != null;
                         for (DocumentSnapshot snapshot : documentSnapshots) {
-                            ritems.add(new Item(snapshot.getString("name"), R.drawable.im));
+                            if(i == 19){
+                                i = 1;
+                            }
+                            else {
+                                i++;
+                            }
+                            ritems.add(new Item(snapshot.getString("name"), im[i]));
                         }
                         radapter.notifyDataSetChanged();
                         rview.setAdapter(radapter);
