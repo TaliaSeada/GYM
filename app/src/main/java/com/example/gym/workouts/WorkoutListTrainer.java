@@ -3,6 +3,7 @@ package com.example.gym.workouts;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -10,9 +11,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class WorkoutListTrainer extends AppCompatActivity {
@@ -36,6 +42,7 @@ public class WorkoutListTrainer extends AppCompatActivity {
     String email = Objects.requireNonNull(getTrainee.nameTR);
     // get firebase instance
     protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String TAG = "DBWorkOut";
 
 
     @SuppressLint("MissingInflatedId")
@@ -69,7 +76,7 @@ public class WorkoutListTrainer extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     String text = input.getText().toString();
-                    AddNewWorkoutTrainee.addWO(email, text);
+                    addWO(email, text);
                     input.setText("");
                     makeToast(text + " Added Successfully");
                     // reload content to show the new workout
@@ -80,6 +87,32 @@ public class WorkoutListTrainer extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /***
+     * this function adds new workout to the trainee and updates the firebase
+     * @param email trainee email
+     * @param wo_name the name we insert in the app
+     */
+    public void addWO(String email, String wo_name) {
+        // create workout
+        Map<String, Object> name = new HashMap<>();
+        name.put("name", wo_name);
+        // set in firebase
+        db.collection("user-info").document(Objects.requireNonNull(email))
+                .collection("workouts").document(wo_name).set(name)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     /***

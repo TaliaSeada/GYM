@@ -3,6 +3,7 @@ package com.example.gym.workouts;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -10,9 +11,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,22 +26,25 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class WorkoutList extends AppCompatActivity {
+    // set global variable
+    static String nameTR;
     // set toast
     Toast t;
     // set fields for data display
     EditText input;
     ImageView add;
-    static GridView listView;
-    static ListViewGroupW adapter;
-    static String nameTR;
-    private static final ArrayList<String> items = new ArrayList<String>();
+    GridView listView;
+    ListViewGroupW adapter;
+    private final ArrayList<String> items = new ArrayList<String>();
     // get firebase instances
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+    private static final String TAG = "DBWorkOut";
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -70,7 +77,7 @@ public class WorkoutList extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     String text = input.getText().toString();
-                    AddNewWorkoutTrainee.addWO(user.getEmail(), text);
+                    addWO(user.getEmail(), text);
                     input.setText("");
                     makeToast(text + " Added Successfully");
                     // reload content to show the new workout
@@ -81,6 +88,32 @@ public class WorkoutList extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /***
+     * this function adds new workout to the trainee and updates the firebase
+     * @param email trainee email
+     * @param wo_name the name we insert in the app
+     */
+    public void addWO(String email, String wo_name) {
+        // create workout
+        Map<String, Object> name = new HashMap<>();
+        name.put("name", wo_name);
+        // set in firebase
+        db.collection("user-info").document(Objects.requireNonNull(email))
+                .collection("workouts").document(wo_name).set(name)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     /***
@@ -109,15 +142,15 @@ public class WorkoutList extends AppCompatActivity {
      * this function removes an item from the display list and updates the firebase
      * @param remove the index of the item we clicked to remove
      */
-    public static void removeItem(int remove) {
-        try {
-            db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
-                    .collection("workouts").document(items.get(remove)).delete();
-            listView.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void removeItem(int remove) {
+//        try {
+//            db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+//                    .collection("workouts").document(items.get(remove)).delete();
+//            listView.setAdapter(adapter);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /***
      * this function raises a massage to the screen

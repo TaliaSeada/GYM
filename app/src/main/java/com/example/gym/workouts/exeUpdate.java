@@ -37,18 +37,18 @@ public class exeUpdate extends AppCompatActivity {
     AppCompatTextView input_weight;
     AppCompatTextView input_reps;
     String Gworkout;
-    static Long reps;
-    static Long sets;
-    static double weight;
-    static String email;
+    Long reps;
+    Long sets;
+    double weight;
+    String email;
     // set buttons for updating and deleting data in firebase
     Button UPDATE;
     Button DELETE;
     // get firebase instances
     private static final String TAG = "DBExercise";
     @SuppressLint("StaticFieldLeak")
-    protected static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     /***
      * the following functions are for the exercise creation and update

@@ -4,12 +4,6 @@ import android.view.View;
 
 public interface I_addNewWorkout {
     /***
-     * this function adds new workout to the trainee and updates the firebase
-     * @param email trainee email
-     * @param wo_name the name we insert in the app
-     */
-    void addWO(String email, String wo_name);
-    /***
      * this function adds new exercise to the trainee and updates the firebase
      * @param email trainee email
      * @param wo_name the workout name we clicked in the app
