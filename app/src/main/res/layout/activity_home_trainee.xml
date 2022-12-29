@@ -29,12 +29,22 @@
             app:layout_constraintTop_toBottomOf="@+id/textView8"
             app:layout_constraintVertical_bias="0.0" />
 
+        <!--        <ImageView-->
+<!--            android:id="@+id/imageView"-->
+<!--            android:layout_width="553dp"-->
+<!--            android:layout_height="274dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:srcCompat="@drawable/gym"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            tools:layout_editor_absoluteY="-4dp" />-->
+
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="299dp"
+            android:layout_height="50dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="652dp"
+            android:layout_marginBottom="616dp"
             android:fontFamily="@font/alex_font"
             android:text="Welcome to  GYM"
             android:textColor="@color/blueBlack"
@@ -44,21 +54,10 @@
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="UnknownIdInLayout" />
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView"-->
-<!--            android:layout_width="553dp"-->
-<!--            android:layout_height="274dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:srcCompat="@drawable/gym"-->
-<!--            tools:ignore="MissingConstraints"-->
-<!--            tools:layout_editor_absoluteY="-4dp" />-->
 
         <TextView
             android:id="@+id/textView6"
