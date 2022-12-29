@@ -17,13 +17,16 @@ import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_addNewWorkout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewWorkout {
+public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout {
+    int minteger_sets;
+    int minteger_reps;
+    double minteger_weight;
     // set toast
     Toast t;
     // set fields for data display
@@ -34,15 +37,16 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
     String Gworkout;
     // set button for adding new data to firebase
     Button ADD;
-    // get relevant user email
-    String email = Objects.requireNonNull(getTrainee.nameTR);
-    // get firebase instance
+    // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // get user email
+    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    String email_trainer = getTrainee.nameTR;
 
     /***
-     * this function adds new exercise to the relevant trainee and updates the firebase
-     * @param email relevant trainee email
+     * this function adds new exercise to the trainee and updates the firebase
+     * @param email trainee email
      * @param wo_name the workout name we clicked in the app
      * @param exe_name the exercise name we insert in the app
      * @param sets number of sets we insert in the app
@@ -87,13 +91,13 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
      */
     @Override
     public void increaseInteger_sets(View view) {
-        AddNewWorkoutTrainee.minteger_sets = AddNewWorkoutTrainee.minteger_sets + 1;
-        display_sets(AddNewWorkoutTrainee.minteger_sets);
+        minteger_sets = minteger_sets + 1;
+        display_sets(minteger_sets);
     }
     @Override
     public void decreaseInteger_sets(View view) {
-        AddNewWorkoutTrainee.minteger_sets = AddNewWorkoutTrainee.minteger_sets - 1;
-        display_sets(AddNewWorkoutTrainee.minteger_sets);
+        minteger_sets = minteger_sets - 1;
+        display_sets(minteger_sets);
     }
     @Override
     public void display_sets(int number) {
@@ -102,13 +106,13 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
     }
     @Override
     public void increaseInteger_reps(View view) {
-        AddNewWorkoutTrainee.minteger_reps = AddNewWorkoutTrainee.minteger_reps + 1;
-        display_reps(AddNewWorkoutTrainee.minteger_reps);
+        minteger_reps = minteger_reps + 1;
+        display_reps(minteger_reps);
     }
     @Override
     public void decreaseInteger_reps(View view) {
-        AddNewWorkoutTrainee.minteger_reps = AddNewWorkoutTrainee.minteger_reps - 1;
-        display_reps(AddNewWorkoutTrainee.minteger_reps);
+        minteger_reps = minteger_reps - 1;
+        display_reps(minteger_reps);
     }
     @Override
     public void display_reps(int number) {
@@ -117,30 +121,29 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
     }
     @Override
     public void increaseInteger_weight(View view) {
-        AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight + 1;
-        display_weight(AddNewWorkoutTrainee.minteger_weight);
+        minteger_weight = minteger_weight + 1;
+        display_weight(minteger_weight);
     }
     @Override
     public void decreaseInteger_weight(View view) {
-        AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight - 1;
-        display_weight(AddNewWorkoutTrainee.minteger_weight);
+        minteger_weight = minteger_weight - 1;
+        display_weight(minteger_weight);
     }
-
-    @SuppressLint("DefaultLocale")
     @Override
+    @SuppressLint("DefaultLocale")
     public void display_weight(double number) {
         TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
         displayDouble.setText(String.format("%.1f", number));
     }
     @Override
     public void increaseInteger_weight_(View view) {
-        AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight + 0.1;
-        display_weight(AddNewWorkoutTrainee.minteger_weight);
+        minteger_weight = minteger_weight + 0.1;
+        display_weight(minteger_weight);
     }
     @Override
     public void decreaseInteger_weight_(View view) {
-        AddNewWorkoutTrainee.minteger_weight = AddNewWorkoutTrainee.minteger_weight - 0.1;
-        display_weight(AddNewWorkoutTrainee.minteger_weight);
+        minteger_weight = minteger_weight - 0.1;
+        display_weight(minteger_weight);
     }
 
 
@@ -149,6 +152,14 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_workout_trainee);
+        String role = getIntent().getStringExtra("role");
+        String email;
+        if(role.equals("trainee")){
+            email = email_trainee;
+        }
+        else {
+            email = email_trainer;
+        }
         // set button
         ADD = findViewById(R.id.addWorkout);
         // set texts
@@ -156,9 +167,9 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
         input_set = findViewById(R.id.integer_number_sets);
         input_weight = findViewById(R.id.integer_number_weight);
         input_exe = findViewById(R.id.editWorkout);
-        AddNewWorkoutTrainee.minteger_sets = 0;
-        AddNewWorkoutTrainee.minteger_reps = 0;
-        AddNewWorkoutTrainee.minteger_weight = 0.0;
+        minteger_sets = 0;
+        minteger_reps = 0;
+        minteger_weight = 0.0;
 
         // set ADD button action
         ADD.setOnClickListener(new View.OnClickListener() {
@@ -168,13 +179,19 @@ public class AddNewWorkoutTrainer extends AppCompatActivity implements I_addNewW
                 double weight = Double.parseDouble(input_weight.getText().toString());
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
+                Gworkout = WorkoutList.nameTR;
                 try {
-                    Gworkout = WorkoutListTrainer.nameTR;
                     // add the exercise to firebase
                     addExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast(exercise + " Added Successfully");
-                } catch (NullPointerException e) {
-                    makeToast("Something Went Wrong");
+                } catch (Exception e) {
+                    if(exercise.equals("")){
+                        makeToast("Type Exercise Name");
+                    }
+                    else{
+                        makeToast("Something Went Wrong");
+                    }
+
                     e.printStackTrace();
                 }
                 // close the window

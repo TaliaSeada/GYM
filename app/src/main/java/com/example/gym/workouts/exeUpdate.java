@@ -14,10 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.gym.R;
+import com.example.gym.workouts.interfaces.I_updateExercise;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,9 +26,8 @@ import com.google.firebase.firestore.MetadataChanges;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class exeUpdate extends AppCompatActivity {
+public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     // set toast
     Toast t;
     // set fields for data display
@@ -40,7 +39,6 @@ public class exeUpdate extends AppCompatActivity {
     Long reps;
     Long sets;
     double weight;
-    String email;
     // set buttons for updating and deleting data in firebase
     Button UPDATE;
     Button DELETE;
@@ -48,7 +46,8 @@ public class exeUpdate extends AppCompatActivity {
     private static final String TAG = "DBExercise";
     @SuppressLint("StaticFieldLeak")
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    String email_trainer = getTrainee.nameTR;
 
     /***
      * the following functions are for the exercise creation and update
@@ -65,7 +64,7 @@ public class exeUpdate extends AppCompatActivity {
         display_sets(sets);
     }
 
-    private void display_sets(Long number) {
+    public void display_sets(Long number) {
         TextView displayInteger = (TextView) findViewById(R.id.integer_number_sets);
         displayInteger.setText("" + number);
     }
@@ -80,7 +79,7 @@ public class exeUpdate extends AppCompatActivity {
         display_reps(reps);
     }
 
-    private void display_reps(Long number) {
+    public void display_reps(Long number) {
         TextView displayInteger = (TextView) findViewById(R.id.integer_number_reps);
         displayInteger.setText("" + number);
     }
@@ -96,7 +95,7 @@ public class exeUpdate extends AppCompatActivity {
     }
 
     @SuppressLint("DefaultLocale")
-    private void display_weight(double number) {
+    public void display_weight(double number) {
         TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
         displayDouble.setText(String.format("%.1f", number));
     }
@@ -115,12 +114,18 @@ public class exeUpdate extends AppCompatActivity {
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // load content from firebase
-        loadContent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exe_update);
-        // get user email
-        email = user.getEmail();
+        String role = getIntent().getStringExtra("role");
+        String email;
+        if(role.equals("trainee")){
+            email = email_trainee;
+        }
+        else {
+            email = email_trainer;
+        }
+        // load content from firebase
+        loadContent(email);
 
         // set UPDATE button action
         UPDATE = findViewById(R.id.updateExe);
@@ -139,7 +144,7 @@ public class exeUpdate extends AppCompatActivity {
                     makeToast("Something Went Wrong");
                     e.printStackTrace();
                 }
-                loadContent();
+                loadContent(email);
                 finish();
 
             }
@@ -158,7 +163,7 @@ public class exeUpdate extends AppCompatActivity {
                     makeToast("Something Went Wrong");
                     e.printStackTrace();
                 }
-                loadContent();
+                loadContent(email);
                 finish();
 
             }
@@ -170,8 +175,8 @@ public class exeUpdate extends AppCompatActivity {
      * this function load the relevant content from the firebase
      * to the fields we created in order to show it in the app screen.
      ***/
-    public void loadContent() {
-        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+    public void loadContent(String email) {
+        db.collection("user-info").document(email)
                 .collection("workouts").document(WorkoutList.nameTR)
                 .collection("exercises").document(ExerciseList.nameExe).
                 addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
@@ -276,7 +281,7 @@ public class exeUpdate extends AppCompatActivity {
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
-    private void makeToast(String s) {
+    public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();

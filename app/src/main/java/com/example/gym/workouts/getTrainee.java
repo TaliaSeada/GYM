@@ -48,7 +48,8 @@ public class getTrainee extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(getTrainee.this, WorkoutListTrainer.class);
+                Intent i = new Intent(getTrainee.this, WorkoutList.class);
+                i.putExtra("role", "trainer");
                 startActivity(i);
                 nameTR = items.get(pos);
             }

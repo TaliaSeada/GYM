@@ -15,10 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.example.gym.workouts.interfaces.I_workoutList;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class WorkoutList extends AppCompatActivity {
+public class WorkoutList extends AppCompatActivity implements I_workoutList {
     // set global variable
     static String nameTR;
     // set toast
@@ -44,13 +44,22 @@ public class WorkoutList extends AppCompatActivity {
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    String email_trainer = getTrainee.nameTR;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_list);
+        String role = getIntent().getStringExtra("role");
+        String email;
+        if(role.equals("trainee")){
+            email = email_trainee;
+        }
+        else {
+            email = email_trainer;
+        }
         // set list adapter
         adapter = new ListViewGroupW(WorkoutList.this, items);
         listView = findViewById(R.id.grid_workout);
@@ -58,13 +67,14 @@ public class WorkoutList extends AppCompatActivity {
         input = findViewById(R.id.Input);
 
         // load content from firebase
-        loadContent();
+        loadContent(email);
 
         // set action for the workouts list
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent i = new Intent(WorkoutList.this, ExerciseList.class);
+                i.putExtra("role", role);
                 startActivity(i);
                 nameTR = items.get(pos);
             }
@@ -77,11 +87,11 @@ public class WorkoutList extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     String text = input.getText().toString();
-                    addWO(user.getEmail(), text);
+                    addWO(email, text);
                     input.setText("");
                     makeToast(text + " Added Successfully");
                     // reload content to show the new workout
-                    loadContent();
+                    loadContent(email);
                 } catch (Exception e) {
                     makeToast("Type Workout Name");
                     e.printStackTrace();
@@ -95,6 +105,7 @@ public class WorkoutList extends AppCompatActivity {
      * @param email trainee email
      * @param wo_name the name we insert in the app
      */
+    @Override
     public void addWO(String email, String wo_name) {
         // create workout
         Map<String, Object> name = new HashMap<>();
@@ -120,8 +131,8 @@ public class WorkoutList extends AppCompatActivity {
      * this function load the relevant content from the firebase
      * to the list we created in order to show it in the app screen.
      ***/
-    public void loadContent() {
-        String email = Objects.requireNonNull(user.getEmail());
+    @Override
+    public void loadContent(String email) {
         db.collection("user-info").document(email)
                 .collection("workouts")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -156,7 +167,8 @@ public class WorkoutList extends AppCompatActivity {
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
-    private void makeToast(String s) {
+    @Override
+    public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();

@@ -1,13 +1,12 @@
 package com.example.gym.homePage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -60,7 +59,9 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
             // Handle navigation view item clicks here.
             int id = item.getItemId();
             if (id == R.id.nav_train) {
-                startActivity(new Intent(getApplicationContext(), WorkoutList.class));
+                Intent intent = new Intent(getApplicationContext(), WorkoutList.class);
+                intent.putExtra("role", "trainee");
+                startActivity(intent);
             }
             else if (id == R.id.nav_personal_details){
                 startActivity(new Intent(getApplicationContext(), PrivateArea.class));

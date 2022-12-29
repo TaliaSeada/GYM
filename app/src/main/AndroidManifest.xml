@@ -111,7 +111,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".workouts.AddNewWorkoutTrainee"
+            android:name=".workouts.AddNewWorkout"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.example.gym.workouts.interfaces.I_exerciseList;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,9 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class ExerciseList extends AppCompatActivity {
+public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     // set global variable
     static String nameExe;
     // set toast
@@ -40,15 +39,24 @@ public class ExerciseList extends AppCompatActivity {
     SimpleAdapter adap;
     // get firebase instances
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    String email_trainer = getTrainee.nameTR;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_list);
+        String role = getIntent().getStringExtra("role");
+        String email;
+        if(role.equals("trainee")){
+            email = email_trainee;
+        }
+        else {
+            email = email_trainer;
+        }
         // load content from firebase
-        loadContent();
+        loadContent(email);
         // set the exercises list
         listView = findViewById(R.id.grid_exe);
         items = new ArrayList<>();
@@ -58,7 +66,9 @@ public class ExerciseList extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddNewWorkoutTrainee.class));
+                Intent i = new Intent(getApplicationContext(), AddNewWorkout.class);
+                i.putExtra("role", role);
+                startActivity(i);
             }
         });
 
@@ -67,6 +77,7 @@ public class ExerciseList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent i = new Intent(ExerciseList.this, exeUpdate.class);
+                i.putExtra("role", role);
                 startActivity(i);
                 nameExe = items.get(pos);
             }
@@ -77,8 +88,8 @@ public class ExerciseList extends AppCompatActivity {
      * this function load the relevant content from the firebase
      * to the lists we created in order to show it in the app screen.
      ***/
-    public void loadContent() {
-        db.collection("user-info").document(Objects.requireNonNull(user.getEmail()))
+    public void loadContent(String email) {
+        db.collection("user-info").document(email)
                 .collection("workouts").document(WorkoutList.nameTR)
                 .collection("exercises")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -109,7 +120,7 @@ public class ExerciseList extends AppCompatActivity {
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
-    private void makeToast(String s) {
+    public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
