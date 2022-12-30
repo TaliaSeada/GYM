@@ -34,7 +34,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     private double double_weight;
 
     // set button for adding new data to firebase
-    private Button START_NOW, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
+    private Button ADD, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -106,7 +106,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         }
 
         // set button
-        START_NOW = findViewById(R.id.addWorkout);
+        ADD = findViewById(R.id.addWorkout);
         IncreaseS = findViewById(R.id.ButtonAddS);
         DecreaseS = findViewById(R.id.ButtonRemoveS);
         workValueS = findViewById(R.id.valueWorkoutS);
@@ -130,7 +130,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
             @Override
             public void onClick(View view) {
                 if (integer_sets <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Can't Decrease 0", Toast.LENGTH_SHORT).show();
                 } else {
                     integer_sets -= 1;
                     workValueS.setText(integer_sets + "");
@@ -155,7 +155,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
             @Override
             public void onClick(View view) {
                 if (integer_reps <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Can't Decrease 0", Toast.LENGTH_SHORT).show();
                 } else {
                     integer_reps -= 1;
                     workValueR.setText(integer_reps + "");
@@ -179,7 +179,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
             @Override
             public void onClick(View view) {
                 if (double_weight <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Can't Decrease 0", Toast.LENGTH_SHORT).show();
                 } else {
                     double_weight -= 0.5;
                     workValueW.setText(double_weight + "");
@@ -195,7 +195,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
 
 
         // set ADD button action
-        START_NOW.setOnClickListener(new View.OnClickListener() {
+        ADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String exercise = input_exe.getText().toString();

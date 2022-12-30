@@ -94,7 +94,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
             @Override
             public void onClick(View view) {
                 if (minteger_sets <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Can't Decrease 0", Toast.LENGTH_SHORT).show();
                 } else {
                     minteger_sets -= 1;
                     workValueS.setText(minteger_sets + "");
@@ -119,7 +119,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
             @Override
             public void onClick(View view) {
                 if (minteger_reps <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Can't Decrease 0", Toast.LENGTH_SHORT).show();
                 } else {
                     minteger_reps -= 1;
                     workValueR.setText(minteger_reps + "");
@@ -143,7 +143,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
             @Override
             public void onClick(View view) {
                 if (minteger_weight <= 0) {
-                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Can't Decrease 0", Toast.LENGTH_SHORT).show();
                 } else {
                     minteger_weight -= 0.5;
                     workValueW.setText(minteger_weight + "");
