@@ -11,15 +11,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_addNewWorkout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.MetadataChanges;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,21 +33,22 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     private Toast t;
     // set fields for data display
     private EditText input_exe;
-    private AppCompatTextView input_set;
-    private AppCompatTextView input_weight;
-    private AppCompatTextView input_reps;
-    private String Gworkout;
-    private int minteger_sets;
-    private int minteger_reps;
-    private double minteger_weight;
+    private TextView  input_set,input_weight,input_reps, workValueS,workValueR,workValueW;
+    private int integer_sets;
+    private int integer_reps;
+    private double double_weight ,weight;
+    private Long reps,sets;
+
     // set button for adding new data to firebase
-    private Button ADD;
+    private Button START_NOW,RemoveS,AddS,RemoveW,AddW ,RemoveR,AddR  ;
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     // get user email
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private String email_trainer = getTrainee.nameTR;
+    private String Gworkout;
+
 
     /***
      * this function adds new exercise to the trainee and updates the firebase
@@ -53,8 +58,11 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
      * @param sets number of sets we insert in the app
      * @param reps number of repetition we insert in the app
      * @param weight_kg weight we insert in the app
+     *
      */
-    @Override
+
+
+//    @Override
     public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
@@ -85,80 +93,17 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                 });
     }
 
-    /***
-     * the following functions are for the exercise creation and update
-     * they give the user the ability to set the sets, repetitions and weight
-     * @param view relevant button (plus or minus)
-     */
-    @Override
-    public void increaseInteger_sets(View view) {
-        minteger_sets = minteger_sets + 1;
-        display_sets(minteger_sets);
-    }
-    @Override
-    public void decreaseInteger_sets(View view) {
-        minteger_sets = minteger_sets - 1;
-        display_sets(minteger_sets);
-    }
-    @Override
-    public void display_sets(int number) {
-        TextView displayInteger = (TextView) findViewById(R.id.integer_number_sets);
-        displayInteger.setText("" + number);
-    }
-    @Override
-    public void increaseInteger_reps(View view) {
-        minteger_reps = minteger_reps + 1;
-        display_reps(minteger_reps);
-    }
-    @Override
-    public void decreaseInteger_reps(View view) {
-        minteger_reps = minteger_reps - 1;
-        display_reps(minteger_reps);
-    }
-    @Override
-    public void display_reps(int number) {
-        TextView displayInteger = (TextView) findViewById(R.id.integer_number_reps);
-        displayInteger.setText("" + number);
-    }
-    @Override
-    public void increaseInteger_weight(View view) {
-        minteger_weight = minteger_weight + 1;
-        display_weight(minteger_weight);
-    }
-    @Override
-    public void decreaseInteger_weight(View view) {
-        minteger_weight = minteger_weight - 1;
-        display_weight(minteger_weight);
-    }
-    @Override
-    @SuppressLint("DefaultLocale")
-    public void display_weight(double number) {
-        TextView displayDouble = (TextView) findViewById(R.id.integer_number_weight);
-        displayDouble.setText(String.format("%.1f", number));
-    }
-    @Override
-    public void increaseInteger_weight_(View view) {
-        minteger_weight = minteger_weight + 0.1;
-        display_weight(minteger_weight);
-    }
-    @Override
-    public void decreaseInteger_weight_(View view) {
-        minteger_weight = minteger_weight - 0.1;
-        display_weight(minteger_weight);
-    }
-
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_workout);
+        setContentView(R.layout.activity_add_excrcise);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width*.9), (int) (height*.8));
-
 
         String role = getIntent().getStringExtra("role");
         String email;
@@ -168,19 +113,99 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         else {
             email = email_trainer;
         }
+        // load content from firebase
+//        loadContent(email);
         // set button
-        ADD = findViewById(R.id.addWorkout);
+        START_NOW = findViewById(R.id.addWorkout);
+        AddS = findViewById(R.id.ButtonAddS);
+        RemoveS = findViewById(R.id.ButtonRemoveS);
+        workValueS = findViewById(R.id.valueWorkoutS);
+
+        AddR = findViewById(R.id.ButtonAddR);
+        RemoveR = findViewById(R.id.ButtonRemoveR);
+        workValueR = findViewById(R.id.valueWorkoutR);
+
+        AddW = findViewById(R.id.ButtonAddW);
+        RemoveW = findViewById(R.id.ButtonRemoveW);
+        workValueW = findViewById(R.id.valueWorkoutW);
+
+        AddS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                integer_sets += 1;
+                workValueS.setText(integer_sets + "");
+            }
+        });
+        RemoveS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (integer_sets <= 0) {
+                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                } else {
+                    integer_sets -= 1;
+                    workValueS.setText(integer_sets + "");
+                }
+            }
+        });
+
+
+//Repetition
+        AddR = findViewById(R.id.ButtonAddR);
+        RemoveR = findViewById(R.id.ButtonRemoveR);
+        workValueR = findViewById(R.id.valueWorkoutR);
+
+        AddR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                integer_reps += 1;
+                workValueR.setText(integer_reps + "");
+            }
+        });
+        RemoveR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (integer_reps <= 0) {
+                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                } else {
+                    integer_reps -= 1;
+                    workValueR.setText(integer_reps + "");
+                }
+            }
+        });
+
+
+        AddW = findViewById(R.id.ButtonAddW);
+        RemoveW = findViewById(R.id.ButtonRemoveW);
+        workValueW = findViewById(R.id.valueWorkoutW);
+
+        AddW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double_weight += 0.5;
+                workValueW.setText(double_weight + "");
+            }
+        });
+        RemoveW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (double_weight <= 0) {
+                    Toast.makeText(getApplicationContext(), "Sorry!", Toast.LENGTH_SHORT).show();
+                } else {
+                    double_weight -= 0.5;
+                    workValueW.setText(double_weight + "");
+                }
+            }
+        });
+
         // set texts
-        input_reps = findViewById(R.id.integer_number_reps);
-        input_set = findViewById(R.id.integer_number_sets);
-        input_weight = findViewById(R.id.integer_number_weight);
-        input_exe = findViewById(R.id.editWorkout);
-        minteger_sets = 0;
-        minteger_reps = 0;
-        minteger_weight = 0.0;
+        input_exe = findViewById(R.id.NameExercise);
+        input_set = findViewById(R.id.valueWorkoutS);
+        input_reps = findViewById(R.id.valueWorkoutR);
+        input_weight = findViewById(R.id.valueWorkoutW);
+
 
         // set ADD button action
-        ADD.setOnClickListener(new View.OnClickListener() {
+        START_NOW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String exercise = input_exe.getText().toString();
@@ -193,10 +218,9 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                     addExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast(exercise + " Added Successfully");
                 } catch (Exception e) {
-                    if(exercise.equals("")){
+                    if (exercise.equals("")) {
                         makeToast("Type Exercise Name");
-                    }
-                    else{
+                    } else {
                         makeToast("Something Went Wrong");
                     }
 
@@ -210,14 +234,53 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
 
     }
 
+//    public void loadContent(String email) {
+//        db.collection("user-info").document(email)
+//                .collection("workouts").document(WorkoutList.nameTR)
+//                .collection("exercises").document(ExerciseList.nameExe).
+//                addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
+//                    @SuppressLint({"SetTextI18n", "WrongViewCast"})
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+//                        if (e != null) {
+//                            Log.w(TAG, "Listen failed.", e);
+//                            return;
+//                        }
+//
+//                        if (snapshot != null && snapshot.exists()) {
+//                            reps = snapshot.getLong("reps");
+//                            sets = snapshot.getLong("sets");
+//                            weight = snapshot.getDouble("weight");
+//                            Log.d(TAG, "Current data: " + snapshot.getData());
+//                        } else {
+//                            Log.d(TAG, "Current data: null");
+//                        }
+//
+//                        // set the fields
+//                        input_exe = findViewById(R.id.NameExercise);
+//                        input_set = findViewById(R.id.valueWorkoutS);
+//                        input_reps = findViewById(R.id.valueWorkoutR);
+//                        input_weight = findViewById(R.id.valueWorkoutW);
+//
+//                        input_set.setText(sets + "");
+//                        input_reps.setText(reps + "");
+//                        input_weight.setText(weight + "");
+//                        input_exe.setText(ExerciseList.nameExe);
+//                    }
+//                });
+//    }
+
+    //Extracts the data from Firebase to activity_private_area.xml
+
+
     /***
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
-    @Override
+//    @Override
     public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }
-}
+    }

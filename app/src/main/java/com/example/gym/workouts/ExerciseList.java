@@ -60,7 +60,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
         // set the exercises list
         listView = findViewById(R.id.grid_exe);
         items = new ArrayList<>();
-
+        loadContent(email_trainee);
         // set add button action
         add = findViewById(R.id.imageMenu);
         add.setOnClickListener(new View.OnClickListener() {

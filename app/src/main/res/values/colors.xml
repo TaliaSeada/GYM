@@ -9,8 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="darker_gray">#FF7C8585</color>
     <color name="colorPrimary">#FFFFFFFF</color>
-
+    <color name="Red">#FFE40A39</color>
+    <color name="Green">#FF14DC1D</color>
+    80DDD0
     <color name="blueBlack">#111F28</color>
+    <color name="blueless">#80DDD0</color>
+    <color name="blueBlack1">#7D7F8E</color>
     <color name="tanAccent">#e3cdb3</color>
 
 </resources>

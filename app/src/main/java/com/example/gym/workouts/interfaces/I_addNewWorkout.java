@@ -24,15 +24,17 @@ public interface I_addNewWorkout {
      * they give the user the ability to set the sets, repetitions and weight
      * @param view relevant button (plus or minus)
      */
-    void increaseInteger_sets(View view);
-    void decreaseInteger_sets(View view);
-    void display_sets(int number);
-    void increaseInteger_reps(View view);
-    void decreaseInteger_reps(View view);
-    void display_reps(int number);
-    void increaseInteger_weight(View view);
-    void decreaseInteger_weight(View view);
-    void display_weight(double number);
-    void increaseInteger_weight_(View view);
-    void decreaseInteger_weight_(View view);
+
+
+//    void increaseInteger_sets(View view);
+//    void decreaseInteger_sets(View view);
+//    void display_sets(int number);
+//    void increaseInteger_reps(View view);
+//    void decreaseInteger_reps(View view);
+//    void display_reps(int number);
+//    void increaseInteger_weight(View view);
+//    void decreaseInteger_weight(View view);
+//    void display_weight(double number);
+//    void increaseInteger_weight_(View view);
+//    void decreaseInteger_weight_(View view);
 }
