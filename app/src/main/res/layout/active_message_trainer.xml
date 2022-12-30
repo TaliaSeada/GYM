@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".messages.Messages"
+    tools:context=".messages.MessagesTrainee"
     >
 
         <RelativeLayout
             android:id="@+id/RLayoutLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:background="#F1FEFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -19,33 +19,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            tools:ignore="MissingConstraints" >
+            >
 
                 <ImageView
                     android:id="@+id/imageRefresh"
                     android:layout_width="40dp"
-                    android:layout_height="38dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="362dp"
-                    android:layout_marginEnd="9dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="360dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="54dp"
                     app:srcCompat="@drawable/ic_refresh" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:textSize="22sp"
+                    android:layout_height="60dp"
+                    android:fontFamily="@font/italic"
+                    android:text="Message from trainee" />
         </RelativeLayout>
 
 
         <ListView
             android:id="@+id/list_message"
-            android:layout_width="396dp"
-            android:layout_height="594dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/RLayoutLayout"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="-22dp"
             />
+ />
 
 
 </RelativeLayout>

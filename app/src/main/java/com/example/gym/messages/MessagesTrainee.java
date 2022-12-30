@@ -18,9 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gym.Manager.ManageUsers;
 import com.example.gym.R;
-import com.example.gym.auth.UserManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,19 +26,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Messages extends AppCompatActivity {
+public class MessagesTrainee extends AppCompatActivity {
     /**
      * This class is an application system where the trainee,
      * can send an application to the trainers
@@ -63,7 +56,7 @@ public class Messages extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.active_messages);
+        setContentView(R.layout.active_messages_trainee);
         listView =(ListView) findViewById(R.id.list_message);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
@@ -74,9 +67,9 @@ public class Messages extends AppCompatActivity {
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Messages.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MessagesTrainee.this);
                 builder.setTitle("Add Messages");
-                View viewInflated = LayoutInflater.from(Messages.this).inflate(R.layout.add_new_message_window, (ViewGroup) listView, false);
+                View viewInflated = LayoutInflater.from(MessagesTrainee.this).inflate(R.layout.add_new_message_window, (ViewGroup) listView, false);
                 // Set up the input box
                 final EditText title = (EditText) viewInflated.findViewById(R.id.Title);
                 final EditText message = (EditText) viewInflated.findViewById(R.id.message);
@@ -98,7 +91,7 @@ public class Messages extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Messages.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MessagesTrainee.this);
                                 builder.setMessage("Can't add this Message.\nTry again later");
                                 builder.setCancelable(true);
                                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -129,7 +122,7 @@ public class Messages extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), Messages.class));
+                startActivity(new Intent(getApplicationContext(), MessagesTrainee.class));
             }
         });
 
@@ -137,7 +130,7 @@ public class Messages extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent senderIntent = new Intent(Messages.this, ShowMessage.class);
+                Intent senderIntent = new Intent(MessagesTrainee.this, ShowMessage.class);
                 senderIntent.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos)});
                 startActivity(senderIntent);
             }
@@ -168,10 +161,10 @@ public class Messages extends AppCompatActivity {
 
                                 //Indicates whether a new message has been received
                                 if (answer.isEmpty()){
-                                    image_array.add(R.drawable.ic_mail);
+                                    image_array.add(R.drawable.close_mail);
                                 }
                                 else{
-                                    image_array.add(R.drawable.ic_mail_read);
+                                    image_array.add(R.drawable.open_mail);
                                 }
                                 Date date = document.getTimestamp("date").toDate();
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -11,7 +11,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.R;
-import com.example.gym.messages.Messages;
+import com.example.gym.messages.MessagesTrainee;
 import com.example.gym.workouts.WorkoutList;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -67,7 +67,7 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
                 startActivity(new Intent(getApplicationContext(), PrivateArea.class));
             }
             else if (id == R.id.nav_message){
-                startActivity(new Intent(getApplicationContext(), Messages.class));
+                startActivity(new Intent(getApplicationContext(), MessagesTrainee.class));
             }
             else if (id== R.id.nav_logout){
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {

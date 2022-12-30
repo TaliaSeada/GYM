@@ -49,14 +49,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".messages.Messages"
+            android:name=".messages.MessagesTrainee"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".messages.MessageT"
+            android:name=".messages.MessagesTrainer"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

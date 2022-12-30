@@ -30,7 +30,7 @@ public class ShowMessage extends AppCompatActivity {
         allMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Messages.class));
+                startActivity(new Intent(getApplicationContext(), MessagesTrainee.class));
             }
         });
 

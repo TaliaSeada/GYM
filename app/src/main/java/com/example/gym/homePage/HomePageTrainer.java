@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.gym.R;
-import com.example.gym.messages.MessageT;
+import com.example.gym.messages.MessagesTrainer;
 import com.example.gym.workouts.getTrainee;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,7 +60,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
 //        }
 //        else
          if (id == R.id.nav_message){
-            startActivity(new Intent(getApplicationContext(), MessageT.class));
+            startActivity(new Intent(getApplicationContext(), MessagesTrainer.class));
         }
         else if (id == R.id.nav_add_train){
             startActivity(new Intent(getApplicationContext(), getTrainee.class));

@@ -4,52 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".messages.ResponseMessageTrainer">
+    >
+
+    <TextView
+        android:id="@+id/reciveMessage"
+        android:layout_width="402dp"
+        android:layout_height="218dp"
+        android:background="@drawable/my_frame"
+        android:gravity="center"
+        android:hint="@string/messages"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.269" />
+
+    <TextView
+        android:id="@+id/TrinerResponse"
+        android:layout_width="180dp"
+        android:layout_height="25dp"
+        android:hint="Response Trainer:"
+        android:textColorHint="@color/black"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.017"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.566" />
+
+    <TextView
+        android:id="@+id/answerMessage"
+        android:layout_width="393dp"
+        android:layout_height="114dp"
+        android:background="@drawable/my_frame"
+        android:gravity="center"
+        android:hint="Not yet answered"
+        android:textColorHint="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.729" />
+
 
     <Button
-        android:id="@+id/sendResponse"
+        android:id="@+id/buttonAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Answer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.743"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.855" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/Title"
         android:gravity="center"
-        android:text="Send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/messageTrainee"
-        android:layout_width="350dp"
-        android:layout_height="163dp"
-        android:background="@drawable/my_frame"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:text="message Trainee"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.338" />
-
-    <EditText
-        android:id="@+id/answerTrainer"
-        android:layout_width="300dp"
-        android:layout_height="140dp"
-        android:background="@drawable/my_frame"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
-
+        app:layout_constraintVertical_bias="0.078" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

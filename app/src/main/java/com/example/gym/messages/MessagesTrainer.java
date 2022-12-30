@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class MessageT extends AppCompatActivity  {
+public class MessagesTrainer extends AppCompatActivity  {
     /**
      * This class is an application system where the trainer,
      * can response an application to the trainee
@@ -47,24 +47,22 @@ public class MessageT extends AppCompatActivity  {
 
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.active_message_show);
+        setContentView(R.layout.active_message_trainer);
         listView = (ListView) findViewById(R.id.list_message);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         email = user.getEmail();
         addMess(email);
-
         //data refresh
         refresh = (ImageView) findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), Messages.class));
+                startActivity(new Intent(getApplicationContext(), MessagesTrainer.class));
             }
         });
 
@@ -72,8 +70,8 @@ public class MessageT extends AppCompatActivity  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick (AdapterView < ? > adapterView, View view,int pos, long l){
-                Intent i = new Intent(MessageT.this, ResponseMessageTrainer.class);
-                    i.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos)});
+                Intent i = new Intent(MessagesTrainer.this, ResponseMessageTrainer.class);
+                i.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos), title_array.get(pos)});
                 //Create the bundle
                 Bundle bundle = new Bundle();
                 //Add your data to bundle
@@ -111,17 +109,17 @@ public class MessageT extends AppCompatActivity  {
                             answer_array.add(answer);
                             //Updated when the trainer responded to the message
                             if (answer.isEmpty()){
-                                image_array.add(R.drawable.ic_mail);
+                                image_array.add(R.drawable.close_mail);
                             }
                             else{
-                                image_array.add(R.drawable.ic_mail_read);
+                                image_array.add(R.drawable.open_mail);
                             }
                             Date date = snapshot.getTimestamp("date").toDate();
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             String strDate = sdf.format(date.getTime());
                             date_array.add(strDate);
                         }
-                        MessageT.MessageAdapter messageAdapter = new MessageT.MessageAdapter();
+                        MessagesTrainer.MessageAdapter messageAdapter = new MessagesTrainer.MessageAdapter();
                         listView.setAdapter(messageAdapter);
 
                     }
