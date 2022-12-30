@@ -21,9 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    public DrawerLayout drawerLayout; //layout that contains the menu
-    public ActionBarDrawerToggle actionBarDrawerToggle;
+    private DrawerLayout drawerLayout; //layout that contains the menu
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

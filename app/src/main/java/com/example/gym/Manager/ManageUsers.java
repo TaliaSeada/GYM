@@ -36,13 +36,11 @@ import java.util.Map;
 
 // The manager page
 public class ManageUsers extends AppCompatActivity {
-
     private static final String TAG = "ManageUsers";
-
-    UserManager userManager = new UserManager();
-    String role;
-    final ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
-    SimpleAdapter adapter; // Connect between the view to the list of users
+    private UserManager userManager = new UserManager();
+    private String role;
+    private final ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
+    private SimpleAdapter adapter; // Connect between the view to the list of users
 
     // Take the users from the db and put them in the view
     private void updateUsersList(){
