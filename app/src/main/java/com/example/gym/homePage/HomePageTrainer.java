@@ -1,14 +1,14 @@
 package com.example.gym.homePage;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.example.gym.R;
 import com.example.gym.messages.MessagesTrainer;
@@ -25,7 +25,7 @@ public class HomePageTrainer extends AppCompatActivity implements NavigationView
      * this class contains a menu in which there are transitions to add train for trainee,
      * a system of inquiries and disconnection
      * */
-    ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

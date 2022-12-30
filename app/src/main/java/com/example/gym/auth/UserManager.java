@@ -1,15 +1,8 @@
 package com.example.gym.auth;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -20,10 +13,7 @@ import java.util.Map;
 // This class have all the actions we can do to user
 
 public class UserManager {
-    private static final String TAG = "DBUserManager";
-
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     public static final String ROLE_MANAGER = "manager";
     public static final String ROLE_TRAINER = "trainer";
     public static final String ROLE_TRAINEE = "trainee";

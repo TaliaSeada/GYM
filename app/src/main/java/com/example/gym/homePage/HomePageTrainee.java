@@ -19,15 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
-
-
     /**
      * This class is responsible for the trainee's main page.
      * this class contains a menu in which there are transitions to training,
      * personal information, a system of inquiries and disconnection
     * */
-
-    ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

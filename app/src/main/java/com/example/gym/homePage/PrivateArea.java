@@ -32,11 +32,11 @@ import java.util.Map;
 
 public class PrivateArea extends AppCompatActivity {
     //personal Details
-    EditText input_weightTrainee;
-    EditText input_ageTrainee;
-    EditText input_heightTrainee;
-    TextView full_name_text;
-    Button Add;
+    private EditText input_weightTrainee;
+    private EditText input_ageTrainee;
+    private EditText input_heightTrainee;
+    private TextView full_name_text;
+    private Button Add;
     static String email;
 
     private static final String TAG = "PrivateArea";

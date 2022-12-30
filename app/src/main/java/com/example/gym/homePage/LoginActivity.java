@@ -37,10 +37,9 @@ import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
-
     private static final String TAG = "LoginActivity";
-    UserManager userManager = new UserManager();
-    ProgressDialog progressDialog;
+    private UserManager userManager = new UserManager();
+    private ProgressDialog progressDialog;
 
     // Launcher of the sign in screen (with google or email)
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
