@@ -13,9 +13,9 @@ import com.example.gym.workouts.interfaces.I_recyclerView;
 import java.util.List;
 
 public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
-    I_recyclerView itemClick;
-    Context context;
-    List<Item> items;
+    private I_recyclerView itemClick;
+    private Context context;
+    private List<Item> items;
 
     public myAdapter(Context context, List<Item> items, I_recyclerView itemClick) {
         this.context = context;
@@ -31,8 +31,8 @@ public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        holder.itemName.setText(items.get(position).getName());
-        holder.itemImage.setImageResource(items.get(position).getImage());
+        holder.getItemName().setText(items.get(position).getName());
+        holder.getItemImage().setImageResource(items.get(position).getImage());
 
         holder.itemView.setOnClickListener(view -> {
             itemClick.onItemClick(position);

@@ -11,8 +11,16 @@ import com.example.gym.R;
 
 public class myViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView itemImage;
-    TextView itemName;
+    private ImageView itemImage;
+    private TextView itemName;
+
+    public ImageView getItemImage() {
+        return itemImage;
+    }
+
+    public TextView getItemName() {
+        return itemName;
+    }
 
     public myViewHolder(@NonNull View itemView) {
         super(itemView);

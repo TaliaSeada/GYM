@@ -1,8 +1,8 @@
 package com.example.gym.workouts;
 
 public class Item {
-    String name;
-    int image;
+    private String name;
+    private int image;
 
     public Item(String name, int image) {
         this.name = name;

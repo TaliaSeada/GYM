@@ -3,7 +3,6 @@ package com.example.gym.workouts;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,6 @@ public class getTrainee extends AppCompatActivity {
     static String nameTR;
     // create list to save the content read from firebase
     private final List<String> items = new ArrayList<>();
-    ListView listView;
     // create list to show only the names from content read from firebase
     private RecyclerView rview;
     private myAdapter radapter;

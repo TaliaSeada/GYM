@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
@@ -19,11 +18,7 @@ import com.example.gym.workouts.interfaces.I_addNewWorkout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.MetadataChanges;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,14 +28,13 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     private Toast t;
     // set fields for data display
     private EditText input_exe;
-    private TextView  input_set,input_weight,input_reps, workValueS,workValueR,workValueW;
+    private TextView input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
     private int integer_sets;
     private int integer_reps;
-    private double double_weight ,weight;
-    private Long reps,sets;
+    private double double_weight;
 
     // set button for adding new data to firebase
-    private Button START_NOW,RemoveS,AddS,RemoveW,AddW ,RemoveR,AddR  ;
+    private Button START_NOW, RemoveS, AddS, RemoveW, AddW, RemoveR, AddR;
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -60,8 +54,6 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
      * @param weight_kg weight we insert in the app
      *
      */
-
-
 //    @Override
     public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
@@ -103,14 +95,13 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width*.9), (int) (height*.8));
+        getWindow().setLayout((int) (width * .9), (int) (height * .8));
 
         String role = getIntent().getStringExtra("role");
         String email;
-        if(role.equals("trainee")){
+        if (role.equals("trainee")) {
             email = email_trainee;
-        }
-        else {
+        } else {
             email = email_trainer;
         }
         // load content from firebase
@@ -149,7 +140,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         });
 
 
-//Repetition
+        //Repetition
         AddR = findViewById(R.id.ButtonAddR);
         RemoveR = findViewById(R.id.ButtonRemoveR);
         workValueR = findViewById(R.id.valueWorkoutR);
@@ -283,4 +274,4 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
     }
-    }
+}

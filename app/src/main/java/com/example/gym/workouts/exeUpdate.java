@@ -13,10 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.gym.R;
-import com.example.gym.workouts.interfaces.I_addNewWorkout;
 import com.example.gym.workouts.interfaces.I_updateExercise;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,12 +28,12 @@ import com.google.firebase.firestore.MetadataChanges;
 import java.util.HashMap;
 import java.util.Map;
 
-public class exeUpdate extends AppCompatActivity implements I_addNewWorkout {
+public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     // set toast
     private Toast t;
     // set fields for data display
     private EditText input_exe;
-    private TextView  title ,input_set,input_weight,input_reps, workValueS,workValueR,workValueW;
+    private TextView title,input_set,input_weight,input_reps, workValueS,workValueR,workValueW;
     private String Gworkout;
     private int minteger_sets;
     private int minteger_reps;
@@ -54,8 +52,7 @@ public class exeUpdate extends AppCompatActivity implements I_addNewWorkout {
     private String email_trainer = getTrainee.nameTR;
 
 
-    @Override
-    public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
+    public void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
         exe.put("reps", reps);
@@ -86,7 +83,7 @@ public class exeUpdate extends AppCompatActivity implements I_addNewWorkout {
     }
 
 
-    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
+    @SuppressLint({"MissingInflatedId", "WrongViewCast", "CutPasteId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +138,7 @@ public class exeUpdate extends AppCompatActivity implements I_addNewWorkout {
         });
 
 
-//Repetition
+        //Repetition
         AddR = findViewById(R.id.ButtonAddR);
         RemoveR = findViewById(R.id.ButtonRemoveR);
         workValueR = findViewById(R.id.valueWorkoutR);
@@ -208,7 +205,7 @@ public class exeUpdate extends AppCompatActivity implements I_addNewWorkout {
                 Gworkout = WorkoutList.nameTR;
                 try {
                     // add the exercise to firebase
-                    addExe(email, Gworkout, exercise, set, reps, weight);
+                    updateExe(email, Gworkout, exercise, set, reps, weight);
                     makeToast(exercise + " Added Successfully");
                 } catch (Exception e) {
                     if (exercise.equals("")) {
@@ -302,9 +299,6 @@ public class exeUpdate extends AppCompatActivity implements I_addNewWorkout {
                     }
                 });
     }
-
-    //Extracts the data from Firebase to activity_private_area.xml
-
 
     /***
      * this function raises a massage to the screen
