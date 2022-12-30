@@ -1,9 +1,5 @@
 package com.example.gym.messages;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,9 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.gym.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,12 +24,13 @@ public class ResponseMessageTrainer extends AppCompatActivity {
     /**
      * This class is the trainer,
      * can response message to the trainee
-     * **/
-    Button send;
-    TextView answerTrainer;
-    TextView Title;
-    TextView messageTrainee;
+     **/
+    private Button send;
+    private TextView answerTrainer;
+    private TextView Title;
+    private TextView messageTrainee;
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     public void addMess(String id, String message, String email) {
         // Update an existing document
         DocumentReference docRef = db.collection("message").document(id);
@@ -40,9 +38,8 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         // (async) Update one field
         docRef.update("answer", message);
         docRef.update("trainer", email);
-
-
     }
+    
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +48,9 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         send = findViewById(R.id.buttonAnswer);
         answerTrainer = findViewById(R.id.answerMessage);
         Title = findViewById(R.id.textViewTitle);
-        messageTrainee=findViewById(R.id.reciveMessage);
-        Intent MessageIntent=getIntent();
-        String [] MessageValue=MessageIntent.getStringArrayExtra("key_sender");
+        messageTrainee = findViewById(R.id.reciveMessage);
+        Intent MessageIntent = getIntent();
+        String[] MessageValue = MessageIntent.getStringArrayExtra("key_sender");
         messageTrainee.setText(MessageValue[0]);
         answerTrainer.setText(MessageValue[1]);
         Title.setText(MessageValue[2]);

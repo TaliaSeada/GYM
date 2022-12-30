@@ -39,18 +39,18 @@ public class MessagesTrainee extends AppCompatActivity {
      * can send an application to the trainers
      * **/
     private static final String TAG = "DBMess";
-    ManageMessages ManageMessages = new ManageMessages();
+    private ManageMessages ManageMessages = new ManageMessages();
     //Defining datasets for extracting the information
-    ListView listView;
-    String email;
-    ArrayList<String> title_array = new ArrayList<String>();
-    ArrayList<String> message_array = new ArrayList<String>();
-    ArrayList<String> date_array = new ArrayList<String>();
-    ArrayList<String> sub_array = new ArrayList<String>();
-    ArrayList<Integer> image_array = new ArrayList<Integer>();
-    ArrayList<String> answer_array = new ArrayList<String>();
+    private ListView listView;
+    private String email;
+    private ArrayList<String> title_array = new ArrayList<String>();
+    private ArrayList<String> message_array = new ArrayList<String>();
+    private ArrayList<String> date_array = new ArrayList<String>();
+    private ArrayList<String> sub_array = new ArrayList<String>();
+    private ArrayList<Integer> image_array = new ArrayList<Integer>();
+    private ArrayList<String> answer_array = new ArrayList<String>();
 
-    ImageView refresh;
+    private ImageView refresh;
 
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override

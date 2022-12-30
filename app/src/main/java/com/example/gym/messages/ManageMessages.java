@@ -10,12 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ManageMessages {
-    private static final String TAG = "DBMessages";
-
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public Task<Void> addMessage(String email, String message, String title) {
-
         Map<String, Object> message_map = new HashMap<>();
         message_map.put("trainee", email);
         message_map.put("trainer", "all");
@@ -34,6 +31,5 @@ public class ManageMessages {
 
     public Task<DocumentSnapshot> getUserName(String email) {
         return db.collection("users").document(email).get();
-
     }
 }

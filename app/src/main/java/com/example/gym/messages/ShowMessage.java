@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.R;
 
 public class ShowMessage extends AppCompatActivity {
-    TextView Message;
-    TextView Answer;
-    Button allMessage;
+    private TextView Message;
+    private TextView Answer;
+    private Button allMessage;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
