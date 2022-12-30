@@ -34,7 +34,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     private double double_weight;
 
     // set button for adding new data to firebase
-    private Button START_NOW, RemoveS, AddS, RemoveW, AddW, RemoveR, AddR;
+    private Button START_NOW, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
     // get firebase instances
     private static final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -54,7 +54,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
      * @param weight_kg weight we insert in the app
      *
      */
-//    @Override
+    @Override
     public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
@@ -86,7 +86,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     }
 
 
-    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
+    @SuppressLint({"MissingInflatedId", "WrongViewCast", "CutPasteId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,30 +104,29 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         } else {
             email = email_trainer;
         }
-        // load content from firebase
-//        loadContent(email);
+
         // set button
         START_NOW = findViewById(R.id.addWorkout);
-        AddS = findViewById(R.id.ButtonAddS);
-        RemoveS = findViewById(R.id.ButtonRemoveS);
+        IncreaseS = findViewById(R.id.ButtonAddS);
+        DecreaseS = findViewById(R.id.ButtonRemoveS);
         workValueS = findViewById(R.id.valueWorkoutS);
 
-        AddR = findViewById(R.id.ButtonAddR);
-        RemoveR = findViewById(R.id.ButtonRemoveR);
+        IncreaseR = findViewById(R.id.ButtonAddR);
+        DecreaseR = findViewById(R.id.ButtonRemoveR);
         workValueR = findViewById(R.id.valueWorkoutR);
 
-        AddW = findViewById(R.id.ButtonAddW);
-        RemoveW = findViewById(R.id.ButtonRemoveW);
+        IncreaseW = findViewById(R.id.ButtonAddW);
+        DecreaseW = findViewById(R.id.ButtonRemoveW);
         workValueW = findViewById(R.id.valueWorkoutW);
 
-        AddS.setOnClickListener(new View.OnClickListener() {
+        IncreaseS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 integer_sets += 1;
                 workValueS.setText(integer_sets + "");
             }
         });
-        RemoveS.setOnClickListener(new View.OnClickListener() {
+        DecreaseS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (integer_sets <= 0) {
@@ -141,18 +140,18 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
 
 
         //Repetition
-        AddR = findViewById(R.id.ButtonAddR);
-        RemoveR = findViewById(R.id.ButtonRemoveR);
+        IncreaseR = findViewById(R.id.ButtonAddR);
+        DecreaseR = findViewById(R.id.ButtonRemoveR);
         workValueR = findViewById(R.id.valueWorkoutR);
 
-        AddR.setOnClickListener(new View.OnClickListener() {
+        IncreaseR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 integer_reps += 1;
                 workValueR.setText(integer_reps + "");
             }
         });
-        RemoveR.setOnClickListener(new View.OnClickListener() {
+        DecreaseR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (integer_reps <= 0) {
@@ -165,18 +164,18 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         });
 
 
-        AddW = findViewById(R.id.ButtonAddW);
-        RemoveW = findViewById(R.id.ButtonRemoveW);
+        IncreaseW = findViewById(R.id.ButtonAddW);
+        DecreaseW = findViewById(R.id.ButtonRemoveW);
         workValueW = findViewById(R.id.valueWorkoutW);
 
-        AddW.setOnClickListener(new View.OnClickListener() {
+        IncreaseW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 double_weight += 0.5;
                 workValueW.setText(double_weight + "");
             }
         });
-        RemoveW.setOnClickListener(new View.OnClickListener() {
+        DecreaseW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (double_weight <= 0) {
@@ -225,50 +224,12 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
 
     }
 
-//    public void loadContent(String email) {
-//        db.collection("user-info").document(email)
-//                .collection("workouts").document(WorkoutList.nameTR)
-//                .collection("exercises").document(ExerciseList.nameExe).
-//                addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
-//                    @SuppressLint({"SetTextI18n", "WrongViewCast"})
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-//                        if (e != null) {
-//                            Log.w(TAG, "Listen failed.", e);
-//                            return;
-//                        }
-//
-//                        if (snapshot != null && snapshot.exists()) {
-//                            reps = snapshot.getLong("reps");
-//                            sets = snapshot.getLong("sets");
-//                            weight = snapshot.getDouble("weight");
-//                            Log.d(TAG, "Current data: " + snapshot.getData());
-//                        } else {
-//                            Log.d(TAG, "Current data: null");
-//                        }
-//
-//                        // set the fields
-//                        input_exe = findViewById(R.id.NameExercise);
-//                        input_set = findViewById(R.id.valueWorkoutS);
-//                        input_reps = findViewById(R.id.valueWorkoutR);
-//                        input_weight = findViewById(R.id.valueWorkoutW);
-//
-//                        input_set.setText(sets + "");
-//                        input_reps.setText(reps + "");
-//                        input_weight.setText(weight + "");
-//                        input_exe.setText(ExerciseList.nameExe);
-//                    }
-//                });
-//    }
-
-    //Extracts the data from Firebase to activity_private_area.xml
-
 
     /***
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
      */
-//    @Override
+    @Override
     public void makeToast(String s) {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
