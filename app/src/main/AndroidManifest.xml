@@ -113,6 +113,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Manager.ManageUpdates"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".homePage.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >

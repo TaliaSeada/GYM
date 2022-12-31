@@ -74,9 +74,8 @@ public class HomePageManager extends AppCompatActivity implements NavigationView
                 break;
             }
             case R.id.nav_manage_updates: {
-//                Intent intent3=new Intent(HomePageManager.this, ManageUsers.class);
-//                intent3.putExtra("role","updates");
-//                startActivity(intent3);
+                Intent intent3=new Intent(HomePageManager.this, ManageUpdates.class);
+                startActivity(intent3);
                 break;
             }
             case R.id.nav_manage_managers: {

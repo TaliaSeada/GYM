@@ -165,7 +165,7 @@ public class ManageUsers extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
+                userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user delete successfully
                     @Override
                     public void onSuccess(Void documentReference) {
                         updateUsersList();
