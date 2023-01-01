@@ -34,12 +34,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class ManageUpdates extends AppCompatActivity {
 
-    final ArrayList<Map<String, String>> updates = new ArrayList<Map<String, String>>();
-    SimpleAdapter adapter;
+    private final ArrayList<Map<String, String>> updates = new ArrayList<Map<String, String>>();
+    private SimpleAdapter adapter;
     private static final String TAG = "ManageUpdates";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
 

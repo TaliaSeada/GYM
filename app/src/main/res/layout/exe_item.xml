@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:cardBackgroundColor="@color/blueBlack"
+        app:cardCornerRadius="10dp">
+
+        <TextView
+            android:id="@+id/exe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:padding="5dp"
+            android:text="Name"
+            android:textColor="@color/tanAccent"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/sets_im"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="50dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_sets"
+            app:tint="@color/tanAccent" />
+
+        <TextView
+            android:id="@+id/sets_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="48dp"
+            android:layout_marginStart="59dp"
+            android:textColor="@color/tanAccent"
+            android:textSize="18sp"
+            tools:text="Sets" />
+
+        <ImageView
+            android:id="@+id/reps_im"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="87dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_reps"
+            app:tint="@color/tanAccent" />
+
+        <TextView
+            android:id="@+id/reps_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="85dp"
+            android:layout_marginStart="59dp"
+            android:textColor="@color/tanAccent"
+            android:textSize="18sp"
+            tools:text="Repetition" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/cals_im"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginVertical="50dp"-->
+<!--            android:layout_marginStart="190dp"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:src="@drawable/ic_cals"-->
+<!--            app:tint="@color/tanAccent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/cals_e"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginVertical="48dp"-->
+<!--            android:layout_marginStart="213dp"-->
+<!--            android:textColor="@color/tanAccent"-->
+<!--            android:textSize="18sp"-->
+<!--            tools:text="Cal" />-->
+
+        <ImageView
+            android:id="@+id/weight_im"
+            android:layout_width="16dp"
+            android:layout_height="14dp"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="87dp"
+            android:layout_marginStart="190dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_weight"
+            app:tint="@color/tanAccent" />
+
+        <TextView
+            android:id="@+id/weight_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="85dp"
+            android:layout_marginStart="213dp"
+            android:textColor="@color/tanAccent"
+            android:textSize="18sp"
+            tools:text="Weight" />
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

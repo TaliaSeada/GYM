@@ -35,7 +35,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     private GridView listView;
     private ImageView add;
     private List<String> items = new ArrayList<>();
-    private final ArrayList<Map<String, exe_object>> show = new ArrayList<Map<String, exe_object>>();
+    private final ArrayList<Map<String, String>> show = new ArrayList<Map<String, String>>();
     private SimpleAdapter adap;
     // get firebase instances
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -99,19 +99,23 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
                         items.clear();
                         show.clear();
                         for(DocumentSnapshot snapshot : documentSnapshots){
-                            final Map<String, exe_object> ex = new HashMap<>();
+                            final Map<String, String> ex = new HashMap<>();
                             items.add(snapshot.getString("name"));
                             String name = snapshot.getString("name");
                             Long reps = snapshot.getLong("reps");
                             Long sets = snapshot.getLong("sets");
                             double weight = snapshot.getDouble("weight");
-                            exe_object eo = new exe_object(name, reps, sets, weight);
-                            ex.put("exercise", eo);
+//                            exe_object eo = new exe_object(name, reps, sets, weight);
+                            ex.put("exercise", name);
+                            ex.put("reps", "Repetition: " + String.valueOf(reps));
+                            ex.put("sets", "Sets: " + String.valueOf(sets));
+                            ex.put("weight", "Weight: " + String.valueOf(weight));
                             show.add(ex);
                         }
-                        String[] from = {"exercise"};
-                        int[] to = {R.id.exe};
-                        adap = new SimpleAdapter(ExerciseList.this, show, R.layout.grid_layout, from, to);
+                        String[] from = {"exercise", "reps", "sets", "weight"};
+                        int[] to = {R.id.exe, R.id.reps_e, R.id.sets_e, R.id.weight_e};
+//                        adap = new SimpleAdapter(ExerciseList.this, show, R.layout.grid_layout, from, to);
+                        adap = new SimpleAdapter(ExerciseList.this, show, R.layout.exe_item, from, to);
                         listView.setAdapter(adap);
                     }
                 });
