@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back2"
+    android:background="@drawable/r4"
     tools:context=".homePage.HomePageTrainee">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,43 +17,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/alex_font"
+            android:fontFamily="@font/italic"
             android:text="address"
-            android:textColor="@color/blueBlack"
+            android:textColor="#FF162F3F"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
+            app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageView"-->
-        <!--            android:layout_width="420dp"-->
-        <!--            android:layout_height="281dp"-->
-        <!--            android:layout_marginTop="4dp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:srcCompat="@drawable/gym"-->
-        <!--            tools:ignore="MissingConstraints" />-->
+            app:layout_constraintVertical_bias="0.118" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="299dp"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="616dp"
-            android:fontFamily="@font/alex_font"
-            android:text="Welcome to  GYM"
-            android:textColor="@color/blueBlack"
+            android:layout_marginBottom="380dp"
+            android:fontFamily="@font/italic"
+            android:text="Welcome to GYM"
+            android:textColor="@color/white"
             android:textColorHighlight="@color/black"
-            android:textSize="40sp"
+            android:textSize="35sp"
             android:textStyle="bold"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="0.0"
@@ -64,14 +55,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="43dp"
-            android:fontFamily="@font/alex_font"
+            android:fontFamily="@font/italic"
             android:text="updates:"
-            android:textColor="@color/blueBlack"
+            android:textColor="#FF162F3F"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
+            app:layout_constraintHorizontal_bias="0.054"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
             app:layout_constraintVertical_bias="0.0" />

@@ -11,8 +11,9 @@
     <color name="colorPrimary">#FFFFFFFF</color>
     <color name="Red">#FFE40A39</color>
     <color name="Green">#FF14DC1D</color>
-    80DDD0
-    <color name="blueBlack">#111F28</color>
+    FF335C77
+    <color name="blue">#FF335C77</color>
+    <color name="blueBlack">#162F3F</color>
     <color name="blueless">#80DDD0</color>
     <color name="blueBlack1">#7D7F8E</color>
     <color name="tanAccent">#e3cdb3</color>

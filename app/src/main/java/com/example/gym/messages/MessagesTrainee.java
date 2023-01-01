@@ -148,6 +148,7 @@ public class MessagesTrainee extends AppCompatActivity {
                             message_array.clear();
                             date_array.clear();
                             sub_array.clear();
+                            answer_array.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //Adding the data to the array
                                 String title = (String) document.getData().get("title");
@@ -161,6 +162,7 @@ public class MessagesTrainee extends AppCompatActivity {
 
                                 //Indicates whether a new message has been received
                                 if (answer.isEmpty()){
+                                    System.out.println(answer.toString());
                                     image_array.add(R.drawable.close_mail);
                                 }
                                 else{
