@@ -105,15 +105,17 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
                             Long reps = snapshot.getLong("reps");
                             Long sets = snapshot.getLong("sets");
                             double weight = snapshot.getDouble("weight");
+                            String time = snapshot.getString("time");
 //                            exe_object eo = new exe_object(name, reps, sets, weight);
                             ex.put("exercise", name);
                             ex.put("reps", "Repetition: " + String.valueOf(reps));
                             ex.put("sets", "Sets: " + String.valueOf(sets));
-                            ex.put("weight", "Weight: " + String.valueOf(weight));
+                            ex.put("weight", "Weight: " + String.valueOf(weight) + " kg");
+                            ex.put("time", "Time: " + time + " sec");
                             show.add(ex);
                         }
-                        String[] from = {"exercise", "reps", "sets", "weight"};
-                        int[] to = {R.id.exe, R.id.reps_e, R.id.sets_e, R.id.weight_e};
+                        String[] from = {"exercise", "reps", "sets", "weight", "time"};
+                        int[] to = {R.id.exe, R.id.reps_e, R.id.sets_e, R.id.weight_e, R.id.time_e};
 //                        adap = new SimpleAdapter(ExerciseList.this, show, R.layout.grid_layout, from, to);
                         adap = new SimpleAdapter(ExerciseList.this, show, R.layout.exe_item, from, to);
                         listView.setAdapter(adap);

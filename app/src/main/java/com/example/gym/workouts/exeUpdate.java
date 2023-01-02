@@ -32,12 +32,13 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     // set toast
     private Toast t;
     // set fields for data display
-    private EditText input_exe;
+    private EditText input_exe, input_time;
     private TextView title, input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
     private String Gworkout;
     private int minteger_sets;
     private int minteger_reps;
     private double minteger_weight;
+    private String time;
     private Button DELETE;
     private Button UPDATE, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
 
@@ -102,12 +103,6 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
             }
         });
 
-
-        //Repetition
-        IncreaseR = findViewById(R.id.ButtonAddR);
-        DecreaseR = findViewById(R.id.ButtonRemoveR);
-        workValueR = findViewById(R.id.valueWorkoutR);
-
         IncreaseR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,11 +121,6 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                 }
             }
         });
-
-
-        IncreaseW = findViewById(R.id.ButtonAddW);
-        DecreaseW = findViewById(R.id.ButtonRemoveW);
-        workValueW = findViewById(R.id.valueWorkoutW);
 
         IncreaseW.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +147,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         input_set = findViewById(R.id.valueWorkoutS);
         input_reps = findViewById(R.id.valueWorkoutR);
         input_weight = findViewById(R.id.valueWorkoutW);
+        input_time = findViewById(R.id.editTextTime);
 
 
         // set ADD button action
@@ -168,9 +159,10 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
                 Gworkout = WorkoutList.nameTR;
+                String time = input_time.getText().toString();
                 try {
                     // add the exercise to firebase
-                    updateExe(email, Gworkout, exercise, set, reps, weight);
+                    updateExe(email, Gworkout, exercise, set, reps, weight, time);
                     makeToast(exercise + " Updated Successfully");
                 } catch (Exception e) {
                     if (exercise.equals("")) {
@@ -218,13 +210,14 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * @param weight_kg weight we insert in the app
      */
     @Override
-    public void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
+    public void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
         exe.put("reps", reps);
         exe.put("sets", sets);
         exe.put("weight", weight_kg);
         exe.put("name", exe_name);
+        exe.put("time", time);
         Map<String, Object> name = new HashMap<>();
         name.put("name", wo_name);
         // if the workout is new insert it first
@@ -296,6 +289,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                             minteger_reps = Math.toIntExact(snapshot.getLong("reps"));
                             minteger_sets = Math.toIntExact(snapshot.getLong("sets"));
                             minteger_weight = snapshot.getDouble("weight");
+                            time = snapshot.getString("time");
                             Log.d(TAG, "Current data: " + snapshot.getData());
                         } else {
                             Log.d(TAG, "Current data: null");
@@ -307,11 +301,13 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                         input_set = findViewById(R.id.valueWorkoutS);
                         input_reps = findViewById(R.id.valueWorkoutR);
                         input_weight = findViewById(R.id.valueWorkoutW);
+                        input_time = findViewById(R.id.editTextTime);
 
                         input_set.setText(minteger_sets + "");
                         input_reps.setText(minteger_reps + "");
                         input_weight.setText(minteger_weight + "");
                         input_exe.setText(ExerciseList.nameExe);
+                        input_time.setText(time);
                     }
                 });
     }

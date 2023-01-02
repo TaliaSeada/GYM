@@ -69,32 +69,32 @@
             android:textSize="18sp"
             tools:text="Repetition" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/cals_im"-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginVertical="50dp"-->
-<!--            android:layout_marginStart="190dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:src="@drawable/ic_cals"-->
-<!--            app:tint="@color/tanAccent" />-->
+        <ImageView
+            android:id="@+id/time_im"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="50dp"
+            android:layout_marginStart="190dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_time"
+            app:tint="@color/tanAccent" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/cals_e"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginVertical="48dp"-->
-<!--            android:layout_marginStart="213dp"-->
-<!--            android:textColor="@color/tanAccent"-->
-<!--            android:textSize="18sp"-->
-<!--            tools:text="Cal" />-->
+        <TextView
+            android:id="@+id/time_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="48dp"
+            android:layout_marginStart="213dp"
+            android:textColor="@color/tanAccent"
+            android:textSize="18sp"
+            tools:text="Time" />
 
         <ImageView
             android:id="@+id/weight_im"
-            android:layout_width="16dp"
-            android:layout_height="14dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginVertical="87dp"
             android:layout_marginStart="190dp"

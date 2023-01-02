@@ -22,7 +22,7 @@ public interface I_updateExercise {
      * @param reps number of repetition we insert in the app
      * @param weight_kg weight we insert in the app
      */
-    void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg);
+    void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time);
     /***
      * this function load the relevant content from the firebase
      * to the fields we created in order to show it in the app screen.

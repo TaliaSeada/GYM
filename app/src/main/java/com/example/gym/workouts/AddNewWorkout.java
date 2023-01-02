@@ -27,7 +27,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     // set toast
     private Toast t;
     // set fields for data display
-    private EditText input_exe;
+    private EditText input_exe, input_time;
     private TextView input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
     private int integer_sets;
     private int integer_reps;
@@ -55,13 +55,14 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
      *
      */
     @Override
-    public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg) {
+    public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
         exe.put("reps", reps);
         exe.put("sets", sets);
         exe.put("weight", weight_kg);
         exe.put("name", exe_name);
+        exe.put("time", time);
         Map<String, Object> name = new HashMap<>();
         name.put("name", wo_name);
         // if the workout is new insert it first
@@ -105,7 +106,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
             email = email_trainer;
         }
 
-        // set button
+        // set buttons
         ADD = findViewById(R.id.addWorkout);
         IncreaseS = findViewById(R.id.ButtonAddS);
         DecreaseS = findViewById(R.id.ButtonRemoveS);
@@ -138,12 +139,6 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
             }
         });
 
-
-        //Repetition
-        IncreaseR = findViewById(R.id.ButtonAddR);
-        DecreaseR = findViewById(R.id.ButtonRemoveR);
-        workValueR = findViewById(R.id.valueWorkoutR);
-
         IncreaseR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,11 +157,6 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                 }
             }
         });
-
-
-        IncreaseW = findViewById(R.id.ButtonAddW);
-        DecreaseW = findViewById(R.id.ButtonRemoveW);
-        workValueW = findViewById(R.id.valueWorkoutW);
 
         IncreaseW.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,11 +177,14 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
             }
         });
 
+
+
         // set texts
         input_exe = findViewById(R.id.NameExercise);
         input_set = findViewById(R.id.valueWorkoutS);
         input_reps = findViewById(R.id.valueWorkoutR);
         input_weight = findViewById(R.id.valueWorkoutW);
+        input_time = findViewById(R.id.editTextTime);
 
 
         // set ADD button action
@@ -202,10 +195,11 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                 double weight = Double.parseDouble(input_weight.getText().toString());
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
+                String time = input_time.getText().toString();
                 Gworkout = WorkoutList.nameTR;
                 try {
                     // add the exercise to firebase
-                    addExe(email, Gworkout, exercise, set, reps, weight);
+                    addExe(email, Gworkout, exercise, set, reps, weight, time);
                     makeToast(exercise + " Added Successfully");
                 } catch (Exception e) {
                     if (exercise.equals("")) {
