@@ -354,8 +354,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="unit"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:textSize="16sp"/>
 
     </LinearLayout>
