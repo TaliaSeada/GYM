@@ -34,13 +34,13 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     // set toast
     private Toast t;
     // set fields for data display
-    private EditText input_exe, input_time;
+    private EditText input_exe, input_time, input_unit;
     private TextView title, input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
     private String Gworkout;
     private int minteger_sets;
     private int minteger_reps;
     private double minteger_weight;
-    private String time;
+    private String time, unit;
     private Button DELETE;
     private Button UPDATE, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
 
@@ -153,6 +153,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         input_reps = findViewById(R.id.valueWorkoutR);
         input_weight = findViewById(R.id.valueWorkoutW);
         input_time = findViewById(R.id.editTextTime);
+        input_unit = findViewById(R.id.unit);
 
 
         // set ADD button action
@@ -165,9 +166,10 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                 int set = Integer.parseInt(input_set.getText().toString());
                 Gworkout = WorkoutList.nameTR;
                 String time = input_time.getText().toString();
+                String unit = input_unit.getText().toString();
                 try {
                     // add the exercise to firebase
-                    updateExe(email, Gworkout, exercise, set, reps, weight, time);
+                    updateExe(email, Gworkout, exercise, set, reps, weight, time, unit);
                     makeToast(exercise + " Updated Successfully");
                 } catch (Exception e) {
                     if (exercise.equals("")) {
@@ -215,7 +217,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * @param weight_kg weight we insert in the app
      */
     @Override
-    public void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time) {
+    public void updateExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time, String unit) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
         exe.put("reps", reps);
@@ -223,6 +225,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         exe.put("weight", weight_kg);
         exe.put("name", exe_name);
         exe.put("time", time);
+        exe.put("unit", unit);
         Map<String, Object> name = new HashMap<>();
         name.put("name", wo_name);
         // if the workout is new insert it first
@@ -295,6 +298,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                             minteger_sets = Math.toIntExact(snapshot.getLong("sets"));
                             minteger_weight = snapshot.getDouble("weight");
                             time = snapshot.getString("time");
+                            unit = snapshot.getString("unit");
                             Log.d(TAG, "Current data: " + snapshot.getData());
                         } else {
                             Log.d(TAG, "Current data: null");
@@ -307,12 +311,14 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                         input_reps = findViewById(R.id.valueWorkoutR);
                         input_weight = findViewById(R.id.valueWorkoutW);
                         input_time = findViewById(R.id.editTextTime);
+                        input_unit = findViewById(R.id.unit);
 
                         input_set.setText(minteger_sets + "");
                         input_reps.setText(minteger_reps + "");
                         input_weight.setText(minteger_weight + "");
                         input_exe.setText(ExerciseList.nameExe);
                         input_time.setText(time);
+                        input_unit.setText(unit);
                     }
                 });
     }

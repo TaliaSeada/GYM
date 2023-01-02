@@ -29,7 +29,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     // set toast
     private Toast t;
     // set fields for data display
-    private EditText input_exe, input_time;
+    private EditText input_exe, input_time, input_unit;
     private TextView input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
     private int integer_sets;
     private int integer_reps;
@@ -57,7 +57,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
      *
      */
     @Override
-    public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time) {
+    public void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time, String unit) {
         // create exercise
         Map<String, Object> exe = new HashMap<>();
         exe.put("reps", reps);
@@ -65,6 +65,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         exe.put("weight", weight_kg);
         exe.put("name", exe_name);
         exe.put("time", time);
+        exe.put("unit", unit);
         Map<String, Object> name = new HashMap<>();
         name.put("name", wo_name);
         // if the workout is new insert it first
@@ -190,6 +191,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         input_reps = findViewById(R.id.valueWorkoutR);
         input_weight = findViewById(R.id.valueWorkoutW);
         input_time = findViewById(R.id.editTextTime);
+        input_unit = findViewById(R.id.unit);
 
 
         // set ADD button action
@@ -201,10 +203,11 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
                 String time = input_time.getText().toString();
+                String unit = input_unit.getText().toString();
                 Gworkout = WorkoutList.nameTR;
                 try {
                     // add the exercise to firebase
-                    addExe(email, Gworkout, exercise, set, reps, weight, time);
+                    addExe(email, Gworkout, exercise, set, reps, weight, time, unit);
                     makeToast(exercise + " Added Successfully");
                 } catch (Exception e) {
                     if (exercise.equals("")) {

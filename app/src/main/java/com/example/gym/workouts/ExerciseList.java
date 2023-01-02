@@ -106,12 +106,13 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
                             Long sets = snapshot.getLong("sets");
                             double weight = snapshot.getDouble("weight");
                             String time = snapshot.getString("time");
+                            String unit = snapshot.getString("unit");
 //                            exe_object eo = new exe_object(name, reps, sets, weight);
                             ex.put("exercise", name);
                             ex.put("reps", "Repetition: " + String.valueOf(reps));
                             ex.put("sets", "Sets: " + String.valueOf(sets));
                             ex.put("weight", "Weight: " + String.valueOf(weight) + " kg");
-                            ex.put("time", "Time: " + time + " sec");
+                            ex.put("time", "Time: " + time + " " + unit);
                             show.add(ex);
                         }
                         String[] from = {"exercise", "reps", "sets", "weight", "time"};

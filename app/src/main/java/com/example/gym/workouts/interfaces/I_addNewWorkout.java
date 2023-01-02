@@ -10,7 +10,7 @@ public interface I_addNewWorkout {
      * @param reps number of repetition we insert in the app
      * @param weight_kg weight we insert in the app
      */
-    void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time);
+    void addExe(String email, String wo_name, String exe_name, int sets, int reps, double weight_kg, String time, String unit);
     /***
      * this function raises a massage to the screen
      * @param s the massage we want to write on the screen
