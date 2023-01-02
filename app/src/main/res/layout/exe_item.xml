@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        app:cardBackgroundColor="@color/blueBlack"
+        android:background="@drawable/my_frame"
+        app:cardBackgroundColor="#FFE7FFFF"
         app:cardCornerRadius="10dp">
 
         <TextView
@@ -21,7 +22,7 @@
             android:layout_marginStart="15dp"
             android:padding="5dp"
             android:text="Name"
-            android:textColor="@color/tanAccent"
+            android:textColor="@color/blueBlack"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -34,7 +35,7 @@
             android:layout_marginStart="35dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_sets"
-            app:tint="@color/tanAccent" />
+            app:tint="@color/blueBlack" />
 
         <TextView
             android:id="@+id/sets_e"
@@ -43,7 +44,7 @@
             android:layout_centerVertical="true"
             android:layout_marginVertical="48dp"
             android:layout_marginStart="59dp"
-            android:textColor="@color/tanAccent"
+            android:textColor="@color/blueBlack"
             android:textSize="18sp"
             tools:text="Sets" />
 
@@ -56,7 +57,7 @@
             android:layout_marginStart="35dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_reps"
-            app:tint="@color/tanAccent" />
+            app:tint="@color/blueBlack" />
 
         <TextView
             android:id="@+id/reps_e"
@@ -65,7 +66,7 @@
             android:layout_centerVertical="true"
             android:layout_marginVertical="85dp"
             android:layout_marginStart="59dp"
-            android:textColor="@color/tanAccent"
+            android:textColor="@color/blueBlack"
             android:textSize="18sp"
             tools:text="Repetition" />
 
@@ -78,7 +79,7 @@
             android:layout_marginStart="190dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_time"
-            app:tint="@color/tanAccent" />
+            app:tint="@color/blueBlack" />
 
         <TextView
             android:id="@+id/time_e"
@@ -87,7 +88,7 @@
             android:layout_centerVertical="true"
             android:layout_marginVertical="48dp"
             android:layout_marginStart="213dp"
-            android:textColor="@color/tanAccent"
+            android:textColor="@color/blueBlack"
             android:textSize="18sp"
             tools:text="Time" />
 
@@ -100,7 +101,7 @@
             android:layout_marginStart="190dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_weight"
-            app:tint="@color/tanAccent" />
+            app:tint="@color/blueBlack" />
 
         <TextView
             android:id="@+id/weight_e"
@@ -109,7 +110,7 @@
             android:layout_centerVertical="true"
             android:layout_marginVertical="85dp"
             android:layout_marginStart="213dp"
-            android:textColor="@color/tanAccent"
+            android:textColor="@color/blueBlack"
             android:textSize="18sp"
             tools:text="Weight" />
     </androidx.cardview.widget.CardView>
