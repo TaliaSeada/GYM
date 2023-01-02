@@ -109,9 +109,11 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
                 R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+        spinner.setSelection(0);
 //        input_ageTrainee.setText(date);
         AddBirth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,20 +187,27 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
                     DateBirth="";
                 }
                 input_ageTrainee.setText(DateBirth);
-                String gender;
+                String genderString;
                 try {
-                    gender = (String) value.get("gender");
+                     genderString = (String) value.get("gender");
                 } catch (Exception e) {
-                    gender="";
+                    genderString="Gender";
+                    Log.d("myTag", genderString);
                 }
+//                String genderString= "Gender";
+//                Log.d("myTaggender", genderString);
 
                 String[] baths = getResources().getStringArray(R.array.planets_array);
-                if (gender.equals("female"))
-                    spinner.setSelection(Arrays.asList(baths).indexOf("female"));
+                try {
+                    if (genderString.equals("female"))
+                        spinner.setSelection(Arrays.asList(baths).indexOf("female"));
 
-                else if (gender.equals("male")){
-                    spinner.setSelection(Arrays.asList(baths).indexOf("male"));
+                    else {
+                        spinner.setSelection(Arrays.asList(baths).indexOf("male"));
 
+                    }
+                } catch (Exception e) {
+                    spinner.setSelection(Arrays.asList(baths).indexOf("Gender"));
                 }
 
             }
