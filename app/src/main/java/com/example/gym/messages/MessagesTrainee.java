@@ -149,6 +149,7 @@ public class MessagesTrainee extends AppCompatActivity {
                             date_array.clear();
                             sub_array.clear();
                             answer_array.clear();
+                            image_array.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //Adding the data to the array
                                 String title = (String) document.getData().get("title");
@@ -159,7 +160,7 @@ public class MessagesTrainee extends AppCompatActivity {
                                 message_array.add(message);
                                 String answer = (String) document.getData().get("answer");
                                 answer_array.add(answer);
-
+                                Log.d("myTag", answer.toString());
                                 //Indicates whether a new message has been received
                                 if (answer.isEmpty()){
                                     System.out.println(answer.toString());

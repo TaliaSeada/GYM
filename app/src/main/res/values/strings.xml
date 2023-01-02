@@ -37,5 +37,20 @@
     <string name="type_new_workout_name">Type New Workout Name</string>
     <string name="Title">Title</string>
     <string name="message">message</string>
+    <string-array name="planets_array">
+        <item>Gender</item>
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+    <string-array name="male">
+        <item>Gender</item>
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+    <string-array name="female">
+        <item>Gender</item>
+        <item>male</item>
+        <item>female</item>
+    </string-array>
 
 </resources>
