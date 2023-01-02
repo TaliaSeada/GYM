@@ -3,17 +3,17 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#306283</color>
     <color name="purple_700">#203643</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#7C8585</color>
+    <color name="teal_200">#4F918B</color>
+    <color name="teal_700">#E2E7E7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="darker_gray">#FF7C8585</color>
+    <color name="darker_gray">#E7FFFF</color>
     <color name="colorPrimary">#FFFFFFFF</color>
     <color name="Red">#FFE40A39</color>
     <color name="Green">#FF14DC1D</color>
     FF335C77
-    <color name="blue">#FF335C77</color>
-    <color name="blueBlack">#162F3F</color>
+    <color name="blue">#71AACF</color>
+    <color name="blueBlack">#FF0F0F0F</color>
     <color name="blueless">#80DDD0</color>
     <color name="blueBlack1">#7D7F8E</color>
     <color name="tanAccent">#e3cdb3</color>

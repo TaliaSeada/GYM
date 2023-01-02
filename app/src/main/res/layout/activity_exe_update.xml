@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#192B37">
+    android:background="#FFE7FFFF">
 
     <TextView
         android:id="@+id/AddExercise"
@@ -17,7 +17,7 @@
         android:lineSpacingExtra="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold" />
     <EditText
@@ -28,7 +28,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="8dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/AddExercise"
@@ -41,7 +41,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/white"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/NameExercise"/>
 
@@ -58,8 +58,8 @@
         app:layout_constraintTop_toBottomOf="@id/divpage">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_new_sets" />
 
         <LinearLayout
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sets  "
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -103,7 +103,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:text="0"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -132,8 +132,8 @@
         app:layout_constraintTop_toBottomOf="@id/layoutSet1">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_baseline_replay_24" />
 
         <LinearLayout
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Repetitions"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -176,7 +176,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:text="0"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -205,8 +205,8 @@
         app:layout_constraintTop_toBottomOf="@id/layoutRepetitions">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:src="@drawable/weightlifting" />
 
         <LinearLayout
@@ -221,7 +221,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -249,7 +249,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:text="0.0"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -288,8 +288,8 @@
         app:layout_constraintTop_toBottomOf="@id/layoutWeight">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_time_" />
 
         <LinearLayout
@@ -304,7 +304,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -354,7 +354,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="time"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -364,8 +364,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="unit"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:textSize="16sp"/>
 
     </LinearLayout>
@@ -377,7 +377,7 @@
         android:layout_height="100dp"
         android:background="@color/Red"
         android:text="DELETE"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -392,7 +392,7 @@
         android:layout_height="100dp"
         android:background="@color/blueless"
         android:text="UPDATE"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
