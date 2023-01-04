@@ -70,6 +70,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.4.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
     implementation 'com.google.firebase:firebase-firestore'
+
+    implementation 'com.google.firebase:firebase-functions'
 }
 
 apply plugin: 'com.google.gms.google-services'

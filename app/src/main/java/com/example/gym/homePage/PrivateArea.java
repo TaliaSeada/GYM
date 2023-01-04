@@ -22,8 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,6 +33,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -160,18 +164,33 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
             }
         });
         //Extracts the data from Firebase to activity_private_area.xml
+
+
+//        mFunctions.getHttpsCallable("getPersonalDetails").call().continueWith(new Continuation<HttpsCallableResult, String>() {
+//            @Override
+//            public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+//                // This continuation runs on either success or failure, but if the task
+//                // has failed then getResult() will throw an Exception which will be
+//                // propagated down.
+//                Object result = task.getResult().getData();
+////                return result;
+//
+//                return "";
+//            }
+//        });
+
         DocumentReference Reference= db.collection("user-info").document(email);
         Reference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                    double height;
-                    try {
-                        height = (Double) value.get("height");
-                    } catch (Exception e) {
-                        height=0;
-                    }
-                    String heightS=String.valueOf(height);
-                    input_heightTrainee.setText(heightS);
+                double height;
+                try {
+                    height = (Double) value.get("height");
+                } catch (Exception e) {
+                    height=0;
+                }
+                String heightS=String.valueOf(height);
+                input_heightTrainee.setText(heightS);
                 double weight;
                 try {
                     weight = (Double) value.get("weight");

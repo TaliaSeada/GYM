@@ -23,9 +23,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,20 +41,24 @@ public class ManageUpdates extends AppCompatActivity {
     private SimpleAdapter adapter;
     private static final String TAG = "ManageUpdates";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     // Take the updates from the db and put them in the view
     private void updateUpdatesList(){
-        db.collection("updates").orderBy("date", Query.Direction.ASCENDING).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        mFunctions.getHttpsCallable("getUpdates").call()
+                .addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                         if (task.isSuccessful()) {
                             updates.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Update updateObj = document.toObject(Update.class);
+                            ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                            ArrayList<Update> updatesList = new ArrayList<>();
+                            data.forEach(d -> updatesList.add(new Update(d)));
+
+                            for (Update updateObj: updatesList) {
 
                                 final Map<String, String> update = new HashMap<>();
-                                update.put("id", document.getId());
+                                update.put("id", updateObj.id);
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                                 update.put("date", simpleDateFormat.format(updateObj.date).toString());
                                 update.put("content", updateObj.content);
@@ -66,6 +70,29 @@ public class ManageUpdates extends AppCompatActivity {
                         }
                     }
                 });
+
+//        db.collection("updates").orderBy("date", Query.Direction.ASCENDING).get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            updates.clear();
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Update updateObj = document.toObject(Update.class);
+//
+//                                final Map<String, String> update = new HashMap<>();
+//                                update.put("id", document.getId());
+//                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//                                update.put("date", simpleDateFormat.format(updateObj.date).toString());
+//                                update.put("content", updateObj.content);
+//                                updates.add(update);
+//                            }
+//                            adapter.notifyDataSetChanged();
+//                        } else {
+//                            Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
     }
 
     @Override
