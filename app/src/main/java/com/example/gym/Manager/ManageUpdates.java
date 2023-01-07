@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.example.gym.updates.Update;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +28,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,8 +59,7 @@ public class ManageUpdates extends AppCompatActivity {
 
                                 final Map<String, String> update = new HashMap<>();
                                 update.put("id", updateObj.id);
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                update.put("date", simpleDateFormat.format(updateObj.date).toString());
+                                update.put("date",updateObj.getPrettyDate());
                                 update.put("content", updateObj.content);
                                 updates.add(update);
                             }
@@ -70,29 +69,6 @@ public class ManageUpdates extends AppCompatActivity {
                         }
                     }
                 });
-
-//        db.collection("updates").orderBy("date", Query.Direction.ASCENDING).get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            updates.clear();
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Update updateObj = document.toObject(Update.class);
-//
-//                                final Map<String, String> update = new HashMap<>();
-//                                update.put("id", document.getId());
-//                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//                                update.put("date", simpleDateFormat.format(updateObj.date).toString());
-//                                update.put("content", updateObj.content);
-//                                updates.add(update);
-//                            }
-//                            adapter.notifyDataSetChanged();
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
     }
 
     @Override
@@ -140,7 +116,7 @@ public class ManageUpdates extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         Calendar c = new GregorianCalendar();
-                        c.set(date.getYear(), date.getMonth(), date.getDayOfMonth(), 23, 59,59 );
+                        c.set(date.getYear(), date.getMonth(), date.getDayOfMonth(), 23, 59,59);
                         Date date_val = c.getTime();
                         String content_val = content.getText().toString();
 

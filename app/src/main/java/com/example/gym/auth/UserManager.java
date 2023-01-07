@@ -5,7 +5,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,22 +15,21 @@ import java.util.Map;
 
 public class UserManager {
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     public static final String ROLE_MANAGER = "manager";
     public static final String ROLE_TRAINER = "trainer";
     public static final String ROLE_TRAINEE = "trainee";
 
 
-    // This function is for the manager. He adds user to the db by email address and role
-    public Task<Void> createUser(String email, String role, String full_name) {
-        // Create a new user with a first and last name
+    // This function is for the manager. He adds user to the db by email address full name and role
+    public Task<HttpsCallableResult> createUser(String email, String role, String full_name) {
+        // Create a new user with role, full name and email
         Map<String, Object> user = new HashMap<>();
         user.put("role", role);
         user.put("full_name", full_name);
+        user.put("email", email);
 
-        email = email.toLowerCase();
-
-        // Add a new document with user email ID
-        return db.collection("users").document(email).set(user); //add new user to db
+        return mFunctions.getHttpsCallable("createUser").call(user);
     }
 
     // Return the document= contain the role&full name, by email(id= email) from the collection
@@ -47,15 +47,17 @@ public class UserManager {
     }
 
     // Delete user by email
-    public Task<Void> deleteUser(String email) {
-        return db.collection("users").document(email).delete();
+    public Task<HttpsCallableResult> deleteUser(String email) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("email", email);
+        return mFunctions.getHttpsCallable("deleteUser").call(data);
     }
 
     // Get all the users that exist by specific role
-    public Task<QuerySnapshot> getUsersByRole(String role) {
-        return db.collection("users")
-                .whereEqualTo("role", role)
-                .get();
+    public Task<HttpsCallableResult> getUsersByRole(String role) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("role", role);
+        return mFunctions.getHttpsCallable("getAllUsers").call(data);
     }
 
 }

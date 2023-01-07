@@ -5,31 +5,20 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mbg"
     tools:context=".homePage.HomePageTrainee">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageView"-->
-        <!--            android:layout_width="553dp"-->
-        <!--            android:layout_height="274dp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:srcCompat="@drawable/gym"-->
-        <!--            tools:ignore="MissingConstraints"-->
-        <!--            tools:layout_editor_absoluteY="-4dp" />-->
-
         <TextView
             android:id="@+id/textView8"
             android:layout_width="299dp"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="428dp"
+            android:layout_marginBottom="552dp"
             android:fontFamily="sans-serif-thin"
-            android:text="Hello Mr"
+            android:text=" Hello "
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"
             android:textSize="35sp"
@@ -37,7 +26,7 @@
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.026"
+            app:layout_constraintHorizontal_bias="0.017"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="0.0"
@@ -48,31 +37,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="43dp"
-            android:layout_marginBottom="344dp"
+            android:layout_marginBottom="452dp"
             android:fontFamily="sans-serif-thin"
-            android:text="updates:"
+            android:text=" Updates:"
             android:textColor="#FF162F3F"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="218dp"
-            android:layout_height="197dp"
+            android:layout_width="191dp"
+            android:layout_height="160dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintVertical_bias="0.056"
             app:srcCompat="@drawable/imagloading"
             app:tint="#FF91C1E0" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/updates_fragment"
+            android:name="com.example.gym.updates.UpdatesListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView6"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout="@layout/fragment_updates_list">
+
+        </androidx.fragment.app.FragmentContainerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,7 +86,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/trainee_menu" />
+        app:menu="@menu/trainer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
 
 

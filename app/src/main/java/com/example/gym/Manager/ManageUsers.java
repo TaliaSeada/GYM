@@ -20,14 +20,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.example.gym.auth.User;
 import com.example.gym.auth.UserManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,18 +42,21 @@ public class ManageUsers extends AppCompatActivity {
     private final ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
     private SimpleAdapter adapter; // Connect between the view to the list of users
 
-    // Take the users from the db and put them in the view
-    private void updateUsersList(){
+    private void updateUsersList() {
         userManager.getUsersByRole(role)
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            .addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                     if (task.isSuccessful()) {
                         users.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                        ArrayList<User> usersList = new ArrayList<>();
+                        data.forEach(d -> usersList.add(new User(d)));
+
+                        for (User userObj : usersList) {
                             final Map<String, String> user = new HashMap<>();
-                            user.put("email", document.getId());
-                            user.put("fullname", (String) document.getData().get("full_name"));
+                            user.put("email", userObj.email);
+                            user.put("full_name", userObj.full_name);
                             users.add(user);
                         }
                         adapter.notifyDataSetChanged(); // adapter do refresh to the data
@@ -83,7 +86,7 @@ public class ManageUsers extends AppCompatActivity {
                 break;
         }
         // match the users name and email to the screen
-        final String[] fromMapKey = new String[] {"fullname", "email"}; // the list of the clients
+        final String[] fromMapKey = new String[] {"full_name", "email"}; // the list of the clients
         final int[] toLayoutId = new int[] {android.R.id.text1, android.R.id.text2};
         adapter = new SimpleAdapter(this, users, android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
 
@@ -121,9 +124,9 @@ public class ManageUsers extends AppCompatActivity {
                         String email_val = email.getText().toString();
                         String full_name_val = full_name.getText().toString();
                         // Add the new user to the db
-                        userManager.createUser(email_val, role, full_name_val).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
+                        userManager.createUser(email_val, role, full_name_val).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the user added successfully
                             @Override
-                            public void onSuccess(Void documentReference) {
+                            public void onSuccess(HttpsCallableResult result) {
                                 updateUsersList();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -165,9 +168,9 @@ public class ManageUsers extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user delete successfully
+                userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the user delete successfully
                     @Override
-                    public void onSuccess(Void documentReference) {
+                    public void onSuccess(HttpsCallableResult result) {
                         updateUsersList();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

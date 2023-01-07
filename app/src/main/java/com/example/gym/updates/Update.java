@@ -1,5 +1,8 @@
-package com.example.gym.Manager;
+package com.example.gym.updates;
 
+import com.google.firebase.database.Exclude;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -15,6 +18,12 @@ public class Update {
     public Update(Date date, String content){
         this.date = date;
         this.content = content;
+    }
+
+    @Exclude
+    public String getPrettyDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDateFormat.format(this.date).toString();
     }
 
     public Update(HashMap<String, Object> hashMap){
