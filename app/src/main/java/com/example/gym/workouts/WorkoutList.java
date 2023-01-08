@@ -18,14 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_recyclerView;
 import com.example.gym.workouts.interfaces.I_workoutList;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class WorkoutList extends AppCompatActivity implements I_workoutList{
+public class WorkoutList extends AppCompatActivity implements I_workoutList {
     // set global variable
     static String nameTR;
     // set toast
@@ -50,6 +50,21 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private String email_trainer = getTrainee.nameTR;
     private int dragged;
+    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String role = getIntent().getStringExtra("role");
+        String email;
+        if (role.equals("trainee")) {
+            email = email_trainee;
+        } else {
+            email = email_trainer;
+        }
+        // load content from firebase
+        loadContent(email);
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -58,10 +73,9 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
         setContentView(R.layout.activity_workout_list);
         String role = getIntent().getStringExtra("role");
         String email;
-        if(role.equals("trainee")){
+        if (role.equals("trainee")) {
             email = email_trainee;
-        }
-        else {
+        } else {
             email = email_trainer;
         }
 
@@ -71,7 +85,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
                     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                         return makeMovementFlags(
                                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                               ItemTouchHelper.END
+                                ItemTouchHelper.END
                         );
                     }
 
@@ -86,13 +100,11 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
 
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        switch (direction){
-                            case ItemTouchHelper.END:
-                                db.collection("user-info").document(email).collection("workouts")
-                                        .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
-                                radapter.notifyItemRemoved(viewHolder.getAbsoluteAdapterPosition());
-                                makeToast("Item Removed");
-                                break;
+                        if (direction == ItemTouchHelper.END) {
+                            db.collection("user-info").document(email).collection("workouts")
+                                    .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
+                            recreate();
+                            makeToast("Item Removed");
                         }
                     }
                 }
@@ -120,6 +132,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
         // set add button action
         add = findViewById(R.id.imageMenu);
         add.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
                 try {
@@ -127,8 +140,9 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
                     addWO(email, text);
                     input.setText("");
                     makeToast(text + " Added Successfully");
-                    // reload content to show the new workout
-                    loadContent(email);
+                    radapter.notifyDataSetChanged();
+//                  reload content to show the new workout
+                    recreate();
                 } catch (Exception e) {
                     makeToast("Type Workout Name");
                     e.printStackTrace();
@@ -170,31 +184,38 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList{
      ***/
     @Override
     public void loadContent(String email) {
-        db.collection("user-info").document(email)
-                .collection("workouts")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        int i = 0;
-                        int[] im = {R.drawable.im, R.drawable.im2, R.drawable.im3, R.drawable.im4, R.drawable.im5, R.drawable.im6
-                                , R.drawable.im7, R.drawable.im8, R.drawable.im9, R.drawable.im10, R.drawable.im11, R.drawable.im12
-                                , R.drawable.im13, R.drawable.im14, R.drawable.im15, R.drawable.im16, R.drawable.im17, R.drawable.im18, R.drawable.im19};
-                        ritems.clear();
-                        assert documentSnapshots != null;
-                        for (DocumentSnapshot snapshot : documentSnapshots) {
-                            if(i == 19){
-                                i = 1;
-                            }
-                            else {
-                                i++;
-                            }
-                            ritems.add(new Item(snapshot.getString("name"), im[i]));
+        HashMap<String, String> data = new HashMap<>();
+        data.put("email", email);
+
+        Task<HttpsCallableResult> workout = mFunctions.getHttpsCallable("getWorkoutList").call(data);
+        workout.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    int[] im = {R.drawable.im, R.drawable.im2, R.drawable.im3, R.drawable.im4, R.drawable.im5, R.drawable.im6
+                            , R.drawable.im7, R.drawable.im8, R.drawable.im9, R.drawable.im10, R.drawable.im11, R.drawable.im12
+                            , R.drawable.im13, R.drawable.im14, R.drawable.im15, R.drawable.im16, R.drawable.im17, R.drawable.im18, R.drawable.im19};
+                    ritems.clear();
+                    ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                    final int[] i = {0};
+                    data.forEach(w -> {
+                        ritems.add(new Item((String) w.get("name"), im[i[0]]));
+                        if(i[0] < 19){
+                            i[0]++;
+                        } else {
+                            i[0] = 0;
                         }
-                        radapter.notifyDataSetChanged();
-                        rview.setAdapter(radapter);
-                    }
-                });
+
+                    });
+                    radapter.notifyDataSetChanged();
+                    rview.setAdapter(radapter);
+                } else {
+                    Log.w("Get Workouts", task.getException());
+                }
+            }
+        });
+
     }
 
     /***
