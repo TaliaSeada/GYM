@@ -3,6 +3,7 @@ package com.example.gym.workouts;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_recyclerView;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class getTrainee extends AppCompatActivity {
@@ -34,6 +36,7 @@ public class getTrainee extends AppCompatActivity {
     private int dragged;
     // get firebase instance
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
 
     @SuppressLint("MissingInflatedId")
@@ -88,25 +91,27 @@ public class getTrainee extends AppCompatActivity {
      * in order to show it in the app screen.
      ***/
     public void loadContent() {
-        db.collection("users").
-                whereEqualTo("role", "trainee")
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        names.clear();
-                        items.clear();
-                        assert documentSnapshots != null;
-                        for (DocumentSnapshot snapshot : documentSnapshots) {
-                            names.add(new Item(snapshot.getString("full_name"), R.drawable.login));
-                            items.add(snapshot.getId());
-                        }
-                        // set adapter
-                        radapter.notifyDataSetChanged();
-                        rview.setAdapter(radapter);
-
-                    }
-                });
+        Task<HttpsCallableResult> list = mFunctions.getHttpsCallable("getTraineeList").call();
+        list.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    names.clear();
+                    items.clear();
+                    ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                    data.forEach(t -> {
+                        names.add(new Item((String) t.get("full_name"), R.drawable.login));
+                        items.add((String) t.get("id"));
+                    });
+                    // set adapter
+                    radapter.notifyDataSetChanged();
+                    rview.setAdapter(radapter);
+                } else {
+                    Log.w("Get Trainees", task.getException());
+                }
+            }
+        });
     }
 
 }

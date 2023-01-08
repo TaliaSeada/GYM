@@ -13,7 +13,6 @@ exports.getExercisesList = https.onCall(async (data, context) => {
     const name = data.name;
 
     const snapshot = await db.collection('user-info').doc(email).collection('workouts').doc(name).collection('exercises').get();
-//     const docsSnap = await getDocs(snapshot);
     const exercises = [];
 
     snapshot.forEach(doc => {
@@ -24,5 +23,24 @@ exports.getExercisesList = https.onCall(async (data, context) => {
     });
 
     return exercises;
+
+});
+
+exports.getTraineeList = https.onCall(async (data, context) => {
+    if (!context.auth) {
+      // Throwing an HttpsError so that the client gets the error details.
+      throw new https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+    }
+
+    const snapshot = await db.collection('users').where('role', '==', 'trainee').get();
+    const trainees = [];
+
+    snapshot.forEach(doc => {
+      const trainee = {id: doc.id, ...doc.data()};
+      logger.log(trainee);
+      trainees.push(trainee);
+    });
+
+    return trainees;
 
 });
