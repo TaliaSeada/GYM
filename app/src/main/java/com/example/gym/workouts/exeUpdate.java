@@ -13,20 +13,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_updateExercise;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.MetadataChanges;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +34,8 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     // set toast
     private Toast t;
     // set fields for data display
-    private EditText input_exe, input_time, input_unit;
-    private TextView title, input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
+    private EditText input_time, input_unit;
+    private TextView input_exe, title, input_set, input_weight, input_reps, workValueS, workValueR, workValueW;
     private String Gworkout;
     private int minteger_sets;
     private int minteger_reps;
@@ -43,6 +43,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     private String time, unit;
     private Button DELETE;
     private Button UPDATE, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
+    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     // get firebase instances
     private static final String TAG = "DBExercise";
@@ -57,8 +58,8 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-       getSupportActionBar().hide();
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_exe_update);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -281,46 +282,86 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      ***/
     @Override
     public void loadContent(String email) {
-        db.collection("user-info").document(email)
-                .collection("workouts").document(WorkoutList.nameTR)
-                .collection("exercises").document(ExerciseList.nameExe).
-                addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
-                    @SuppressLint({"SetTextI18n", "WrongViewCast"})
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
+        HashMap<String, String> data = new HashMap<>();
+        data.put("email", email);
+        data.put("name_wo", WorkoutList.nameTR);
+        data.put("name_exe", ExerciseList.nameExe);
 
-                        if (snapshot != null && snapshot.exists()) {
-                            minteger_reps = Math.toIntExact(snapshot.getLong("reps"));
-                            minteger_sets = Math.toIntExact(snapshot.getLong("sets"));
-                            minteger_weight = snapshot.getDouble("weight");
-                            time = snapshot.getString("time");
-                            unit = snapshot.getString("unit");
-                            Log.d(TAG, "Current data: " + snapshot.getData());
-                        } else {
-                            Log.d(TAG, "Current data: null");
-                        }
+        Task<HttpsCallableResult> exe = mFunctions.getHttpsCallable("getExercise").call(data);
+        exe.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                    data.forEach(e -> {
+                        minteger_reps = (int) e.get("reps");
+                        minteger_sets =(int) e.get("sets");
+                        minteger_weight = (double) e.get("weight"); //TODO change
+                        time = (String) e.get("time");
+                        unit = (String) e.get("unit");
+                    });
+                } else {
+                    Log.w("Get Exercises", task.getException());
+                }
 
-                        // set the fields
-                        title = findViewById(R.id.AddExercise);
-                        input_exe = findViewById(R.id.NameExercise);
-                        input_set = findViewById(R.id.valueWorkoutS);
-                        input_reps = findViewById(R.id.valueWorkoutR);
-                        input_weight = findViewById(R.id.valueWorkoutW);
-                        input_time = findViewById(R.id.editTextTime);
-                        input_unit = findViewById(R.id.unit);
+                // set the fields
+                title = findViewById(R.id.AddExercise);
+                input_exe = findViewById(R.id.NameExercise);
+                input_set = findViewById(R.id.valueWorkoutS);
+                input_reps = findViewById(R.id.valueWorkoutR);
+                input_weight = findViewById(R.id.valueWorkoutW);
+                input_time = findViewById(R.id.editTextTime);
+                input_unit = findViewById(R.id.unit);
 
-                        input_set.setText(minteger_sets + "");
-                        input_reps.setText(minteger_reps + "");
-                        input_weight.setText(minteger_weight + "");
-                        input_exe.setText(ExerciseList.nameExe);
-                        input_time.setText(time);
-                        input_unit.setText(unit);
-                    }
-                });
+                input_set.setText(minteger_sets + "");
+                input_reps.setText(minteger_reps + "");
+                input_weight.setText(minteger_weight + "");
+                input_exe.setText(ExerciseList.nameExe);
+                input_time.setText(time);
+                input_unit.setText(unit);
+            }
+        });
+//        db.collection("user-info").document(email)
+//                .collection("workouts").document(WorkoutList.nameTR)
+//                .collection("exercises").document(ExerciseList.nameExe).
+//                addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
+//                    @SuppressLint({"SetTextI18n", "WrongViewCast"})
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+//                        if (e != null) {
+//                            Log.w(TAG, "Listen failed.", e);
+//                            return;
+//                        }
+//
+//                        if (snapshot != null && snapshot.exists()) {
+//                            minteger_reps = Math.toIntExact(snapshot.getLong("reps"));
+//                            minteger_sets = Math.toIntExact(snapshot.getLong("sets"));
+//                            minteger_weight = snapshot.getDouble("weight");
+//                            time = snapshot.getString("time");
+//                            unit = snapshot.getString("unit");
+//                            Log.d(TAG, "Current data: " + snapshot.getData());
+//                        } else {
+//                            Log.d(TAG, "Current data: null");
+//                        }
+//
+//                        // set the fields
+//                        title = findViewById(R.id.AddExercise);
+//                        input_exe = findViewById(R.id.NameExercise);
+//                        input_set = findViewById(R.id.valueWorkoutS);
+//                        input_reps = findViewById(R.id.valueWorkoutR);
+//                        input_weight = findViewById(R.id.valueWorkoutW);
+//                        input_time = findViewById(R.id.editTextTime);
+//                        input_unit = findViewById(R.id.unit);
+//
+//                        input_set.setText(minteger_sets + "");
+//                        input_reps.setText(minteger_reps + "");
+//                        input_weight.setText(minteger_weight + "");
+//                        input_exe.setText(ExerciseList.nameExe);
+//                        input_time.setText(time);
+//                        input_unit.setText(unit);
+//                    }
+//                });
     }
 
     /***
