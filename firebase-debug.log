@@ -1,0 +1,189 @@
+[debug] [2023-01-08T12:15:07.778Z] ----------------------------------------------------------------------
+[debug] [2023-01-08T12:15:07.779Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2023-01-08T12:15:07.780Z] CLI Version:   11.20.0
+[debug] [2023-01-08T12:15:07.780Z] Platform:      win32
+[debug] [2023-01-08T12:15:07.780Z] Node Version:  v18.12.1
+[debug] [2023-01-08T12:15:07.781Z] Time:          Sun Jan 08 2023 14:15:07 GMT+0200 (Israel Standard Time)
+[debug] [2023-01-08T12:15:07.781Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-01-08T12:15:07.890Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-01-08T12:15:07.890Z] > authorizing via signed-in user (talias1235@gmail.com)
+[debug] [2023-01-08T12:15:08.077Z] java version "15.0.1" 2020-10-20
+
+[debug] [2023-01-08T12:15:08.078Z] Java(TM) SE Runtime Environment (build 15.0.1+9-18)
+Java HotSpot(TM) 64-Bit Server VM (build 15.0.1+9-18, mixed mode, sharing)
+
+[debug] [2023-01-08T12:15:08.122Z] Parsed Java major version: 15
+[info] i  emulators: Starting emulators: functions, firestore {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions, firestore"}}
+[debug] [2023-01-08T12:15:08.135Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-01-08T12:15:08.135Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-01-08T12:15:08.135Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[warn] !  ui: Emulator UI unable to start on port 4000, starting on 4002 instead. {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI unable to start on port 4000, starting on 4002 instead."}}
+[debug] [2023-01-08T12:15:08.138Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4002},{"address":"::1","family":"IPv6","port":4002}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[warn] !  emulators: It seems that you are running multiple instances of the emulator suite for project gym-firebase-95e4d. This may result in unexpected behavior. 
+[debug] [2023-01-08T12:15:08.154Z] [hub] writing locator at C:\Users\talia\AppData\Local\Temp\hub-gym-firebase-95e4d.json
+[debug] [2023-01-08T12:15:08.169Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-01-08T12:15:08.169Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-01-08T12:15:08.170Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4002},{"address":"::1","family":"IPv6","port":4002}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, database, hosting, pubsub, storage {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, database, hosting, pubsub, storage\u001b[22m"}}
+[warn] !  Your requested "node" version "16" doesn't match your global version "18". Using node@18 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Your requested \"node\" version \"16\" doesn't match your global version \"18\". Using node@18 from host."}}
+[debug] [2023-01-08T12:15:08.210Z] defaultcredentials: writing to file C:\Users\talia\AppData\Roaming\firebase\talias1235_gmail_com_application_default_credentials.json
+[debug] [2023-01-08T12:15:08.212Z] Setting GAC to C:\Users\talia\AppData\Roaming\firebase\talias1235_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\talia\\AppData\\Roaming\\firebase\\talias1235_gmail_com_application_default_credentials.json"}}
+[debug] [2023-01-08T12:15:08.214Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d/adminSdkConfig [none]
+[debug] [2023-01-08T12:15:08.531Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d/adminSdkConfig 200
+[debug] [2023-01-08T12:15:08.531Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d/adminSdkConfig {"projectId":"gym-firebase-95e4d","databaseURL":"https://gym-firebase-95e4d-default-rtdb.firebaseio.com","storageBucket":"gym-firebase-95e4d.appspot.com","locationId":"europe-west"}
+[debug] [2023-01-08T12:15:08.559Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-01-08T12:15:08.559Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-01-08T12:15:08.560Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\talia\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.15.1.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","gym-firebase-95e4d","--rules","C:\\Users\\talia\\AndroidStudioProjects\\GYM\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\talia\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.15.1.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"gym-firebase-95e4d\",\"--rules\",\"C:\\\\Users\\\\talia\\\\AndroidStudioProjects\\\\GYM\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2023-01-08T12:15:12.015Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-01-08T12:15:12.015Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-01-08T12:15:12.015Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\talia\\.cache\\firebase\\emulators\\ui-v1.11.2\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\talia\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.2\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-01-08T12:15:12.284Z] Web / API server started at 127.0.0.1:4002
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4002\n"}}
+[debug] [2023-01-08T12:15:12.284Z] Web / API server started at ::1:4002
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4002\n"}}
+[info] i  functions: Watching "C:\Users\talia\AndroidStudioProjects\GYM\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\talia\\AndroidStudioProjects\\GYM\\functions\" for Cloud Functions..."}}
+[debug] [2023-01-08T12:15:12.303Z] Validating nodejs source
+[debug] [2023-01-08T12:15:14.544Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2023-01-08T12:15:14.544Z] Building nodejs source
+[debug] [2023-01-08T12:15:14.546Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-01-08T12:15:14.583Z] Error: spawn ./node_modules/.bin/firebase-functions ENOENT
+    at notFoundError (C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:291:12)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-01-08T12:18:59.188Z] ----------------------------------------------------------------------
+[debug] [2023-01-08T12:18:59.190Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2023-01-08T12:18:59.191Z] CLI Version:   11.20.0
+[debug] [2023-01-08T12:18:59.191Z] Platform:      win32
+[debug] [2023-01-08T12:18:59.191Z] Node Version:  v18.12.1
+[debug] [2023-01-08T12:18:59.198Z] Time:          Sun Jan 08 2023 14:18:59 GMT+0200 (Israel Standard Time)
+[debug] [2023-01-08T12:18:59.199Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-01-08T12:18:59.284Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-01-08T12:18:59.285Z] > authorizing via signed-in user (talias1235@gmail.com)
+[debug] [2023-01-08T12:18:59.286Z] [iam] checking project gym-firebase-95e4d for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-01-08T12:18:59.289Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/gym-firebase-95e4d:testIamPermissions [none]
+[debug] [2023-01-08T12:18:59.290Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/gym-firebase-95e4d:testIamPermissions x-goog-quota-user=projects/gym-firebase-95e4d
+[debug] [2023-01-08T12:18:59.290Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/gym-firebase-95e4d:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-01-08T12:19:00.406Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/gym-firebase-95e4d:testIamPermissions 200
+[debug] [2023-01-08T12:19:00.406Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/gym-firebase-95e4d:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-01-08T12:19:00.407Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/gym-firebase-95e4d/serviceAccounts/gym-firebase-95e4d@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-01-08T12:19:00.408Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/gym-firebase-95e4d/serviceAccounts/gym-firebase-95e4d@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-01-08T12:19:01.358Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/gym-firebase-95e4d/serviceAccounts/gym-firebase-95e4d@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-01-08T12:19:01.359Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/gym-firebase-95e4d/serviceAccounts/gym-firebase-95e4d@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'gym-firebase-95e4d'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[debug] [2023-01-08T12:19:15.740Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d [none]
+[debug] [2023-01-08T12:19:16.085Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d 200
+[debug] [2023-01-08T12:19:16.085Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d {"projectId":"gym-firebase-95e4d","projectNumber":"1055291991216","displayName":"gym-firebase","name":"projects/gym-firebase-95e4d","resources":{"hostingSite":"gym-firebase-95e4d","realtimeDatabaseInstance":"gym-firebase-95e4d-default-rtdb","storageBucket":"gym-firebase-95e4d.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_cbc073af-683c-4e32-9ed3-a36ab370178b"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-01-08T12:19:16.087Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-01-08T12:19:16.087Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/gym-firebase-95e4d
+[debug] [2023-01-08T12:19:16.088Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-01-08T12:19:16.089Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/gym-firebase-95e4d
+[debug] [2023-01-08T12:19:16.090Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudbuild.googleapis.com [none]
+[debug] [2023-01-08T12:19:16.090Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudbuild.googleapis.com x-goog-quota-user=projects/gym-firebase-95e4d
+[debug] [2023-01-08T12:19:16.091Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/artifactregistry.googleapis.com [none]
+[debug] [2023-01-08T12:19:16.091Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/artifactregistry.googleapis.com x-goog-quota-user=projects/gym-firebase-95e4d
+[debug] [2023-01-08T12:19:17.267Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/runtimeconfig.googleapis.com 200
+[debug] [2023-01-08T12:19:17.267Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-01-08T12:19:17.302Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudfunctions.googleapis.com 200
+[debug] [2023-01-08T12:19:17.302Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-01-08T12:19:17.323Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudbuild.googleapis.com 200
+[debug] [2023-01-08T12:19:17.323Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-01-08T12:19:17.379Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/artifactregistry.googleapis.com 200
+[debug] [2023-01-08T12:19:17.379Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/gym-firebase-95e4d/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-01-08T12:19:17.379Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d/adminSdkConfig [none]
+[debug] [2023-01-08T12:19:17.668Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d/adminSdkConfig 200
+[debug] [2023-01-08T12:19:17.668Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gym-firebase-95e4d/adminSdkConfig {"projectId":"gym-firebase-95e4d","databaseURL":"https://gym-firebase-95e4d-default-rtdb.firebaseio.com","storageBucket":"gym-firebase-95e4d.appspot.com","locationId":"europe-west"}
+[debug] [2023-01-08T12:19:17.669Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/gym-firebase-95e4d/configs [none]
+[debug] [2023-01-08T12:19:18.488Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/gym-firebase-95e4d/configs 200
+[debug] [2023-01-08T12:19:18.488Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/gym-firebase-95e4d/configs {}
+[debug] [2023-01-08T12:19:18.490Z] Validating nodejs source
+[debug] [2023-01-08T12:19:20.272Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2023-01-08T12:19:20.272Z] Building nodejs source
+[debug] [2023-01-08T12:19:20.274Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-01-08T12:19:20.319Z] Error: spawn ./node_modules/.bin/firebase-functions ENOENT
+    at notFoundError (C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (C:\Users\talia\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:291:12)
+[error] 
+[error] Error: An unexpected error has occurred.

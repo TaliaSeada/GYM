@@ -7,5 +7,5 @@ export * from './personal-details';
 export * from './updates';
 
 export * from './users';
-// export * from './workouts';
+export * from './workouts';
 // export * from './messages';

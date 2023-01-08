@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /{document=**} { 
+      allow read, write, create, delete: if true;
+    }
+    
+    match /users/{userId} {
+      // user can see just his document
+      allow read: if request.auth != null && request.auth.token['email'] == userId;
+      
+      // just the manager can read, create, write and delete all users 
+      allow read, create, write, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.token['email'])).data.role == "manager";
+    }
+    
+    match /user-info/{userId}{
+    // user (trainee/trainer) can read, create, write and delete his document
+      allow read, create, write, delete: if request.auth != null && request.auth.token['email'] == userId;
+    }
+    
+    // user-info/kk@gmail.com/workouts/my
+    match /user-info/{userId}/workouts/{workout=**}{
+    // the *trainee* can acces his workouts and *trainer* can create and read the trainee's workouts  
+      allow read, create, write: if request.auth != null && (request.auth.token['email'] == userId || get(/databases/$(database)/documents/users/$(request.auth.token['email'])).data.role == "trainer");
+      allow delete: if request.auth != null && request.auth.token['email'] == userId; //user can delete his workouts
+    }
+    
+    match /message/{messageId}{
+      // who that create the message has to write he is the author
+      allow create: if request.auth != null && request.resource.data.trainee == request.auth.token.email;
+      //if the user is *trainee* he can read just his messages
+      //if the user is *trainer* he can read all the messages
+    	allow read, write, delete: if request.auth != null && (resource.data.trainee == request.auth.token.email
+                           || get(/databases/$(database)/documents/users/$(request.auth.token['email'])).data.role == "trainer");    
+    }
+       
+  }
+}

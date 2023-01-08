@@ -89,8 +89,8 @@ public class getTrainee extends AppCompatActivity {
      ***/
     public void loadContent() {
         db.collection("users").
-                whereEqualTo("role", "trainee").
-                addSnapshotListener(new EventListener<QuerySnapshot>() {
+                whereEqualTo("role", "trainee")
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
