@@ -2,6 +2,7 @@ package com.example.gym.messages;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.example.gym.auth.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,9 +31,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.functions.HttpsCallableResult;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MessagesTrainee extends AppCompatActivity {
     /**
@@ -39,7 +45,7 @@ public class MessagesTrainee extends AppCompatActivity {
      * can send an application to the trainers
      * **/
     private static final String TAG = "DBMess";
-    private ManageMessages ManageMessages = new ManageMessages();
+    private final ManageMessages ManageMessages = new ManageMessages();
     //Defining datasets for extracting the information
     private ListView listView;
     private String email;
@@ -52,7 +58,6 @@ public class MessagesTrainee extends AppCompatActivity {
 
     private ImageView refresh;
 
-    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,11 +87,12 @@ public class MessagesTrainee extends AppCompatActivity {
                         dialog.dismiss();
                         String title_val = title.getText().toString();
                         String message_val = message.getText().toString();
-//                        // Add the new user to the db
-                        ManageMessages.addMessage(email, message_val, title_val).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
+                        // Add the new user to the db
+                        ManageMessages.addMessage(email, message_val, title_val).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
                             @Override
-                            public void onSuccess(Void documentReference) {
+                            public void onSuccess(HttpsCallableResult httpsCallableResult) {
                                 updateMessagesList();
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -105,17 +111,16 @@ public class MessagesTrainee extends AppCompatActivity {
                         });
                     }
                 });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder.show(); //show the add user window
                     }
                 });
-
-                builder.show(); //show the add user window
-            }
-        });
-
         //data refresh
         refresh = (ImageView) findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
@@ -138,49 +143,49 @@ public class MessagesTrainee extends AppCompatActivity {
     }
 
     // Take the users from the db and put them in the view
-    private void updateMessagesList(){
-        ManageMessages.getMessage(email)
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+    public void updateMessagesList(){
+        ManageMessages.getMessageTrainee(email).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>(){
+            @Override
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
                             title_array.clear();
                             message_array.clear();
                             date_array.clear();
                             sub_array.clear();
                             answer_array.clear();
                             image_array.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Adding the data to the array
-                                String title = (String) document.getData().get("title");
-                                title_array.add(title);
-                                String trainee = (String) document.getData().get("trainee");
-                                sub_array.add(trainee);
-                                String message = (String) document.getData().get("message");
-                                message_array.add(message);
-                                String answer = (String) document.getData().get("answer");
-                                answer_array.add(answer);
-                                Log.d("myTag", answer.toString());
-                                //Indicates whether a new message has been received
-                                if (answer.isEmpty()){
-                                    System.out.println(answer.toString());
-                                    image_array.add(R.drawable.close_mail);
-                                }
-                                else{
-                                    image_array.add(R.drawable.open_mail);
-                                }
-                                Date date = document.getTimestamp("date").toDate();
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                String strDate = sdf.format(date.getTime());
-                                date_array.add(strDate);
+                            ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                            ArrayList<User> messageList = new ArrayList<>();
+                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                           data.forEach(m -> {
+                            title_array.add((String) m.get("title"));
+                            sub_array.add((String) m.get("trainee"));
+                            message_array.add((String) m.get("message"));
+                            String answer = (String) m.get("answer");
+                            answer_array.add(answer);
+                            Log.d("myTag", answer);
+                            //Indicates whether a new message has been received
+                            if (answer.isEmpty()){
+                                image_array.add(R.drawable.close_mail);
                             }
-                            MessageAdapter messageAdapter = new MessageAdapter();
+                            else{
+                                image_array.add(R.drawable.open_mail);
+                            }
+                            Date date = (Date) m.get("date");
+//                                Date date = document.getTimestamp("date").toDate();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String strDate = sdf.format(date.getTime());
+                            date_array.add(strDate);
+                        });
+                    }
+                    MessageAdapter messageAdapter = new MessageAdapter();
                             listView.setAdapter(messageAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                    }
-                });
+
+            }
+        });
     }
 
     // This class displays the messages as a list

@@ -56,7 +56,6 @@ public class ManageUpdates extends AppCompatActivity {
                             data.forEach(d -> updatesList.add(new Update(d)));
 
                             for (Update updateObj: updatesList) {
-
                                 final Map<String, String> update = new HashMap<>();
                                 update.put("id", updateObj.id);
                                 update.put("date",updateObj.getPrettyDate());
