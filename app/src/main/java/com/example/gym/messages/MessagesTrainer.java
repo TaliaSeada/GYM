@@ -2,7 +2,9 @@ package com.example.gym.messages;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,9 +13,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
+import com.example.gym.auth.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,11 +27,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MessagesTrainer extends AppCompatActivity  {
     /**
@@ -33,6 +41,8 @@ public class MessagesTrainer extends AppCompatActivity  {
      * can response an application to the trainee
      * **/
     //Defining datasets for extracting the information
+    private static final String TAG = "DBMess";
+    private ManageMessages ManageMessages = new ManageMessages();
     private ListView listView;
     private String email;
     private ArrayList<String> title_array = new ArrayList<String>();
@@ -45,8 +55,6 @@ public class MessagesTrainer extends AppCompatActivity  {
 
     private ImageView refresh;
 
-    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +63,7 @@ public class MessagesTrainer extends AppCompatActivity  {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         email = user.getEmail();
-        addMess(email);
+        updateMessagesList(email);
         //data refresh
         refresh = (ImageView) findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
@@ -85,45 +93,50 @@ public class MessagesTrainer extends AppCompatActivity  {
     }
     //connection to Firebase
 
-    public void addMess(String email) {
-        db.collection("message")
-                .whereIn("trainer", Arrays.asList("all" , email))
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                        title_array.clear();
-                        message_array.clear();
-                        date_array.clear();
-                        sub_array.clear();
-                        assert documentSnapshots != null;
-                        for (DocumentSnapshot snapshot : documentSnapshots) {
-                            String title = (String) snapshot.getData().get("title");
-                            title_array.add(title);
-                            String id = snapshot.getId();
-                            id_array.add(id);
-                            String trainee = (String) snapshot.getData().get("trainee");
-                            sub_array.add(trainee);
-                            String message = (String) snapshot.getData().get("message");
-                            message_array.add(message);
-                            String answer = (String) snapshot.getData().get("answer");
+    public void updateMessagesList(String email) {
+        ManageMessages.getMessageTrainer(email).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            @Override
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    title_array.clear();
+                    message_array.clear();
+                    date_array.clear();
+                    sub_array.clear();
+                    image_array.clear();
+                    answer_array.clear();
+                    ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+                    ArrayList<User> messageList = new ArrayList<>();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        data.forEach(m -> {
+                            title_array.add((String) m.get("title"));
+                            sub_array.add((String) m.get("trainee"));
+                            message_array.add((String) m.get("message"));
+                            String answer = (String) m.get("answer");
                             answer_array.add(answer);
-                            //Updated when the trainer responded to the message
-                            if (answer.isEmpty()){
+                            Log.d("myTag", answer);
+                            //Indicates whether a new message has been received
+                            if (answer.isEmpty()) {
                                 image_array.add(R.drawable.close_mail);
-                            }
-                            else{
+                            } else {
                                 image_array.add(R.drawable.open_mail);
                             }
-                            Date date = snapshot.getTimestamp("date").toDate();
+                            Date date = (Date) m.get("date");
+//                                Date date = document.getTimestamp("date").toDate();
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             String strDate = sdf.format(date.getTime());
                             date_array.add(strDate);
-                        }
-                        MessagesTrainer.MessageAdapter messageAdapter = new MessagesTrainer.MessageAdapter();
-                        listView.setAdapter(messageAdapter);
-
+                            ////////////////check////////////////////
+                            id_array.add((String) m.get("id"));
+                            ////////////////////////////////////////
+                        });
                     }
-                });
+                    MessageAdapter messageAdapter = new MessageAdapter();
+                    listView.setAdapter(messageAdapter);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
     }
 
     // This class displays the messages as a list

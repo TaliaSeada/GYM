@@ -29,15 +29,11 @@ public class ResponseMessageTrainer extends AppCompatActivity {
     private TextView answerTrainer;
     private TextView Title;
     private TextView messageTrainee;
-    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ManageMessages manageMessages = new ManageMessages();
 
     public void addMess(String id, String message, String email) {
         // Update an existing document
-        DocumentReference docRef = db.collection("message").document(id);
-
-        // (async) Update one field
-        docRef.update("answer", message);
-        docRef.update("trainer", email);
+        manageMessages.updateMessage(id, message, email);
     }
     
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
