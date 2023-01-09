@@ -78,6 +78,49 @@
 
         </androidx.fragment.app.FragmentContainerView>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/contactbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="@color/white"
+            android:backgroundTint="@color/blue"
+            app:layout_constraintBottom_toBottomOf="@+id/updates_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="@+id/updates_fragment"
+            app:layout_constraintTop_toTopOf="@+id/updates_fragment"
+            app:layout_constraintVertical_bias="0.959"
+            app:srcCompat="@drawable/ic_contact" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="invisible"
+            android:backgroundTint="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/contactbtn"
+            app:layout_constraintEnd_toEndOf="@+id/contactbtn"
+            app:srcCompat="@drawable/fui_ic_phone_white_24dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/send_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="invisible"
+            android:tint="@color/white"
+            android:backgroundTint="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/call"
+            app:layout_constraintEnd_toEndOf="@+id/call"
+            app:srcCompat="@drawable/ic_email" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -86,7 +129,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/trainer_menu" />
+        app:menu="@menu/trainee_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
 
 
