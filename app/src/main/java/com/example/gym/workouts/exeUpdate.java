@@ -227,27 +227,25 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         exe.put("name", exe_name);
         exe.put("time", time);
         exe.put("unit", unit);
-        Map<String, Object> name = new HashMap<>();
-        name.put("name", wo_name);
-        // if the workout is new insert it first
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name).set(name);
-        // set in firebase
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name)
-                .collection("exercises").document(exe_name).set(exe)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        data.put("name_wo", wo_name);
+        data.put("name_exe", exe_name);
+        data.put("exe", exe);
+
+        Task<HttpsCallableResult> exe_ = mFunctions.getHttpsCallable("createExercise").call(data);
+        exe_.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+            @Override
+            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                Log.d(TAG, "DocumentSnapshot successfully updated!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error updating document", e);
+            }
+        });
     }
 
     /***
@@ -258,22 +256,39 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      */
     @Override
     public void DeleteExe(String email, String wo_name, String exe_name) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        data.put("name_wo", wo_name);
+        data.put("name_exe", exe_name);
+
         // delete from firebase
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name)
-                .collection("exercises").document(exe_name).delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        Task<HttpsCallableResult> del_exe = mFunctions.getHttpsCallable("deleteExercise").call(data);
+        del_exe.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+            @Override
+            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error deleting document", e);
+            }
+        });
+//        db.collection("user-info").document(email)
+//                .collection("workouts").document(wo_name)
+//                .collection("exercises").document(exe_name).delete()
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        Log.d(TAG, "DocumentSnapshot successfully written!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error adding document", e);
+//                    }
+//                });
     }
 
     /***

@@ -19,8 +19,11 @@ import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_addNewWorkout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +47,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private String email_trainer = getTrainee.nameTR;
     private String Gworkout;
+    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
 
     /***
@@ -66,27 +70,25 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         exe.put("name", exe_name);
         exe.put("time", time);
         exe.put("unit", unit);
-        Map<String, Object> name = new HashMap<>();
-        name.put("name", wo_name);
-        // if the workout is new insert it first
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name).set(name);
-        // set in firebase
-        db.collection("user-info").document(email)
-                .collection("workouts").document(wo_name)
-                .collection("exercises").document(exe_name).set(exe)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        data.put("name_wo", wo_name);
+        data.put("name_exe", exe_name);
+        data.put("exe", exe);
+
+        Task<HttpsCallableResult> exe_ = mFunctions.getHttpsCallable("createExercise").call(data);
+        exe_.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+            @Override
+            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                Log.d(TAG, "DocumentSnapshot successfully written!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error adding document", e);
+            }
+        });
     }
 
 

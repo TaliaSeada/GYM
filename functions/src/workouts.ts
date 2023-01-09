@@ -87,3 +87,37 @@ exports.getExercise = https.onCall(async (data, context) => {
   return exercises;
 
 });
+
+// Create exercise
+exports.createExercise = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+  }
+
+  const email = data.email;
+  const name_wo = data.name_wo;
+  const name_exe = data.name_exe;
+  const exe = data.exe;
+
+    await db.collection('user-info').doc(email).
+    collection('workouts').doc(name_wo).collection('exercises').doc(name_exe).set(exe);
+    return;
+});
+
+
+// Delete exercise
+exports.deleteExercise = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+  }
+
+    const email = data.email;
+    const name_wo = data.name_wo;
+    const name_exe = data.name_exe;
+
+    const res = await db.collection('users').doc(email).
+    collection('workouts').doc(name_wo).collection('exercises').doc(name_exe).delete();
+    return;
+});
