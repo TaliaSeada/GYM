@@ -297,7 +297,14 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                     data.forEach(e -> {
                         minteger_reps = (int) e.get("reps");
                         minteger_sets =(int) e.get("sets");
-                        minteger_weight = (double) e.get("weight"); //TODO change
+                        Object tmp = e.get("weight");
+                        assert tmp != null;
+                        if(tmp.equals(0)){
+                            minteger_weight = (double)((Integer)(tmp));
+                        }
+                        else{
+                            minteger_weight = (double) tmp;
+                        }
                         time = (String) e.get("time");
                         unit = (String) e.get("unit");
                     });
