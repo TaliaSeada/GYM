@@ -329,46 +329,6 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                 input_unit.setText(unit);
             }
         });
-//        db.collection("user-info").document(email)
-//                .collection("workouts").document(WorkoutList.nameTR)
-//                .collection("exercises").document(ExerciseList.nameExe).
-//                addSnapshotListener(MetadataChanges.INCLUDE, new EventListener<DocumentSnapshot>() {
-//                    @SuppressLint({"SetTextI18n", "WrongViewCast"})
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-//                        if (e != null) {
-//                            Log.w(TAG, "Listen failed.", e);
-//                            return;
-//                        }
-//
-//                        if (snapshot != null && snapshot.exists()) {
-//                            minteger_reps = Math.toIntExact(snapshot.getLong("reps"));
-//                            minteger_sets = Math.toIntExact(snapshot.getLong("sets"));
-//                            minteger_weight = snapshot.getDouble("weight");
-//                            time = snapshot.getString("time");
-//                            unit = snapshot.getString("unit");
-//                            Log.d(TAG, "Current data: " + snapshot.getData());
-//                        } else {
-//                            Log.d(TAG, "Current data: null");
-//                        }
-//
-//                        // set the fields
-//                        title = findViewById(R.id.AddExercise);
-//                        input_exe = findViewById(R.id.NameExercise);
-//                        input_set = findViewById(R.id.valueWorkoutS);
-//                        input_reps = findViewById(R.id.valueWorkoutR);
-//                        input_weight = findViewById(R.id.valueWorkoutW);
-//                        input_time = findViewById(R.id.editTextTime);
-//                        input_unit = findViewById(R.id.unit);
-//
-//                        input_set.setText(minteger_sets + "");
-//                        input_reps.setText(minteger_reps + "");
-//                        input_weight.setText(minteger_weight + "");
-//                        input_exe.setText(ExerciseList.nameExe);
-//                        input_time.setText(time);
-//                        input_unit.setText(unit);
-//                    }
-//                });
     }
 
     /***
