@@ -22,6 +22,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".messages.ShowMessage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".workouts.exeUpdate"
             android:exported="false"
             android:theme="@style/AppTheme.CustomTheme">
