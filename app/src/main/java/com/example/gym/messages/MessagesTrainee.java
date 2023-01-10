@@ -88,15 +88,15 @@ public class MessagesTrainee extends AppCompatActivity {
                         String title_val = title.getText().toString();
                         String message_val = message.getText().toString();
                         // Add the new user to the db
-                        ManageMessages.addMessage(email, message_val, title_val).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                        ManageMessages.addMessageTrainee(email, message_val, title_val).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
                             @Override
                             public void onSuccess(HttpsCallableResult httpsCallableResult) {
                                 updateMessagesList();
-
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                Log.d("myTag", e.toString());
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MessagesTrainee.this);
                                 builder.setMessage("Can't add this Message.\nTry again later");
                                 builder.setCancelable(true);
@@ -163,7 +163,7 @@ public class MessagesTrainee extends AppCompatActivity {
                             message_array.add((String) m.get("message"));
                             String answer = (String) m.get("answer");
                             answer_array.add(answer);
-                            Log.d("myTag", answer);
+//                            Log.d("myTag", answer);
                             //Indicates whether a new message has been received
                             if (answer.isEmpty()){
                                 image_array.add(R.drawable.close_mail);
@@ -171,11 +171,15 @@ public class MessagesTrainee extends AppCompatActivity {
                             else{
                                 image_array.add(R.drawable.open_mail);
                             }
-                            Date date = (Date) m.get("date");
-//                                Date date = document.getTimestamp("date").toDate();
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            String strDate = sdf.format(date.getTime());
-                            date_array.add(strDate);
+//                            HashMap<String, Integer> d = (HashMap<String, Integer>) m.get("date");
+//                            long dateEpoch = d.get("_seconds") * 1000L;
+//                            Date date = new Date(dateEpoch);
+////                            Date date = (Date) m.get("date");
+////                          Date date = document.getTimestamp("date").toDate();
+//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                            String strDate = sdf.format(date.getTime());
+                               String strDate = (String) m.get("date");
+                               date_array.add(strDate);
                         });
                     }
                     MessageAdapter messageAdapter = new MessageAdapter();

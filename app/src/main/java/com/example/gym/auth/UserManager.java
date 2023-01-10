@@ -13,7 +13,7 @@ import java.util.Map;
 
 // This class have all the actions we can do to user
 
-public class UserManager {
+public class  UserManager {
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     public static final String ROLE_MANAGER = "manager";

@@ -73,6 +73,7 @@ public class ResponseMessageTrainer extends AppCompatActivity {
 //                        // Add the new user to the db
                         addMess(stuff, message_val, email);
                         answerTrainer.setText(message_val);
+                        finish();
                         startActivity(new Intent(getApplicationContext(), MessagesTrainer.class));
 
                     }

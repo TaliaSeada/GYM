@@ -120,10 +120,11 @@ public class MessagesTrainer extends AppCompatActivity  {
                             } else {
                                 image_array.add(R.drawable.open_mail);
                             }
-                            Date date = (Date) m.get("date");
-//                                Date date = document.getTimestamp("date").toDate();
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            String strDate = sdf.format(date.getTime());
+//                            Date date = (Date) m.get("date");
+////                                Date date = document.getTimestamp("date").toDate();
+//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                            String strDate = sdf.format(date.getTime());
+                            String strDate = (String) m.get("date");
                             date_array.add(strDate);
                             ////////////////check////////////////////
                             id_array.add((String) m.get("id"));

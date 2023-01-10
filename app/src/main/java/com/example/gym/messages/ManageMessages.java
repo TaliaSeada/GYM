@@ -4,24 +4,30 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ManageMessages {
     protected FirebaseFunctions Functions = FirebaseFunctions.getInstance();
 
-    public Task<HttpsCallableResult> addMessage(String email, String message, String title) {
+    public Task<HttpsCallableResult> addMessageTrainee(String email, String message, String title) {
         Map<String, Object> message_map = new HashMap<>();
         message_map.put("trainee", email);
         message_map.put("trainer", "all");
         message_map.put("message", message);
         message_map.put("answer", "");
         message_map.put("title", title);
-        message_map.put("date", Calendar.getInstance().getTime());
-        return Functions.getHttpsCallable("addMessage").call(message_map);
+        Date date =  Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(date.getTime());
+        message_map.put("date", strDate);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("mess", message_map);
 
-//        return db.collection("message").document().set(message_map);
+        return Functions.getHttpsCallable("addMessageTrainee").call(data);
     }
 
     public Task<HttpsCallableResult> getMessageTrainee(String email) {

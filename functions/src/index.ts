@@ -8,4 +8,4 @@ export * from './updates';
 
 export * from './users';
 export * from './workouts';
-// export * from './messages';
+export * from './messages';
