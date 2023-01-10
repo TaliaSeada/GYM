@@ -3,6 +3,7 @@ package com.example.gym.homePage;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
+import com.example.gym.auth.User;
+import com.example.gym.messages.MessagesTrainee;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -59,44 +63,33 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     private static final String TAG = "PrivateArea";
     protected  FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-//    public int getAge(int year, int month, int dayOfMonth) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            return Period.between(
-//                    LocalDate.of(year, month, dayOfMonth),
-//                    LocalDate.now()
-//            ).getYears();
-//        }
-//        return 0;
-//    }
-
+    ManagePrivateArea managePrivateArea = new ManagePrivateArea();
 
     //update data in  Firebase
     public void addDetails(String email, double height, double weight) {
-        DocumentReference docRef = db.collection("user-info").document(email);
-
-        docRef.update("height", height);
-        docRef.update("weight", weight);
+        managePrivateArea.addDetails(email,height,weight);
+//        DocumentReference docRef = db.collection("user-info").document(email);
+//
+//        docRef.update("height", height);
+//        docRef.update("weight", weight);
     }
     public void addDate(String date) {
-        DocumentReference docRef = db.collection("user-info").document(email);
-
-        // (async) Update one field
-        docRef.update("dateBirth", date);
+        managePrivateArea.addDate(email,date);
+//        DocumentReference docRef = db.collection("user-info").document(email);
+//        // (async) Update one field
+//        docRef.update("dateBirth", date);
     }
     public void addGender(String gender) {
-        DocumentReference docRef = db.collection("user-info").document(email);
-
-        // (async) Update one field
-        docRef.update("gender", gender);
+        managePrivateArea.addGender(email, gender);
+//        DocumentReference docRef = db.collection("user-info").document(email);
+//        // (async) Update one field
+//        docRef.update("gender", gender);
     }
-
 
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private_area);
         email = user.getEmail();
@@ -163,29 +156,15 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
                 finish();
             }
         });
-        //Extracts the data from Firebase to activity_private_area.xml
-
-
-//        mFunctions.getHttpsCallable("getPersonalDetails").call().continueWith(new Continuation<HttpsCallableResult, String>() {
-//            @Override
-//            public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
-//                // This continuation runs on either success or failure, but if the task
-//                // has failed then getResult() will throw an Exception which will be
-//                // propagated down.
-//                Object result = task.getResult().getData();
-////                return result;
-//
-//                return "";
-//            }
-//        });
-
-        DocumentReference Reference= db.collection("user-info").document(email);
-        Reference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        managePrivateArea.getPersonalDetails(email).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>(){
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                double height;
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    HashMap data = (HashMap) task.getResult().getData();
+//                    data.forEach(m -> {
+                    double height;
                 try {
-                    height = (Double) value.get("height");
+                    height = (Double) data.get("height");
                 } catch (Exception e) {
                     height=0;
                 }
@@ -193,29 +172,27 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
                 input_heightTrainee.setText(heightS);
                 double weight;
                 try {
-                    weight = (Double) value.get("weight");
+                    weight = (Double) data.get("weight");
                 } catch (Exception e) {
+                    Log.d("TAG", e.toString());
                     weight=0;
                 }
-                    String weightS=String.valueOf(weight);
-                    input_weightTrainee.setText(weightS);
+                String weightS=String.valueOf(weight);
+                input_weightTrainee.setText(weightS);
                 String DateBirth;
                 try {
-                    DateBirth = (String) value.get("dateBirth");
+                    DateBirth = (String) data.get("dateBirth");
                 } catch (Exception e) {
                     DateBirth="";
                 }
                 input_ageTrainee.setText(DateBirth);
                 String genderString;
                 try {
-                     genderString = (String) value.get("gender");
+                    genderString = (String) data.get("gender");
                 } catch (Exception e) {
                     genderString="Gender";
                     Log.d("myTag", genderString);
                 }
-//                String genderString= "Gender";
-//                Log.d("myTaggender", genderString);
-
                 String[] baths = getResources().getStringArray(R.array.planets_array);
                 try {
                     if (genderString.equals("female"))
@@ -228,19 +205,30 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
                 } catch (Exception e) {
                     spinner.setSelection(Arrays.asList(baths).indexOf("Gender"));
                 }
+//            });
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
 
             }
         });
         //Extracts the name from Firebase to activity_private_area.xml
-        DocumentReference name= db.collection("users").document(email);
-        name.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        managePrivateArea.getName(email).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>(){
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                try {
-                    String fullName = (String) value.get("full_name");
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                if (task.isSuccessful()) {
+                    HashMap data = (HashMap) task.getResult().getData();
+                    Log.d(TAG,data.toString());
+                    try {
+                    String fullName = (String) data.get("full_name");
                     full_name_text.setText(fullName);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                            Log.d(TAG, e.toString());
+                            e.printStackTrace();
+                }
+//                    });
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
 
             }

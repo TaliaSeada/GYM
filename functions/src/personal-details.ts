@@ -4,19 +4,12 @@ import { firestore } from 'firebase-admin';
 const db = firestore();
 
 exports.getPersonalDetails = https.onCall(async (data, context) => {
-  // Checking attribute.
-//   if (!(typeof data.text === 'string') || text.length === 0) {
-//     // Throwing an HttpsError so that the client gets the error details.
-//     throw new functions.https.HttpsError('invalid-argument', 'The function must be called with ' +
-//         'one arguments "text" containing the message text to add.');
-//   }
   // Checking that the user is authenticated.
   if (!context.auth) {
     // Throwing an HttpsError so that the client gets the error details.
     throw new https.HttpsError('failed-precondition', 'The function must be called ' +
         'while authenticated.');
   }
-
   const email = context.auth.token.email;
   logger.log(`email: "${email}"`);
 
@@ -28,7 +21,51 @@ exports.getPersonalDetails = https.onCall(async (data, context) => {
   } else {
     return doc.data();
   }
-
 });
+exports.addDate = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' +
+        'while authenticated.');
+  }
+    const snapshot = db.collection("user-info").doc(data.email);
+    await snapshot.update("dateBirth", data.date);
+    return {message: 'date was update successfully'};
+});
+exports.addDetails = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' +
+        'while authenticated.');
+  }
+    const snapshot = db.collection("user-info").doc(data.email);
+     await snapshot.update("height", data.height);
+     await snapshot.update("weight", data.weight);
+    return {message: 'details was update successfully'};
+});
+exports.addGender = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' +
+        'while authenticated.');
+  }
+    const snapshot = db.collection("user-info").doc(data.email);
+     await snapshot.update("gender", data.gender);
+    return {message: 'gender was update successfully'};
+});
+
+exports.getName = https.onCall(async (data, context) => {
+    if (!context.auth) {
+      // Throwing an HttpsError so that the client gets the error details.
+      throw new https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+    }
+    const email = data.email;
+    const snapshot = await db.collection('users').doc(email);
+    const doc = await snapshot.get();
+
+
+    return doc.data();
+});
+
 
 
