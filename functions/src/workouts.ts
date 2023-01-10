@@ -117,7 +117,49 @@ exports.deleteExercise = https.onCall(async (data, context) => {
     const name_wo = data.name_wo;
     const name_exe = data.name_exe;
 
-    const res = await db.collection('users').doc(email).
-    collection('workouts').doc(name_wo).collection('exercises').doc(name_exe).delete();
-    return;
+    const res = await db.collection('users').doc(email)
+    .collection('workouts').doc(name_wo)
+    .collection('exercises').doc(name_exe).delete();
+    try{
+      await res;
+      return {message: 'Exercise was deleted successfully'};
+    }catch(err){
+      return {error: err};
+    }
+});
+
+// Create workout
+exports.createWorkout = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+  }
+
+  const email = data.email;
+  const name_wo = data.name_wo;
+  const name = data.name;
+
+  await db.collection('user-info').doc(email).
+  collection('workouts').doc(name_wo).set(name);
+  return;
+});
+
+// Delete workout
+exports.deleteWorkout = https.onCall(async (data, context) => {
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+  }
+
+    const email = data.email;
+    const name_wo = data.name_wo;
+
+    const res = await db.collection('users').doc(email)
+    .collection('workouts').doc(name_wo).delete();
+    try{
+      await res;
+      return {message: 'Workout was deleted successfully'};
+    }catch(err){
+      return {error: err};
+    }
 });

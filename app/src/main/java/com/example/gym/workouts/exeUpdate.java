@@ -256,39 +256,39 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      */
     @Override
     public void DeleteExe(String email, String wo_name, String exe_name) {
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name_wo", wo_name);
-        data.put("name_exe", exe_name);
-
-        // delete from firebase
-        Task<HttpsCallableResult> del_exe = mFunctions.getHttpsCallable("deleteExercise").call(data);
-        del_exe.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
-            @Override
-            public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error deleting document", e);
-            }
-        });
-//        db.collection("user-info").document(email)
-//                .collection("workouts").document(wo_name)
-//                .collection("exercises").document(exe_name).delete()
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Log.d(TAG, "DocumentSnapshot successfully written!");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("email", email);
+//        data.put("name_wo", wo_name);
+//        data.put("name_exe", exe_name);
+//
+//        // delete from firebase
+//        Task<HttpsCallableResult> del_exe = mFunctions.getHttpsCallable("deleteExercise").call(data);
+//        del_exe.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+//            @Override
+//            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+//                Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
+//                if(result.containsKey("message"))
+//                    Log.d(TAG, result.get("message"));
+//
+//                else
+//                    Log.d(TAG, "Error deleting document " + result.get("error"));
+//            }
+//        });
+        db.collection("user-info").document(email)
+                .collection("workouts").document(wo_name)
+                .collection("exercises").document(exe_name).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 
     /***

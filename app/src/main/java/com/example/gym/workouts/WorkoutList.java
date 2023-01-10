@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class WorkoutList extends AppCompatActivity implements I_workoutList {
     // set global variable
@@ -101,6 +100,23 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         if (direction == ItemTouchHelper.END) {
+//                            HashMap<String, Object> data = new HashMap<>();
+//                            data.put("email", email);
+//                            data.put("name_wo", ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName());
+//
+//                            // delete from firebase
+//                            Task<HttpsCallableResult> del_wo = mFunctions.getHttpsCallable("deleteWorkout").call(data);
+//                            del_wo.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+//                                @Override
+//                                public void onSuccess(HttpsCallableResult httpsCallableResult) {
+//                                    Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
+//                                    if (result.containsKey("message"))
+//                                        Log.d(TAG, (String) result.get("message"));
+//
+//                                    else
+//                                        Log.d(TAG, "Error deleting document " + result.get("error"));
+//                                }
+//                            });
                             db.collection("user-info").document(email).collection("workouts")
                                     .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
                             recreate();
@@ -158,24 +174,26 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
      */
     @Override
     public void addWO(String email, String wo_name) {
-        // create workout
         Map<String, Object> name = new HashMap<>();
         name.put("name", wo_name);
-        // set in firebase
-        db.collection("user-info").document(Objects.requireNonNull(email))
-                .collection("workouts").document(wo_name).set(name)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        data.put("name_wo", wo_name);
+        data.put("name", name);
+
+        Task<HttpsCallableResult> wo = mFunctions.getHttpsCallable("createWorkout").call(data);
+        wo.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+            @Override
+            public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                Log.d(TAG, "Workout successfully added!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error adding document", e);
+            }
+        });
     }
 
     /***
@@ -201,7 +219,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     final int[] i = {0};
                     data.forEach(w -> {
                         ritems.add(new Item((String) w.get("name"), im[i[0]]));
-                        if(i[0] < 19){
+                        if (i[0] < 19) {
                             i[0]++;
                         } else {
                             i[0] = 0;
