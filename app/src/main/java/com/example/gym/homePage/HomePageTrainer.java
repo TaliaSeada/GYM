@@ -20,6 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.R;
+import com.example.gym.auth.LoginActivity;
 import com.example.gym.messages.MessagesTrainer;
 import com.example.gym.workouts.view.getTrainee;
 import com.firebase.ui.auth.AuthUI;

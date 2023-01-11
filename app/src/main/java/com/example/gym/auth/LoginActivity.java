@@ -1,4 +1,4 @@
-package com.example.gym.homePage;
+package com.example.gym.auth;
 
 import static com.example.gym.auth.UserController.ROLE_MANAGER;
 import static com.example.gym.auth.UserController.ROLE_TRAINEE;
@@ -19,7 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.Manager.HomePageManager;
 import com.example.gym.R;
-import com.example.gym.auth.UserController;
+import com.example.gym.homePage.HomePageTrainee;
+import com.example.gym.homePage.HomePageTrainer;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
