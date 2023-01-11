@@ -27,6 +27,6 @@ public interface I_updateExercise {
      * this function load the relevant content from the firebase
      * to the fields we created in order to show it in the app screen.
      ***/
-    void loadContent(String email);
+    void loadContent(String email, String nameEx, String nameTR);
 
 }

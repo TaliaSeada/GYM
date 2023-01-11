@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ExerciseList extends AppCompatActivity implements I_exerciseList {
-    // set global variable
-    static String nameExe;
     // set toast
     private Toast t;
     // set fields for data display
@@ -42,37 +40,40 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     // get firebase instances
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private String email_trainer = getTrainee.nameTR;
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     @Override
     protected void onResume() {
         super.onResume();
-        String role = getIntent().getStringExtra("role");
+        Intent MessageIntent = getIntent();
+        String[] MessageValue = MessageIntent.getStringArrayExtra("key_ex");
+        String role = MessageValue[0];
         String email;
         if (role.equals("trainee")) {
             email = email_trainee;
         } else {
-            email = email_trainer;
+            email = MessageValue[1];
         }
         // load content from firebase
-        loadContent(email);
+        loadContent(email,MessageValue[2]);
     }
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent MessageIntent = getIntent();
+        String[] MessageValue = MessageIntent.getStringArrayExtra("key_ex");
         setContentView(R.layout.activity_exercise_list);
-        String role = getIntent().getStringExtra("role");
+        String role = MessageValue[0];
         String email;
         if (role.equals("trainee")) {
             email = email_trainee;
         } else {
-            email = email_trainer;
+            email = MessageValue[1];
         }
         // load content from firebase
-        loadContent(email);
+        loadContent(email,MessageValue[2]);
         // set the exercises list
         listView = findViewById(R.id.grid_exe);
         items = new ArrayList<>();
@@ -82,7 +83,8 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddNewWorkout.class);
-                i.putExtra("role", role);
+                i.putExtra("key_ex", new String[]{role,MessageValue[1] ,MessageValue[2]});
+//                i.putExtra("role", role);
                 startActivity(i);
             }
         });
@@ -93,9 +95,10 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent i = new Intent(ExerciseList.this, exeUpdate.class);
-                i.putExtra("role", role);
+//                nameExe = items.get(pos);
+                i.putExtra("key_ex", new String[]{role, items.get(pos), MessageValue[2]});
+//                i.putExtra("role", role);
                 startActivity(i);
-                nameExe = items.get(pos);
             }
         });
     }
@@ -105,11 +108,10 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
      * to the lists we created in order to show it in the app screen.
      ***/
     @Override
-    public void loadContent(String email) {
+    public void loadContent(String email, String nameTR) {
         HashMap<String, String> data = new HashMap<>();
         data.put("email", email);
-        data.put("name", WorkoutList.nameTR);
-
+        data.put("name", nameTR);
         Task<HttpsCallableResult> exe = mFunctions.getHttpsCallable("getExercisesList").call(data);
         exe.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @Override

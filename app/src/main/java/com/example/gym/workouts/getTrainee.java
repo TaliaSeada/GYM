@@ -26,7 +26,6 @@ import java.util.List;
 
 public class getTrainee extends AppCompatActivity {
     //set global variable
-    static String nameTR;
     // create list to save the content read from firebase
     private final List<String> items = new ArrayList<>();
     // create list to show only the names from content read from firebase
@@ -73,9 +72,10 @@ public class getTrainee extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent i = new Intent(getTrainee.this, WorkoutList.class);
-                i.putExtra("role", "trainer");
+                i.putExtra("key_ex", new String[]{"trainer", items.get(position)});
+//                i.putExtra("role", "trainer");
                 startActivity(i);
-                nameTR = items.get(position);
+//                nameTR = items.get(position);
             }
         });
         rview = findViewById(R.id.recyclerView1);

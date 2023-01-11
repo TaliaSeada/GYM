@@ -34,7 +34,6 @@ import java.util.Map;
 
 public class WorkoutList extends AppCompatActivity implements I_workoutList {
     // set global variable
-    static String nameTR;
     // set toast
     private Toast t;
     // set fields for data display
@@ -44,23 +43,29 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     private myAdapter radapter;
     private final ArrayList<Item> ritems = new ArrayList<Item>();
     // get firebase instances
-    private static final String TAG = "DBWorkOut";
+    private final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private String email_trainer = getTrainee.nameTR;
     private int dragged;
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     @Override
     protected void onResume() {
         super.onResume();
-        String role = getIntent().getStringExtra("role");
         String email;
-        if (role.equals("trainee")) {
+        try {
+            Intent MessageIntent = getIntent();
+            String[] MessageValue = MessageIntent.getStringArrayExtra("key_ex");
+            String role = MessageValue[0];
+            if (role.equals("trainee")) {
+                email = email_trainee;
+            } else {
+                email = MessageValue[1];
+            }
+        } catch (Exception e) {
             email = email_trainee;
-        } else {
-            email = email_trainer;
         }
+
         // load content from firebase
         loadContent(email);
     }
@@ -70,14 +75,24 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_list);
-        String role = getIntent().getStringExtra("role");
+//        String role = getIntent().getStringExtra("role");
         String email;
-        if (role.equals("trainee")) {
+        Intent MessageIntent = getIntent();
+        String[] MessageValue = MessageIntent.getStringArrayExtra("key_ex");
+        String role="";
+        try {
+            role = MessageValue[0];
+            if (role.equals("trainee")) {
+                email = email_trainee;
+            } else {
+                email = MessageValue[1];
+            }
+        } catch (Exception e) {
             email = email_trainee;
-        } else {
-            email = email_trainer;
         }
 
+        String finalEmail = email;
+        String finalEmail3 = email;
         ItemTouchHelper helper = new ItemTouchHelper(
                 new ItemTouchHelper.Callback() {
                     @Override
@@ -101,7 +116,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         if (direction == ItemTouchHelper.END) {
                             HashMap<String, Object> data = new HashMap<>();
-                            data.put("email", email);
+                            data.put("email", finalEmail3);
                             data.put("name_wo", ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName());
 
                             // delete from firebase
@@ -112,7 +127,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                                     Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
                                     if (result.containsKey("message")) {
                                         Log.d(TAG, (String) result.get("message"));
-                                        loadContent(email);
+                                        loadContent(finalEmail3);
                                         makeToast("Item Removed");
                                     }
 
@@ -126,13 +141,21 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                 }
         );
         // set list adapter
+        String finalRole = role;
+        String finalEmail2 = email;
         radapter = new myAdapter(getApplicationContext(), ritems, new I_recyclerView() {
             @Override
             public void onItemClick(int position) {
                 Intent i = new Intent(WorkoutList.this, ExerciseList.class);
-                i.putExtra("role", role);
+                try {
+                    i.putExtra("key_ex", new String[]{finalRole, MessageValue[1], ritems.get(position).getName()});
+                } catch (Exception e) {
+                    i.putExtra("key_ex", new String[]{finalRole, finalEmail2, ritems.get(position).getName()});
+                }
+
+//                i.putExtra("role", role);
                 startActivity(i);
-                nameTR = ritems.get(position).getName();
+//                nameTR = ritems.get(position).getName();
             }
         });
         rview = findViewById(R.id.recyclerView);
@@ -147,13 +170,14 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
 
         // set add button action
         add = findViewById(R.id.imageMenu);
+        String finalEmail1 = email;
         add.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
                 try {
                     String text = input.getText().toString();
-                    addWO(email, text);
+                    addWO(finalEmail1, text);
                     input.setText("");
                     makeToast(text + " Added Successfully");
                     radapter.notifyDataSetChanged();

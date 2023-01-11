@@ -1,6 +1,7 @@
 package com.example.gym.workouts;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -46,11 +47,9 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     // get firebase instances
-    private static final String TAG = "DBExercise";
-    @SuppressLint("StaticFieldLeak")
+    private final String TAG = "DBExercise";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private String email_trainer = getTrainee.nameTR;
 
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast", "CutPasteId"})
@@ -67,15 +66,16 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width * .9), (int) (height * .8));
 
-        String role = getIntent().getStringExtra("role");
+        Intent MessageIntent = getIntent();
+        String[] MessageValue = MessageIntent.getStringArrayExtra("key_ex");
         String email;
-        if (role.equals("trainee")) {
+        if (MessageValue[0].equals("trainee")) {
             email = email_trainee;
         } else {
-            email = email_trainer;
+            email = MessageValue[1];
         }
         // load content from firebase
-        loadContent(email);
+        loadContent(email, MessageValue[1], MessageValue[2]);
         // set button
         UPDATE = findViewById(R.id.addWorkout);
         IncreaseS = findViewById(R.id.ButtonAddS);
@@ -165,7 +165,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                 double weight = Double.parseDouble(input_weight.getText().toString());
                 int reps = Integer.parseInt(input_reps.getText().toString());
                 int set = Integer.parseInt(input_set.getText().toString());
-                Gworkout = WorkoutList.nameTR;
+                Gworkout = MessageValue[2];
                 String time = input_time.getText().toString();
                 String unit = input_unit.getText().toString();
                 try {
@@ -192,7 +192,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
             public void onClick(View view) {
                 String exercise = input_exe.getText().toString();
                 try {
-                    Gworkout = WorkoutList.nameTR;
+                    Gworkout = MessageValue[2];
                     DeleteExe(email, Gworkout, exercise);
                 } catch (NullPointerException e) {
                     makeToast("Something Went Wrong");
@@ -236,7 +236,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         exe_.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                loadContent(email);
+                loadContent(email,exe_name, wo_name);
                 Log.d(TAG, "DocumentSnapshot successfully updated!");
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -265,7 +265,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         del_exe.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                loadContent(email);
+                loadContent(email, wo_name, exe_name);
                 Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
                 if(result.containsKey("message")) {
                     Log.d(TAG, (String) result.get("message"));
@@ -284,11 +284,11 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      * to the fields we created in order to show it in the app screen.
      ***/
     @Override
-    public void loadContent(String email) {
+    public void loadContent(String email, String nameExe, String nameTR) {
         HashMap<String, String> data = new HashMap<>();
         data.put("email", email);
-        data.put("name_wo", WorkoutList.nameTR);
-        data.put("name_exe", ExerciseList.nameExe);
+        data.put("name_wo", nameTR);
+        data.put("name_exe", nameExe);
 
         Task<HttpsCallableResult> exe = mFunctions.getHttpsCallable("getExercise").call(data);
         exe.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
@@ -327,7 +327,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                 input_set.setText(minteger_sets + "");
                 input_reps.setText(minteger_reps + "");
                 input_weight.setText(minteger_weight + "");
-                input_exe.setText(ExerciseList.nameExe);
+                input_exe.setText(nameExe);
                 input_time.setText(time);
                 input_unit.setText(unit);
             }

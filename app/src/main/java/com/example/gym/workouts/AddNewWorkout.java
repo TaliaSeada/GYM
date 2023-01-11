@@ -1,6 +1,7 @@
 package com.example.gym.workouts;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -41,11 +42,10 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     // set button for adding new data to firebase
     private Button ADD, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
     // get firebase instances
-    private static final String TAG = "DBWorkOut";
+    private final String TAG = "DBWorkOut";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     // get user email
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private String email_trainer = getTrainee.nameTR;
     private String Gworkout;
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
@@ -105,8 +105,10 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width * .9), (int) (height * .8));
-
-        String role = getIntent().getStringExtra("role");
+        Intent MessageIntent = getIntent();
+        String[] MessageValue = MessageIntent.getStringArrayExtra("key_ex");
+        String role = MessageValue[0];
+        String email_trainer = MessageValue[1];
         String email;
         if (role.equals("trainee")) {
             email = email_trainee;
@@ -206,7 +208,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                 int set = Integer.parseInt(input_set.getText().toString());
                 String time = input_time.getText().toString();
                 String unit = input_unit.getText().toString();
-                Gworkout = WorkoutList.nameTR;
+                Gworkout = MessageValue[2];
                 try {
                     // add the exercise to firebase
                     addExe(email, Gworkout, exercise, set, reps, weight, time, unit);
