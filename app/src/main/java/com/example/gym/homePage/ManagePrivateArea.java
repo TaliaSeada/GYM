@@ -1,16 +1,14 @@
 package com.example.gym.homePage;
 
+import com.example.gym.homePage.interfaces.I_ManagePrivateArea;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManagePrivateArea {
+public class ManagePrivateArea implements I_ManagePrivateArea {
     protected FirebaseFunctions Functions = FirebaseFunctions.getInstance();
 
 

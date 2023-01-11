@@ -21,15 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ResponseMessageTrainer extends AppCompatActivity {
-    /**
-     * This class is the trainer,
-     * can response message to the trainee
-     **/
-    private Button send;
-    private TextView answerTrainer;
-    private TextView Title;
-    private TextView messageTrainee;
-    private ManageMessages manageMessages = new ManageMessages();
+    private final ManageMessages manageMessages = new ManageMessages();
 
     public void addMess(String id, String message, String email) {
         // Update an existing document
@@ -41,15 +33,19 @@ public class ResponseMessageTrainer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_response_message_trainer);
-        send = findViewById(R.id.buttonAnswer);
-        answerTrainer = findViewById(R.id.answerMessage);
-        Title = findViewById(R.id.textViewTitle);
-        messageTrainee = findViewById(R.id.reciveMessage);
+        /**
+         * This class is the trainer,
+         * can response message to the trainee
+         **/
+        Button send = findViewById(R.id.buttonAnswer);
+        TextView answerTrainer = findViewById(R.id.answerMessage);
+        TextView title = findViewById(R.id.textViewTitle);
+        TextView messageTrainee = findViewById(R.id.reciveMessage);
         Intent MessageIntent = getIntent();
         String[] MessageValue = MessageIntent.getStringArrayExtra("key_sender");
         messageTrainee.setText(MessageValue[0]);
         answerTrainer.setText(MessageValue[1]);
-        Title.setText(MessageValue[2]);
+        title.setText(MessageValue[2]);
         //Get the bundle
         Bundle bundle = getIntent().getExtras();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

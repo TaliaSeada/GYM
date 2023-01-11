@@ -44,7 +44,7 @@ public class MessagesTrainee extends AppCompatActivity {
      * This class is an application system where the trainee,
      * can send an application to the trainers
      * **/
-    private static final String TAG = "DBMess";
+    private final String TAG = "DBMess";
     private final ManageMessages ManageMessages = new ManageMessages();
     //Defining datasets for extracting the information
     private ListView listView;

@@ -1,49 +1,28 @@
 package com.example.gym.homePage;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
-import com.example.gym.auth.User;
-import com.example.gym.messages.MessagesTrainee;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.HttpsCallableResult;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * This department manages the personal details,
@@ -56,45 +35,31 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     private EditText input_ageTrainee;
     private EditText input_heightTrainee;
     private TextView full_name_text;
-    private Button Add;
-    private ImageButton AddBirth;
     static String email;
     String date;
-    private static final String TAG = "PrivateArea";
-    protected  FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private final String TAG = "PrivateArea";
+    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     ManagePrivateArea managePrivateArea = new ManagePrivateArea();
 
     //update data in  Firebase
     public void addDetails(String email, double height, double weight) {
         managePrivateArea.addDetails(email,height,weight);
-//        DocumentReference docRef = db.collection("user-info").document(email);
-//
-//        docRef.update("height", height);
-//        docRef.update("weight", weight);
     }
     public void addDate(String date) {
         managePrivateArea.addDate(email,date);
-//        DocumentReference docRef = db.collection("user-info").document(email);
-//        // (async) Update one field
-//        docRef.update("dateBirth", date);
     }
     public void addGender(String gender) {
         managePrivateArea.addGender(email, gender);
-//        DocumentReference docRef = db.collection("user-info").document(email);
-//        // (async) Update one field
-//        docRef.update("gender", gender);
     }
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private_area);
         email = user.getEmail();
-        Add=(Button) findViewById(R.id.addP);
-        AddBirth=(ImageButton) findViewById(R.id.imageButtonAddBirth);
+        Button add = (Button) findViewById(R.id.addP);
+        ImageButton addBirth = (ImageButton) findViewById(R.id.imageButtonAddBirth);
         input_ageTrainee=(EditText)findViewById(R.id.editTextDate);
         input_heightTrainee=(EditText)findViewById(R.id.heightTrainee);
         input_weightTrainee=(EditText)findViewById(R.id.weightTrainee);
@@ -112,126 +77,110 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
 //        input_ageTrainee.setText(date);
-        AddBirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        addBirth.setOnClickListener(view -> {
 
-                dialog.setTitle("Set Date");
-                dialog.showDatePicker(new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        date = String.valueOf(year) + "/" + String.valueOf(month) + "/" + String.valueOf(dayOfMonth);
-                        input_ageTrainee.setText(date);
-                        addDate(date);
+            dialog.setTitle("Set Date");
+            dialog.showDatePicker((view1, year, month, dayOfMonth) -> {
+                date = year + "/" + month + "/" + dayOfMonth;
+                input_ageTrainee.setText(date);
+                addDate(date);
 
-                    }
-
-                }, Calendar.getInstance());
-            }
+            }, Calendar.getInstance());
         });
-        Add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        add.setOnClickListener(view -> {
 
-                double output_weight;
-                try{
-                    output_weight = Double.parseDouble(input_weightTrainee.getText().toString());
-                } catch (NumberFormatException e) {
-                    output_weight = 0;
-                }
-                double output_height;
-                try{
-                    output_height = Double.parseDouble(input_heightTrainee.getText().toString());
-                } catch (NumberFormatException e) {
-                    output_height = 0;
-                }
-
-
-                try{
-                    addDetails(email, output_height ,output_weight);
-                } catch (NullPointerException e){
-                    e.printStackTrace();
-                }
-
-                finish();
+            double output_weight;
+            try{
+                output_weight = Double.parseDouble(input_weightTrainee.getText().toString());
+            } catch (NumberFormatException e) {
+                output_weight = 0;
             }
+            double output_height;
+            try{
+                output_height = Double.parseDouble(input_heightTrainee.getText().toString());
+            } catch (NumberFormatException e) {
+                output_height = 0;
+            }
+
+
+            try{
+                addDetails(email, output_height ,output_weight);
+            } catch (NullPointerException e){
+                e.printStackTrace();
+            }
+
+            finish();
         });
-        managePrivateArea.getPersonalDetails(email).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>(){
-            @Override
-            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
-                if (task.isSuccessful()) {
-                    HashMap data = (HashMap) task.getResult().getData();
-//                    data.forEach(m -> {
-                    double height;
-                try {
-                    height = (Double) data.get("height");
-                } catch (Exception e) {
-                    height=0;
-                }
-                String heightS=String.valueOf(height);
-                input_heightTrainee.setText(heightS);
-                double weight;
-                try {
-                    weight = (Double) data.get("weight");
-                } catch (Exception e) {
-                    Log.d("TAG", e.toString());
-                    weight=0;
-                }
-                String weightS=String.valueOf(weight);
-                input_weightTrainee.setText(weightS);
-                String DateBirth;
-                try {
-                    DateBirth = (String) data.get("dateBirth");
-                } catch (Exception e) {
-                    DateBirth="";
-                }
-                input_ageTrainee.setText(DateBirth);
-                String genderString;
-                try {
-                    genderString = (String) data.get("gender");
-                } catch (Exception e) {
-                    genderString="Gender";
-                    Log.d("myTag", genderString);
-                }
-                String[] baths = getResources().getStringArray(R.array.planets_array);
-                try {
-                    if (genderString.equals("female"))
-                        spinner.setSelection(Arrays.asList(baths).indexOf("female"));
+        managePrivateArea.getPersonalDetails(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                HashMap<String, Object> data = (HashMap<String, Object>) task.getResult().getData();
+                double height;
+            try {
+                height = (Double) data.get("height");
+            } catch (Exception e) {
+                height=0;
+            }
+            String heightS=String.valueOf(height);
+            input_heightTrainee.setText(heightS);
+            double weight;
+            try {
+                weight = (Double) data.get("weight");
+            } catch (Exception e) {
+                Log.d("TAG", e.toString());
+                weight=0;
+            }
+            String weightS=String.valueOf(weight);
+            input_weightTrainee.setText(weightS);
+            String DateBirth;
+            try {
+                DateBirth = (String) data.get("dateBirth");
+            } catch (Exception e) {
+                DateBirth="";
+            }
+            input_ageTrainee.setText(DateBirth);
+            String genderString;
+            try {
+                genderString = (String) data.get("gender");
+            } catch (Exception e) {
+                genderString="Gender";
+                Log.d("myTag", genderString);
+            }
+            String[] baths = getResources().getStringArray(R.array.planets_array);
+            try {
+                assert genderString != null;
+                if (genderString.equals("female"))
+                    spinner.setSelection(Arrays.asList(baths).indexOf("female"));
 
-                    else {
-                        spinner.setSelection(Arrays.asList(baths).indexOf("male"));
+                else {
+                    spinner.setSelection(Arrays.asList(baths).indexOf("male"));
 
-                    }
-                } catch (Exception e) {
-                    spinner.setSelection(Arrays.asList(baths).indexOf("Gender"));
                 }
+            } catch (Exception e) {
+                spinner.setSelection(Arrays.asList(baths).indexOf("Gender"));
+            }
 //            });
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
             }
+
         });
         //Extracts the name from Firebase to activity_private_area.xml
-        managePrivateArea.getName(email).addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>(){
-            @Override
-            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
-                if (task.isSuccessful()) {
-                    HashMap data = (HashMap) task.getResult().getData();
-                    Log.d(TAG,data.toString());
-                    try {
+        managePrivateArea.getName(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                HashMap data = (HashMap) task.getResult().getData();
+                try {
+                    assert data != null;
                     String fullName = (String) data.get("full_name");
-                    full_name_text.setText(fullName);
-                } catch (Exception e) {
-                            Log.d(TAG, e.toString());
-                            e.printStackTrace();
-                }
-//                    });
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-
+                full_name_text.setText(fullName);
+            } catch (Exception e) {
+                        Log.d(TAG, e.toString());
+                        e.printStackTrace();
             }
+//                    });
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+
         });
     }
 
@@ -252,15 +201,11 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
 //        final String[] data = new String[1];
         MyDatePickerDialog dialog = new MyDatePickerDialog(this);
         dialog.setTitle("Set Date");
-        dialog.showDatePicker(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                date = String.valueOf(year) + "/" + String.valueOf(month) + "/" + String.valueOf(dayOfMonth);
-                Log.d("myTag", String.valueOf(year));
-                Log.d("myTag", String.valueOf(month));
-                Log.d("myTag", String.valueOf(dayOfMonth));
-            }
-
+        dialog.showDatePicker((view, year, month, dayOfMonth) -> {
+            date = year + "/" + month + "/" + dayOfMonth;
+            Log.d("myTag", String.valueOf(year));
+            Log.d("myTag", String.valueOf(month));
+            Log.d("myTag", String.valueOf(dayOfMonth));
         }, Calendar.getInstance());
     }
 }

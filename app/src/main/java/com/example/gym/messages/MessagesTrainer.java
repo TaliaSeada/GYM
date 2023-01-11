@@ -41,10 +41,9 @@ public class MessagesTrainer extends AppCompatActivity  {
      * can response an application to the trainee
      * **/
     //Defining datasets for extracting the information
-    private static final String TAG = "DBMess";
+    private final String TAG = "DBMess";
     private ManageMessages ManageMessages = new ManageMessages();
     private ListView listView;
-    private String email;
     private ArrayList<String> title_array = new ArrayList<String>();
     private ArrayList<String> message_array = new ArrayList<String>();
     private ArrayList<String> id_array = new ArrayList<String>();
@@ -53,8 +52,6 @@ public class MessagesTrainer extends AppCompatActivity  {
     private ArrayList<Integer> image_array = new ArrayList<Integer>();
     private ArrayList<String> answer_array = new ArrayList<String>();
 
-    private ImageView refresh;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +59,10 @@ public class MessagesTrainer extends AppCompatActivity  {
         listView = (ListView) findViewById(R.id.list_message);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
-        email = user.getEmail();
+        String email = user.getEmail();
         updateMessagesList(email);
         //data refresh
-        refresh = (ImageView) findViewById(R.id.imageRefresh);
+        ImageView refresh = (ImageView) findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
