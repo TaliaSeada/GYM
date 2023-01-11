@@ -1,8 +1,8 @@
 package com.example.gym.Manager;
 
-import static com.example.gym.auth.UserManager.ROLE_MANAGER;
-import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
-import static com.example.gym.auth.UserManager.ROLE_TRAINER;
+import static com.example.gym.auth.UserController.ROLE_MANAGER;
+import static com.example.gym.auth.UserController.ROLE_TRAINEE;
+import static com.example.gym.auth.UserController.ROLE_TRAINER;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.auth.User;
-import com.example.gym.auth.UserManager;
+import com.example.gym.auth.UserController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,13 +37,13 @@ import java.util.Map;
 // The manager page
 public class ManageUsers extends AppCompatActivity {
     private static final String TAG = "ManageUsers";
-    private UserManager userManager = new UserManager();
+    private UserController userController = new UserController();
     private String role;
     private final ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
     private SimpleAdapter adapter; // Connect between the view to the list of users
 
     private void updateUsersList() {
-        userManager.getUsersByRole(role)
+        userController.getUsersByRole(role)
             .addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
                 @Override
                 public void onComplete(@NonNull Task<HttpsCallableResult> task) {
@@ -124,7 +124,7 @@ public class ManageUsers extends AppCompatActivity {
                         String email_val = email.getText().toString();
                         String full_name_val = full_name.getText().toString();
                         // Add the new user to the db
-                        userManager.createUser(email_val, role, full_name_val).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the user added successfully
+                        userController.createUser(email_val, role, full_name_val).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the user added successfully
                             @Override
                             public void onSuccess(HttpsCallableResult result) {
                                 updateUsersList();
@@ -168,7 +168,7 @@ public class ManageUsers extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                userManager.deleteUser(email).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the user delete successfully
+                userController.deleteUser(email).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the user delete successfully
                     @Override
                     public void onSuccess(HttpsCallableResult result) {
                         updateUsersList();
