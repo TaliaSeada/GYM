@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
-import com.example.gym.auth.UserManager;
+import com.example.gym.auth.UserController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class MessagesTrainer extends AppCompatActivity  {
     private final ArrayList<String> sub_array = new ArrayList<>();
     private final ArrayList<Integer> image_array = new ArrayList<>();
     private final ArrayList<String> answer_array = new ArrayList<>();
-    private final UserManager userManager = new UserManager();
+    private final UserController userController = new UserController();
 
 
     @Override
@@ -42,7 +42,7 @@ public class MessagesTrainer extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_message_trainer);
         listView = (ListView) findViewById(R.id.list_message);
-        String email = userManager.getConnectedUserMail();
+        String email = userController.getConnectedUserMail();
         updateMessagesList(email);
         //data refresh
         ImageView refresh = (ImageView) findViewById(R.id.imageRefresh);
