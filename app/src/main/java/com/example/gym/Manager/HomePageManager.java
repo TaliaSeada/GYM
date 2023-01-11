@@ -1,8 +1,8 @@
 package com.example.gym.Manager;
 
-import static com.example.gym.auth.UserManager.ROLE_MANAGER;
-import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
-import static com.example.gym.auth.UserManager.ROLE_TRAINER;
+import static com.example.gym.auth.UserController.ROLE_MANAGER;
+import static com.example.gym.auth.UserController.ROLE_TRAINEE;
+import static com.example.gym.auth.UserController.ROLE_TRAINER;
 
 import android.content.Intent;
 import android.os.Bundle;
