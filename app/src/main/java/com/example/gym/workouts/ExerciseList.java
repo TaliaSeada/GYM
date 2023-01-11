@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     // get firebase instances
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
+    private final workoutControllet workoutControllet = new workoutControllet();
 
     @Override
     protected void onResume() {
@@ -82,7 +81,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), AddNewWorkout.class);
+                Intent i = new Intent(getApplicationContext(), AddNewExercise.class);
                 i.putExtra("key_ex", new String[]{role,MessageValue[1] ,MessageValue[2]});
 //                i.putExtra("role", role);
                 startActivity(i);
@@ -109,10 +108,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
      ***/
     @Override
     public void loadContent(String email, String nameTR) {
-        HashMap<String, String> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name", nameTR);
-        Task<HttpsCallableResult> exe = mFunctions.getHttpsCallable("getExercisesList").call(data);
+        Task<HttpsCallableResult> exe = workoutControllet.exercises_content(email, nameTR);
         exe.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @Override
             public void onComplete(@NonNull Task<HttpsCallableResult> task) {

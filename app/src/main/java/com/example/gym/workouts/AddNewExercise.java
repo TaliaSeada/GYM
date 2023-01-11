@@ -17,19 +17,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
-import com.example.gym.workouts.interfaces.I_addNewWorkout;
+import com.example.gym.workouts.interfaces.I_addNewExercise;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout {
+public class AddNewExercise extends AppCompatActivity implements I_addNewExercise {
     // set toast
     private Toast t;
     // set fields for data display
@@ -47,7 +46,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
     // get user email
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private String Gworkout;
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
+    private final workoutControllet workoutControllet = new workoutControllet();
 
 
     /***
@@ -71,13 +70,7 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
         exe.put("time", time);
         exe.put("unit", unit);
 
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name_wo", wo_name);
-        data.put("name_exe", exe_name);
-        data.put("exe", exe);
-
-        Task<HttpsCallableResult> exe_ = mFunctions.getHttpsCallable("createExercise").call(data);
+        Task<HttpsCallableResult> exe_ = workoutControllet.createExercise(exe, email, wo_name, exe_name);
         exe_.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {

@@ -1,6 +1,6 @@
 package com.example.gym.workouts.interfaces;
 
-public interface I_addNewWorkout {
+public interface I_addNewExercise {
     /***
      * this function adds new exercise to the trainee and updates the firebase
      * @param email trainee email

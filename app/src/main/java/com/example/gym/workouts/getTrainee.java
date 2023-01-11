@@ -16,7 +16,6 @@ import com.example.gym.workouts.interfaces.I_recyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class getTrainee extends AppCompatActivity {
     private int dragged;
     // get firebase instance
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
+    private final workoutControllet workoutControllet = new workoutControllet();
 
 
     @SuppressLint("MissingInflatedId")
@@ -91,7 +90,7 @@ public class getTrainee extends AppCompatActivity {
      * in order to show it in the app screen.
      ***/
     public void loadContent() {
-        Task<HttpsCallableResult> list = mFunctions.getHttpsCallable("getTraineeList").call();
+        Task<HttpsCallableResult> list = workoutControllet.trainees_content();
         list.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

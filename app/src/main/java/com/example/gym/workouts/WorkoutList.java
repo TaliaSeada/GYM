@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private int dragged;
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     private final workoutControllet workoutControllet = new workoutControllet();
 
     @Override
@@ -213,10 +211,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
      ***/
     @Override
     public void loadContent(String email) {
-        HashMap<String, String> data = new HashMap<>();
-        data.put("email", email);
-
-        Task<HttpsCallableResult> workout = mFunctions.getHttpsCallable("getWorkoutList").call(data);
+        Task<HttpsCallableResult> workout = workoutControllet.workouts_content(email);
         workout.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
@@ -44,12 +43,12 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     private String time, unit;
     private Button DELETE;
     private Button UPDATE, DecreaseS, IncreaseS, DecreaseW, IncreaseW, DecreaseR, IncreaseR;
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     // get firebase instances
     private final String TAG = "DBExercise";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private final workoutControllet workoutControllet = new workoutControllet();
 
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast", "CutPasteId"})
@@ -226,13 +225,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         exe.put("time", time);
         exe.put("unit", unit);
 
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name_wo", wo_name);
-        data.put("name_exe", exe_name);
-        data.put("exe", exe);
-
-        Task<HttpsCallableResult> exe_ = mFunctions.getHttpsCallable("createExercise").call(data);
+        Task<HttpsCallableResult> exe_ = workoutControllet.createExercise(exe, email, wo_name, exe_name);
         exe_.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {
@@ -255,13 +248,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      */
     @Override
     public void DeleteExe(String email, String wo_name, String exe_name) {
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name_wo", wo_name);
-        data.put("name_exe", exe_name);
-
-        // delete from firebase
-        Task<HttpsCallableResult> del_exe = mFunctions.getHttpsCallable("deleteExercise").call(data);
+        Task<HttpsCallableResult> del_exe = workoutControllet.deleteExercise(email, wo_name, exe_name);
         del_exe.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {
@@ -285,12 +272,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
      ***/
     @Override
     public void loadContent(String email, String nameExe, String nameTR) {
-        HashMap<String, String> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name_wo", nameTR);
-        data.put("name_exe", nameExe);
-
-        Task<HttpsCallableResult> exe = mFunctions.getHttpsCallable("getExercise").call(data);
+        Task<HttpsCallableResult> exe = workoutControllet.exercise_content(email, nameTR, nameExe);
         exe.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
             @SuppressLint("SetTextI18n")
             @Override

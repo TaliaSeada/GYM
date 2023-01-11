@@ -80,7 +80,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".workouts.AddNewWorkout"
+            android:name=".workouts.AddNewExercise"
             android:exported="false"
             android:theme="@style/AppTheme.CustomTheme">
             <meta-data
