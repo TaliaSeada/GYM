@@ -48,6 +48,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private int dragged;
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
+    private final workoutControllet workoutControllet = new workoutControllet();
 
     @Override
     protected void onResume() {
@@ -117,27 +118,22 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         if (direction == ItemTouchHelper.END) {
-                            HashMap<String, Object> data = new HashMap<>();
-                            data.put("email", email);
-                            data.put("name_wo", ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName());
-
-                            // delete from firebase
-                            Task<HttpsCallableResult> del_wo = mFunctions.getHttpsCallable("deleteWorkout").call(data);
+                            String wo_name = ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName();
+                            Task<HttpsCallableResult> del_wo = workoutControllet.deleteWorkout(email, wo_name);
                             del_wo.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
                                 @Override
                                 public void onSuccess(HttpsCallableResult httpsCallableResult) {
                                     Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
                                     if (result.containsKey("message")) {
-                                        Log.d(TAG, (String) result.get("message"));
                                         loadContent(email);
-                                        makeToast("Item Removed");
+                                        makeToast(wo_name + " Deleted Successfully");
+                                        Log.d(TAG, (String) result.get("message"));
                                     }
 
                                     else
                                         Log.d(TAG, "Error deleting document " + result.get("error"));
                                 }
                             });
-                            recreate();
                         }
                     }
                 }
@@ -176,13 +172,11 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
             @Override
             public void onClick(View view) {
                 try {
-                    String text = input.getText().toString();
-                    addWO(email, text);
+                    String wo_name = input.getText().toString();
+                    addWO(email, wo_name);
                     input.setText("");
-                    makeToast(text + " Added Successfully");
+                    makeToast(wo_name + " Added Successfully");
                     radapter.notifyDataSetChanged();
-//                  reload content to show the new workout
-//                    recreate();
                 } catch (Exception e) {
                     makeToast("Type Workout Name");
                     e.printStackTrace();
@@ -198,20 +192,12 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
      */
     @Override
     public void addWO(String email, String wo_name) {
-        Map<String, Object> name = new HashMap<>();
-        name.put("name", wo_name);
-
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("name_wo", wo_name);
-        data.put("name", name);
-
-        Task<HttpsCallableResult> wo = mFunctions.getHttpsCallable("createWorkout").call(data);
+        Task<HttpsCallableResult> wo = workoutControllet.addWorkout(email, wo_name);
         wo.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                Log.d(TAG, "Workout successfully added!");
                 loadContent(email);
+                Log.d(TAG, "Workout successfully added!");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
