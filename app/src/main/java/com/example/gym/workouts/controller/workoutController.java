@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class workoutControllet implements I_workoutController {
+public class workoutController implements I_workoutController {
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     private final String TAG = "DBWorkOut";
 

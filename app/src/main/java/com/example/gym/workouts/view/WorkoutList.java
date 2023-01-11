@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_recyclerView;
 import com.example.gym.workouts.interfaces.I_workoutList;
-import com.example.gym.workouts.controller.workoutControllet;
+import com.example.gym.workouts.controller.workoutController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,7 +47,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private int dragged;
-    private final com.example.gym.workouts.controller.workoutControllet workoutControllet = new workoutControllet();
+    private final workoutController workoutControllet = new workoutController();
 
     @Override
     protected void onResume() {
