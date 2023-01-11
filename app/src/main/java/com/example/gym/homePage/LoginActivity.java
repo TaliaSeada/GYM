@@ -1,14 +1,13 @@
 package com.example.gym.homePage;
 
-import static com.example.gym.auth.UserManager.ROLE_MANAGER;
-import static com.example.gym.auth.UserManager.ROLE_TRAINEE;
-import static com.example.gym.auth.UserManager.ROLE_TRAINER;
+import static com.example.gym.auth.UserController.ROLE_MANAGER;
+import static com.example.gym.auth.UserController.ROLE_TRAINEE;
+import static com.example.gym.auth.UserController.ROLE_TRAINER;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.Manager.HomePageManager;
 import com.example.gym.R;
-import com.example.gym.auth.UserManager;
+import com.example.gym.auth.UserController;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
@@ -31,7 +30,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +37,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private UserManager userManager = new UserManager();
+    private UserController userController = new UserController();
     private ProgressDialog progressDialog;
 
     // Launcher of the sign in screen (with google or email)
