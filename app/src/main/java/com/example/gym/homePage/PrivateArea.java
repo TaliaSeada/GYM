@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
 
-import com.example.gym.auth.UserManager;
+import com.example.gym.auth.UserController;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     static String email;
     String date;
     private final String TAG = "PrivateArea";
-    private final UserManager userManager = new UserManager();
+    private final UserController userController = new UserController();
     privateAreaController managePrivateArea = new privateAreaController();
 
     //update data in  Firebase
@@ -55,7 +55,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private_area);
-        email = userManager.getConnectedUserMail();
+        email = userController.getConnectedUserMail();
         Button add = (Button) findViewById(R.id.addP);
         ImageButton addBirth = (ImageButton) findViewById(R.id.imageButtonAddBirth);
         input_ageTrainee=(EditText)findViewById(R.id.editTextDate);
