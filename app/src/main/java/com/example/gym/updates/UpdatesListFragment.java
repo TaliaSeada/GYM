@@ -27,7 +27,6 @@ import java.util.HashMap;
 // The fragment of the list
 public class UpdatesListFragment extends Fragment {
 
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     private UpdateController updateController = new UpdateController();
     final ArrayList<UpdateViewItemModel> updates = new ArrayList<>();
     private ListSectionAdapter adapter;
