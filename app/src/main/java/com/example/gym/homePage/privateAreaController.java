@@ -1,6 +1,6 @@
 package com.example.gym.homePage;
 
-import com.example.gym.homePage.interfaces.I_ManagePrivateArea;
+import com.example.gym.homePage.interfaces.I_privateAreaController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
@@ -8,7 +8,7 @@ import com.google.firebase.functions.HttpsCallableResult;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManagePrivateArea implements I_ManagePrivateArea {
+public class privateAreaController implements I_privateAreaController {
     protected FirebaseFunctions Functions = FirebaseFunctions.getInstance();
 
 

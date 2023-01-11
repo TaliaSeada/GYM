@@ -1,6 +1,6 @@
 package com.example.gym.messages;
 
-import com.example.gym.messages.interfaces.I_ManageMessages;
+import com.example.gym.messages.interfaces.I_messagesController;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManageMessages implements I_ManageMessages {
+public class messagesController implements I_messagesController {
     protected FirebaseFunctions Functions = FirebaseFunctions.getInstance();
     public Task<HttpsCallableResult> addMessageTrainee(String email, String message, String title) {
         Map<String, Object> message_map = new HashMap<>();

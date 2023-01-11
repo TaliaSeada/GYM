@@ -6,7 +6,7 @@ import com.google.firebase.functions.HttpsCallableResult;
 /***
  * The department for control between the view to the server
  */
-public interface I_ManageMessages {
+public interface I_messagesController {
 
     //Add a message to the trainee
     Task<HttpsCallableResult> addMessageTrainee(String email, String message, String title);

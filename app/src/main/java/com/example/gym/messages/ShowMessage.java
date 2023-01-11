@@ -1,7 +1,6 @@
 package com.example.gym.messages;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,12 +21,7 @@ public class ShowMessage extends AppCompatActivity {
         String [] MessageValue=MessageIntent.getStringArrayExtra("key_sender");
         message.setText(MessageValue[0]);
         answer.setText(MessageValue[1]);
-        allMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MessagesTrainee.class));
-            }
-        });
+        allMessage.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), MessagesTrainee.class)));
 
     }
 }

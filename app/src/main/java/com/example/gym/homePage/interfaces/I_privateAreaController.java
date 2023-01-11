@@ -3,13 +3,10 @@ package com.example.gym.homePage.interfaces;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.HttpsCallableResult;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /***
  * The department for control between the view to the server
  */
-public interface I_ManagePrivateArea {
+public interface I_privateAreaController {
 
     // get the personal details
     Task<HttpsCallableResult> getPersonalDetails(String email);

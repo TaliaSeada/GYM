@@ -16,9 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
+import com.example.gym.auth.UserManager;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,8 +36,8 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     static String email;
     String date;
     private final String TAG = "PrivateArea";
-    protected FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    ManagePrivateArea managePrivateArea = new ManagePrivateArea();
+    private final UserManager userManager = new UserManager();
+    privateAreaController managePrivateArea = new privateAreaController();
 
     //update data in  Firebase
     public void addDetails(String email, double height, double weight) {
@@ -57,7 +55,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private_area);
-        email = user.getEmail();
+        email = userManager.getConnectedUserMail();
         Button add = (Button) findViewById(R.id.addP);
         ImageButton addBirth = (ImageButton) findViewById(R.id.imageButtonAddBirth);
         input_ageTrainee=(EditText)findViewById(R.id.editTextDate);
@@ -195,17 +193,5 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public void birthDate(){
-//        final String[] data = new String[1];
-        MyDatePickerDialog dialog = new MyDatePickerDialog(this);
-        dialog.setTitle("Set Date");
-        dialog.showDatePicker((view, year, month, dayOfMonth) -> {
-            date = year + "/" + month + "/" + dayOfMonth;
-            Log.d("myTag", String.valueOf(year));
-            Log.d("myTag", String.valueOf(month));
-            Log.d("myTag", String.valueOf(dayOfMonth));
-        }, Calendar.getInstance());
     }
 }
