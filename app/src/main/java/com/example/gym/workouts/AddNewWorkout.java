@@ -217,7 +217,6 @@ public class AddNewWorkout extends AppCompatActivity implements I_addNewWorkout 
                     } else {
                         makeToast("Something Went Wrong");
                     }
-
                     e.printStackTrace();
                 }
                 // close the window

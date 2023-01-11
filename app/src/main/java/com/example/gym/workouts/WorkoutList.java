@@ -100,27 +100,27 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         if (direction == ItemTouchHelper.END) {
-//                            HashMap<String, Object> data = new HashMap<>();
-//                            data.put("email", email);
-//                            data.put("name_wo", ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName());
-//
-//                            // delete from firebase
-//                            Task<HttpsCallableResult> del_wo = mFunctions.getHttpsCallable("deleteWorkout").call(data);
-//                            del_wo.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
-//                                @Override
-//                                public void onSuccess(HttpsCallableResult httpsCallableResult) {
-//                                    Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
-//                                    if (result.containsKey("message"))
-//                                        Log.d(TAG, (String) result.get("message"));
-//
-//                                    else
-//                                        Log.d(TAG, "Error deleting document " + result.get("error"));
-//                                }
-//                            });
-                            db.collection("user-info").document(email).collection("workouts")
-                                    .document(ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName()).delete();
+                            HashMap<String, Object> data = new HashMap<>();
+                            data.put("email", email);
+                            data.put("name_wo", ritems.get(viewHolder.getAbsoluteAdapterPosition()).getName());
+
+                            // delete from firebase
+                            Task<HttpsCallableResult> del_wo = mFunctions.getHttpsCallable("deleteWorkout").call(data);
+                            del_wo.addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                                @Override
+                                public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                                    Map<String, Object> result = (Map<String, Object>) httpsCallableResult.getData();
+                                    if (result.containsKey("message")) {
+                                        Log.d(TAG, (String) result.get("message"));
+                                        loadContent(email);
+                                        makeToast("Item Removed");
+                                    }
+
+                                    else
+                                        Log.d(TAG, "Error deleting document " + result.get("error"));
+                                }
+                            });
                             recreate();
-                            makeToast("Item Removed");
                         }
                     }
                 }
@@ -158,7 +158,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
                     makeToast(text + " Added Successfully");
                     radapter.notifyDataSetChanged();
 //                  reload content to show the new workout
-                    recreate();
+//                    recreate();
                 } catch (Exception e) {
                     makeToast("Type Workout Name");
                     e.printStackTrace();
@@ -187,6 +187,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
             @Override
             public void onSuccess(HttpsCallableResult httpsCallableResult) {
                 Log.d(TAG, "Workout successfully added!");
+                loadContent(email);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
