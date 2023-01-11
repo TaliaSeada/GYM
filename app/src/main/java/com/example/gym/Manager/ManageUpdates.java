@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class ManageUpdates extends AppCompatActivity {
     private SimpleAdapter adapter;
     private static final String TAG = "ManageUpdates";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
 
     // Take the updates from the db and put them in the view
     private void updateUpdatesList(){
