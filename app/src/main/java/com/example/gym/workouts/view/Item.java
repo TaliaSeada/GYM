@@ -1,4 +1,4 @@
-package com.example.gym.workouts;
+package com.example.gym.workouts.view;
 
 public class Item {
     private String name;

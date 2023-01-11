@@ -21,7 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.R;
 import com.example.gym.messages.MessagesTrainee;
-import com.example.gym.workouts.WorkoutList;
+import com.example.gym.workouts.view.WorkoutList;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

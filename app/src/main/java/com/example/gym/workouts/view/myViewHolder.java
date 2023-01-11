@@ -1,4 +1,4 @@
-package com.example.gym.workouts;
+package com.example.gym.workouts.view;
 
 import android.view.View;
 import android.widget.ImageView;

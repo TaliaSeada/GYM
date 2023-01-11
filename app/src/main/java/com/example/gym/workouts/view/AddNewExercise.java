@@ -1,4 +1,4 @@
-package com.example.gym.workouts;
+package com.example.gym.workouts.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_addNewExercise;
+import com.example.gym.workouts.workoutControllet;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +47,7 @@ public class AddNewExercise extends AppCompatActivity implements I_addNewExercis
     // get user email
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private String Gworkout;
-    private final workoutControllet workoutControllet = new workoutControllet();
+    private final com.example.gym.workouts.workoutControllet workoutControllet = new workoutControllet();
 
 
     /***

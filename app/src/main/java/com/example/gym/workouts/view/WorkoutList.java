@@ -1,4 +1,4 @@
-package com.example.gym.workouts;
+package com.example.gym.workouts.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_recyclerView;
 import com.example.gym.workouts.interfaces.I_workoutList;
+import com.example.gym.workouts.workoutControllet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +47,7 @@ public class WorkoutList extends AppCompatActivity implements I_workoutList {
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private int dragged;
-    private final workoutControllet workoutControllet = new workoutControllet();
+    private final com.example.gym.workouts.workoutControllet workoutControllet = new workoutControllet();
 
     @Override
     protected void onResume() {
