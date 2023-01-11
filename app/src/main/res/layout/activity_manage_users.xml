@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Manager.ManageUsers">
 
-<!--         Editext for Search -->
-    <!--    <EditText android:id="@+id/itemSearch"-->
-    <!--        android:layout_width="fill_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:hint="Search products.."-->
-    <!--        android:inputType=""/>-->
-
     <!-- List View -->
     <ListView
         android:id="@+id/list_users"
@@ -34,6 +27,7 @@
         android:layout_margin="16dp"
         android:contentDescription="Add User"
         android:src="@drawable/ic_add"
+        app:backgroundTint="@color/lightBlue"
         app:fabCustomSize="70dp"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"

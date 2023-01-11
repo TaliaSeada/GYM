@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.updates.Update;
+import com.example.gym.updates.UpdateController;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,7 @@ import java.util.Map;
 public class ManageUpdates extends AppCompatActivity {
 
     private final ArrayList<Map<String, String>> updates = new ArrayList<Map<String, String>>();
+    private UpdateController updateController = new UpdateController();
     private SimpleAdapter adapter;
     private static final String TAG = "ManageUpdates";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -90,8 +92,8 @@ public class ManageUpdates extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                final String item = (String) ((HashMap) parent.getItemAtPosition(position)).get("id");
-                onDeleteClick(item);
+                final String updateId = (String) ((HashMap) parent.getItemAtPosition(position)).get("id");
+                onDeleteClick(updateId);
             }
         });
 
@@ -122,9 +124,9 @@ public class ManageUpdates extends AppCompatActivity {
                         Update newUpdate = new Update(date_val, content_val);
 
                         // Add the new update to the db
-                        db.collection("updates").document().set(newUpdate).addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the user added successfully
+                        updateController.createUpdate(newUpdate).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the update added successfully
                             @Override
-                            public void onSuccess(Void documentReference) {
+                            public void onSuccess(HttpsCallableResult result) {
                                 updateUpdatesList();
                             }
                         });
@@ -142,6 +144,7 @@ public class ManageUpdates extends AppCompatActivity {
             }
         });
     }
+
     // On click on specific update -> ask to delete
     public void onDeleteClick(String updateId) {
 
@@ -152,9 +155,9 @@ public class ManageUpdates extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                db.collection("updates").document(updateId).delete().addOnSuccessListener(new OnSuccessListener<Void>() { //what happened if the update delete successfully
+                updateController.deleteUpdate(updateId).addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() { //what happened if the update delete successfully
                     @Override
-                    public void onSuccess(Void documentReference) {
+                    public void onSuccess(HttpsCallableResult result) {
                         updateUpdatesList();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

@@ -1,11 +1,17 @@
-import { https, logger } from 'firebase-functions';
+import { https, logger, auth } from 'firebase-functions';
 import { firestore } from 'firebase-admin';
 
 const db = firestore();
 
+export enum ROLES {
+    MANAGER = 'manager',
+    TRAINEE = 'trainee',
+    TRAINER = 'trainer',
+}
+
 // Get all users
 exports.getAllUsers = https.onCall(async (data, context) => {
-  if (!context.auth) {
+  if (!context.auth || context.auth.token.role != ROLES.MANAGER) {
     // Throwing an HttpsError so that the client gets the error details.
     throw new https.HttpsError('failed-precondition', 'The function must be called ' +
         'while authenticated.');
@@ -25,7 +31,7 @@ exports.getAllUsers = https.onCall(async (data, context) => {
 
 // Create user
 exports.createUser = https.onCall(async (data, context) => {
-  if (!context.auth) {
+  if (!context.auth || context.auth.token.role != ROLES.MANAGER) {
     // Throwing an HttpsError so that the client gets the error details.
     throw new https.HttpsError('failed-precondition', 'The function must be called ' +
         'while authenticated.');
@@ -38,7 +44,7 @@ exports.createUser = https.onCall(async (data, context) => {
 
 // Delete user
 exports.deleteUser = https.onCall(async (data, context) => {
-  if (!context.auth) {
+  if (!context.auth || context.auth.token.role != ROLES.MANAGER) {
     // Throwing an HttpsError so that the client gets the error details.
     throw new https.HttpsError('failed-precondition', 'The function must be called ' +
         'while authenticated.');
@@ -48,3 +54,26 @@ exports.deleteUser = https.onCall(async (data, context) => {
     return;
 });
 
+
+// Before User Sign In- blocks user that the manager don't signed to the gym
+exports.beforeSignIn = auth.user().beforeSignIn( async (user, context) => {
+
+    const docSnapshot = await db.collection('users').doc(user?.email).get();
+
+    if (!docSnapshot.exists) {
+//         auth().updateUser(user.uid, {disable: true});
+//         auth().deleteUser(user.uid);
+//         throw new https.HttpsError('invalid-argument', 'The user not allowed to connect, please talk to the manager');
+        throw new https.HttpsError('permission-denied', 'The user not allowed to connect,please talk to the manager');
+    }
+
+    //auth().updateUser(user.uid, {disable: false});
+
+    const userDoc = docSnapshot.data();
+
+    return {
+         sessionClaims: {
+            role: userDoc.role,
+         },
+    };
+});

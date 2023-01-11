@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Arrays;
@@ -132,48 +133,72 @@ public class LoginActivity extends AppCompatActivity {
     // If the connect with google or email success
     public void transferUserToPage(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String email = user.getEmail();
 
-        // check if the user exist
-        userManager.getUserDoc(email).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        user.getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
             @Override
-            public void onSuccess(DocumentSnapshot doc) {
-                if(doc.exists()){
-                    Log.d(TAG,"User exists");
-                    String role = (String) doc.getData().get("role");
-                    switch (role){
-                        case ROLE_MANAGER:
-                            Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
-                            startActivity(intent1);
-                            break;
-                        case ROLE_TRAINER:
-                            Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
-                            startActivity(intent2);
-                            break;
-                        case ROLE_TRAINEE:
-                            Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
-                            startActivity(intent3);
-                            break;
-                    }
-                } else {
-                    Log.d(TAG,"User Not exists");
-                    delete(); // Delete the user from the firebase auth
-
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-                    builder1.setMessage("The user not exist.\nPlease talk to the manager");
-                    builder1.setCancelable(true);
-                    builder1.setPositiveButton(
-                            "Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = builder1.create();
-                    alertDialog.show();
+            public void onSuccess(GetTokenResult getTokenResult) {
+                String role = (String) getTokenResult.getClaims().get("role");
+                if(role == null){
+                    AuthUI.getInstance().signOut(LoginActivity.this);
+                    finish();
                 }
-                progressDialog.dismiss();
+
+                switch (role){
+                    case ROLE_MANAGER:
+                        Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
+                        startActivity(intent1);
+                        break;
+                    case ROLE_TRAINER:
+                        Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
+                        startActivity(intent2);
+                        break;
+                    case ROLE_TRAINEE:
+                        Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
+                        startActivity(intent3);
+                        break;
+                }
             }
         });
+        // check if the user exist
+//        userManager.getUserDoc(email).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot doc) {
+//                if(doc.exists()){
+//                    Log.d(TAG,"User exists");
+//                    String role = (String) doc.getData().get("role");
+//                    switch (role){
+//                        case ROLE_MANAGER:
+//                            Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
+//                            startActivity(intent1);
+//                            break;
+//                        case ROLE_TRAINER:
+//                            Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
+//                            startActivity(intent2);
+//                            break;
+//                        case ROLE_TRAINEE:
+//                            Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
+//                            startActivity(intent3);
+//                            break;
+//                    }
+//                } else {
+//                    Log.d(TAG,"User Not exists");
+//                    delete(); // Delete the user from the firebase auth
+//
+//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+//                    builder1.setMessage("The user not exist.\nPlease talk to the manager");
+//                    builder1.setCancelable(true);
+//                    builder1.setPositiveButton(
+//                            "Ok", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    dialog.cancel();
+//                                }
+//                            });
+//                    AlertDialog alertDialog = builder1.create();
+//                    alertDialog.show();
+//                }
+//                progressDialog.dismiss();
+//            }
+//        });
     }
 
     // Delete user that try to connect and not in the DB from the firebase auth
