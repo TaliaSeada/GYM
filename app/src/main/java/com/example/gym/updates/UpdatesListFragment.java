@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.gym.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
