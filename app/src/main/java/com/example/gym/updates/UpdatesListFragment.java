@@ -28,6 +28,7 @@ import java.util.HashMap;
 public class UpdatesListFragment extends Fragment {
 
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
+    private UpdateController updateController = new UpdateController();
     final ArrayList<UpdateViewItemModel> updates = new ArrayList<>();
     private ListSectionAdapter adapter;
 
@@ -58,7 +59,7 @@ public class UpdatesListFragment extends Fragment {
 
     // Take the updates from the db and put them in the view
     private void updateUpdatesList() {
-        mFunctions.getHttpsCallable("getUpdates").call()
+        updateController.getUpdates()
                 .addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
                     @Override
                     public void onComplete(@NonNull Task<HttpsCallableResult> task) {
