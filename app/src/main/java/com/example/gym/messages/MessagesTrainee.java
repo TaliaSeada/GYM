@@ -18,7 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
-import com.example.gym.auth.UserManager;
+import com.example.gym.auth.UserController;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class MessagesTrainee extends AppCompatActivity {
      * **/
     private final String TAG = "DBMess";
     private final messagesController ManageMessages = new messagesController();
-    private final UserManager userManager = new UserManager();
+    private final UserController userController = new UserController();
     //Defining datasets for extracting the information
     private ListView listView;
     private String email;
@@ -46,7 +46,7 @@ public class MessagesTrainee extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_messages_trainee);
         listView =(ListView) findViewById(R.id.list_message);
-        email = userManager.getConnectedUserMail();
+        email = userController.getConnectedUserMail();
         updateMessagesList();
         //plus button
         FloatingActionButton addUserButton = findViewById(R.id.fabAdd);
