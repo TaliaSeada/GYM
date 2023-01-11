@@ -31,5 +31,8 @@ public class UpdateController {
         data.put("id", id);
         return mFunctions.getHttpsCallable("deleteUpdate").call(data);
     }
+    public Task<HttpsCallableResult> getUpdates() {
+        return mFunctions.getHttpsCallable("getUpdates").call();
+    }
 
 }
