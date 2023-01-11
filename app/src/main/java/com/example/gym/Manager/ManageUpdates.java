@@ -47,7 +47,7 @@ public class ManageUpdates extends AppCompatActivity {
 
     // Take the updates from the db and put them in the view
     private void updateUpdatesList(){
-        mFunctions.getHttpsCallable("getUpdates").call()
+        updateController.getUpdates()
                 .addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
                     @Override
                     public void onComplete(@NonNull Task<HttpsCallableResult> task) {
