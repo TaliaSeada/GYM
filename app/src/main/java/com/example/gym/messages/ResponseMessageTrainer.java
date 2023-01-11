@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
-import com.example.gym.auth.UserManager;
+import com.example.gym.auth.UserController;
 
 
 /**
@@ -43,8 +43,8 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         title.setText(MessageValue[2]);
         //Get the bundle
         Bundle bundle = getIntent().getExtras();
-        UserManager userManager = new UserManager();
-        String email = userManager.getConnectedUserMail();
+        UserController userController = new UserController();
+        String email = userController.getConnectedUserMail();
         //Extract the data…
         String stuff = bundle.getString("id");
         send.setOnClickListener(view -> {
