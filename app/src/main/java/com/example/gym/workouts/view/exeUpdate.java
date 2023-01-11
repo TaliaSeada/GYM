@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_updateExercise;
-import com.example.gym.workouts.workoutControllet;
+import com.example.gym.workouts.controller.workoutControllet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +49,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
     private final String TAG = "DBExercise";
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private final com.example.gym.workouts.workoutControllet workoutControllet = new workoutControllet();
+    private final com.example.gym.workouts.controller.workoutControllet workoutControllet = new workoutControllet();
 
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast", "CutPasteId"})

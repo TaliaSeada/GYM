@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_recyclerView;
-import com.example.gym.workouts.workoutControllet;
+import com.example.gym.workouts.controller.workoutControllet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,7 +35,7 @@ public class getTrainee extends AppCompatActivity {
     private int dragged;
     // get firebase instance
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final com.example.gym.workouts.workoutControllet workoutControllet = new workoutControllet();
+    private final com.example.gym.workouts.controller.workoutControllet workoutControllet = new workoutControllet();
 
 
     @SuppressLint("MissingInflatedId")

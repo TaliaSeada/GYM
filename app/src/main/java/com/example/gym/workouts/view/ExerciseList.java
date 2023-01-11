@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.workouts.interfaces.I_exerciseList;
-import com.example.gym.workouts.workoutControllet;
+import com.example.gym.workouts.controller.workoutControllet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +40,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     // get firebase instances
     protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String email_trainee = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private final com.example.gym.workouts.workoutControllet workoutControllet = new workoutControllet();
+    private final com.example.gym.workouts.controller.workoutControllet workoutControllet = new workoutControllet();
 
     @Override
     protected void onResume() {

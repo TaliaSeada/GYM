@@ -1,4 +1,4 @@
-package com.example.gym.workouts;
+package com.example.gym.workouts.controller;
 
 import com.example.gym.workouts.interfaces.I_workoutController;
 import com.google.android.gms.tasks.Task;
