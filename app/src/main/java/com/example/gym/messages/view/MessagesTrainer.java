@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
-import com.example.gym.messages.control.messagesController;
+import com.example.gym.messages.controller.messagesController;
 
 import java.util.ArrayList;
 import java.util.HashMap;

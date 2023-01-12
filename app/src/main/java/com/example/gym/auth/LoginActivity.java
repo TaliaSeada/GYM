@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -137,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(GetTokenResult getTokenResult) {
                 String role = (String) getTokenResult.getClaims().get("role");
+//                String role = "trainer";
                 if(role == null){
                     AuthUI.getInstance().signOut(LoginActivity.this);
                     finish();

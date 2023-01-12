@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
 import com.example.gym.homePage.view.PraivteAreaShow;
-import com.example.gym.messages.control.messagesController;
+import com.example.gym.messages.controller.messagesController;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 

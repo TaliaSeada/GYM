@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.R;
 
 import com.example.gym.auth.UserController;
-import com.example.gym.homePage.controll.privateAreaController;
+import com.example.gym.homePage.controller.privateAreaController;
 
 import java.util.Arrays;
 import java.util.Calendar;

@@ -9,8 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.gym.R;
-import com.example.gym.auth.UserController;
-import com.example.gym.homePage.controll.privateAreaController;
+import com.example.gym.homePage.controller.privateAreaController;
 
 import java.util.HashMap;
 

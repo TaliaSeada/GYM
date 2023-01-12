@@ -21,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.R;
 import com.example.gym.auth.LoginActivity;
+import com.example.gym.homePage.controller.privateAreaController;
 import com.example.gym.messages.view.MessagesTrainee;
 import com.example.gym.workouts.view.WorkoutList;
 import com.firebase.ui.auth.AuthUI;
@@ -28,6 +29,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.functions.HttpsCallableResult;
+
+import java.util.ArrayList;
 
 public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     /**
@@ -47,7 +51,7 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
     private FloatingActionButton mailbtn;
     private FloatingActionButton callbtn;
     static int PERMISSION_CODE = 100;
-
+    private final com.example.gym.homePage.controller.privateAreaController privateAreaController = new privateAreaController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +81,28 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
             }
         });
 
+//        String mail = "talias1235@gmail.com";
+//        String phone = "0542670780";
+        final String[] mail = new String[1];
+        final String[] phone = new String[1];
+        Task<HttpsCallableResult> contact = privateAreaController.getContact();
+        contact.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            @Override
+            public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                ArrayList<String> data = (ArrayList<String>) task.getResult().getData();
+                assert data != null;
+                mail[0] = (String) data.get(0);
+                phone[0] = (String) data.get(1);
+            }
+        });
+
         // mail button
         mailbtn = findViewById(R.id.send_mail);
         mailbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mail = "talias1235@gmail.com";
                 Intent i = new Intent(Intent.ACTION_SEND);
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{mail});
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{mail[0]});
                 i.setType("message/rfc822");
                 if (i.resolveActivity(getPackageManager()) != null) {
                     startActivity(i);
@@ -102,9 +120,9 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone = "0542670780";
+
                 Intent i = new Intent(Intent.ACTION_CALL);
-                i.setData(Uri.parse("tel:" + phone));
+                i.setData(Uri.parse("tel:" + phone[0]));
                 startActivity(i);
             }
         });

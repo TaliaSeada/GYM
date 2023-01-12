@@ -1,4 +1,4 @@
-package com.example.gym.homePage.controll;
+package com.example.gym.homePage.controller;
 
 import com.example.gym.homePage.interfaces.I_privateAreaController;
 import com.google.android.gms.tasks.Task;
@@ -41,5 +41,9 @@ public class privateAreaController implements I_privateAreaController {
         Map<String, Object> name_map = new HashMap<>();
         name_map.put("email", email);
         return Functions.getHttpsCallable("getName").call(name_map);
+    }
+
+    public Task<HttpsCallableResult> getContact() {
+        return Functions.getHttpsCallable("getContact").call();
     }
 }
