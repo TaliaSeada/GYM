@@ -1,6 +1,6 @@
 import { https, logger } from 'firebase-functions';
 import { firestore } from 'firebase-admin';
-import { ROLES } from './users'
+import { ROLES } from './users';
 
 const db = firestore();
 

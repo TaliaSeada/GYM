@@ -46,4 +46,12 @@ public class privateAreaController implements I_privateAreaController {
     public Task<HttpsCallableResult> getContact() {
         return Functions.getHttpsCallable("getContact").call();
     }
+
+    public Task<HttpsCallableResult> updateContact(String email, String phone) {
+        Map<String, Object> contact = new HashMap<>();
+        contact.put("email", email);
+        contact.put("phone", phone);
+        return Functions.getHttpsCallable("updateContact").call(contact);
+    }
+
 }
