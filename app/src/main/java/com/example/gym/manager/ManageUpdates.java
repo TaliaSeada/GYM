@@ -1,4 +1,4 @@
-package com.example.gym.Manager;
+package com.example.gym.manager;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

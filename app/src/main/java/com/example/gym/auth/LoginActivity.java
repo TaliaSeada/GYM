@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gym.Manager.HomePageManager;
+import com.example.gym.manager.HomePageManager;
 import com.example.gym.R;
 import com.example.gym.homePage.view.HomePageTrainee;
 import com.example.gym.homePage.view.HomePageTrainer;

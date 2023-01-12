@@ -109,21 +109,21 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Manager.HomePageManager"
+            android:name=".manager.HomePageManager"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Manager.ManageUsers"
+            android:name=".manager.ManageUsers"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Manager.ManageUpdates"
+            android:name=".manager.ManageUpdates"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

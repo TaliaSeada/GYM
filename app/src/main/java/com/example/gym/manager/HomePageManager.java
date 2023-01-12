@@ -1,4 +1,4 @@
-package com.example.gym.Manager;
+package com.example.gym.manager;
 
 import static com.example.gym.auth.UserController.ROLE_MANAGER;
 import static com.example.gym.auth.UserController.ROLE_TRAINEE;
