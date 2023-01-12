@@ -77,3 +77,13 @@ exports.beforeSignIn = auth.user().beforeSignIn( async (user, context) => {
          },
     };
 });
+
+// Get manager phone and email
+exports.getContact = https.onCall(async (data, context) => {
+    const snapshot = await db.collection('users').doc('contact').get();
+    
+    const contact = [];
+    contact.push(snapshot.get("email"));
+    contact.push(snapshot.get("phone")); 
+    return contact;
+});
