@@ -1,7 +1,9 @@
 package com.example.gym.messages;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 /**
@@ -33,6 +36,36 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_response_message_trainer);
         Button send = findViewById(R.id.buttonAnswer);
+//        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) FloatingActionButton addUserButton = findViewById(R.id.fabDetails);
+//        addUserButton.setOnClickListener(view -> {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(ResponseMessageTrainer.this);
+//            builder.setTitle("Add Messages");
+//            View viewInflated = LayoutInflater.from(ResponseMessageTrainer.this).inflate(R.layout.add_new_message_window, (ViewGroup) null, false);
+//            // Set up the input box
+//            final EditText title = (EditText) viewInflated.findViewById(R.id.Title);
+//            final EditText message = (EditText) viewInflated.findViewById(R.id.message);
+//            builder.setView(viewInflated);
+//
+//            // Set up the buttons
+//            builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+//                dialog.dismiss();
+//                String title_val = title.getText().toString();
+//                String message_val = message.getText().toString();
+//                // Add the new user to the db
+//                ManageMessages.addMessageTrainee(email, message_val, title_val).addOnSuccessListener(httpsCallableResult -> updateMessagesList()).addOnFailureListener(e -> {
+//                    Log.d("myTag", e.toString());
+//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(MessagesTrainee.this);
+//                    builder1.setMessage("Can't add this Message.\nTry again later");
+//                    builder1.setCancelable(true);
+//                    builder1.setPositiveButton("Ok", (dialog1, id) -> dialog1.cancel());
+//                    AlertDialog alertDialog = builder1.create();
+//                    alertDialog.show();
+//                });
+//            });
+//            builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
+//
+//            builder.show(); //show the add user window
+//        });
         TextView answerTrainer = findViewById(R.id.answerMessage);
         TextView title = findViewById(R.id.textViewTitle);
         TextView messageTrainee = findViewById(R.id.reciveMessage);

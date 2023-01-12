@@ -79,6 +79,8 @@ public class MessagesTrainee extends AppCompatActivity {
 
                     builder.show(); //show the add user window
                 });
+
+
         //data refresh
         ImageView refresh = (ImageView) findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(view -> {
