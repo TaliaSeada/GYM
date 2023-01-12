@@ -1,4 +1,4 @@
-package com.example.gym.updates;
+package com.example.gym.updates.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.gym.R;
+import com.example.gym.updates.Update;
+import com.example.gym.updates.controller.UpdateController;
+import com.example.gym.updates.UpdateViewItemModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.HttpsCallableResult;

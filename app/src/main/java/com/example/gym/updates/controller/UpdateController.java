@@ -1,8 +1,7 @@
-package com.example.gym.updates;
+package com.example.gym.updates.controller;
 
+import com.example.gym.updates.Update;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 

@@ -65,7 +65,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/updates_fragment"
-            android:name="com.example.gym.updates.UpdatesListFragment"
+            android:name="com.example.gym.updates.view.UpdatesListFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
