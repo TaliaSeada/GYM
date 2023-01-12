@@ -62,14 +62,9 @@ exports.beforeSignIn = auth.user().beforeSignIn( async (user, context) => {
     const docSnapshot = await db.collection('users').doc(user?.email).get();
 
     if (!docSnapshot.exists) {
-//         auth().updateUser(user.uid, {disable: true});
         adminAuth().deleteUser(user.uid);
-        throw new https.HttpsError('invalid-argument', 'The user not allowed to connect, please talk to the manager');
-//         throw new https.HttpsError('permission-denied', 'The user not allowed to connect,please talk to the manager');
+        throw new https.HttpsError('permission-denied', 'The user not allowed to connect,please talk to the manager');
     }
-
-    //auth().updateUser(user.uid, {disable: false});
-
     const userDoc = docSnapshot.data();
 
     return {
