@@ -1,25 +1,17 @@
-package com.example.gym.homePage;
+package com.example.gym.homePage.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
+import com.example.gym.homePage.controll.privateAreaController;
 
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 
 public class PraivteAreaShow extends AppCompatActivity {
@@ -31,9 +23,7 @@ public class PraivteAreaShow extends AppCompatActivity {
     private TextView full_name_text;
     private TextView input_genderTrainee;
 
-    static String email;
     private final String TAG = "PrivateArea";
-    private final UserController userController = new UserController();
     privateAreaController managePrivateArea = new privateAreaController();
 
     @SuppressLint("MissingInflatedId")
@@ -41,31 +31,15 @@ public class PraivteAreaShow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praivte_area_show);
-        email = userController.getConnectedUserMail();
-        ImageButton addBirth = (ImageButton) findViewById(R.id.imageButtonAddBirth);
+        Intent MessageIntent = getIntent();
+        String email = MessageIntent.getStringExtra("email");
         input_ageTrainee=(TextView)findViewById(R.id.editTextDate1);
         input_heightTrainee=(TextView)findViewById(R.id.heightTrainee1);
         input_weightTrainee=(TextView)findViewById(R.id.weightTrainee2);
         input_genderTrainee= (TextView) findViewById(R.id.genderTrainee1);
+        full_name_text = (TextView) findViewById(R.id.textViewName1);
         // Create an ArrayAdapter using the string array and a default spinner layout
-
-        managePrivateArea.getName(email).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                HashMap data = (HashMap) task.getResult().getData();
-                try {
-                    assert data != null;
-                    String fullName = (String) data.get("full_name");
-                    full_name_text.setText(fullName);
-                } catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                    e.printStackTrace();
-                }
-//                    });
-            } else {
-                Log.d(TAG, "Error getting documents: ", task.getException());
-            }
-
-        });
+        Log.d(TAG, email);
 
         managePrivateArea.getPersonalDetails(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -104,6 +78,22 @@ public class PraivteAreaShow extends AppCompatActivity {
                 input_genderTrainee.setText(genderString);
             }
          });
+        managePrivateArea.getName(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                HashMap data = (HashMap) task.getResult().getData();
+                try {
+                    String fullName = (String) data.get("full_name");
+                    full_name_text.setText(fullName);
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                    e.printStackTrace();
+                }
+//                    });
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+
+        });
     }
 
 

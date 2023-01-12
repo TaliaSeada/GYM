@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,8 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.Manager.HomePageManager;
 import com.example.gym.R;
-import com.example.gym.homePage.HomePageTrainee;
-import com.example.gym.homePage.HomePageTrainer;
+import com.example.gym.homePage.view.HomePageTrainee;
+import com.example.gym.homePage.view.HomePageTrainer;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
@@ -132,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
     // If the connect with google or email success
     public void transferUserToPage(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         user.getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
             @Override
             public void onSuccess(GetTokenResult getTokenResult) {
@@ -141,7 +141,6 @@ public class LoginActivity extends AppCompatActivity {
                     AuthUI.getInstance().signOut(LoginActivity.this);
                     finish();
                 }
-
                 switch (role){
                     case ROLE_MANAGER:
                         Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);

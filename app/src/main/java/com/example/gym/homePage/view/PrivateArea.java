@@ -1,4 +1,4 @@
-package com.example.gym.homePage;
+package com.example.gym.homePage.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +13,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gym.MyDatePickerDialog;
 import com.example.gym.R;
 
 import com.example.gym.auth.UserController;
+import com.example.gym.homePage.controll.privateAreaController;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;

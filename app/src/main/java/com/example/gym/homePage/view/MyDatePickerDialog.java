@@ -1,4 +1,4 @@
-package com.example.gym;
+package com.example.gym.homePage.view;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -10,6 +10,8 @@ import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.gym.R;
 
 import java.util.Calendar;
 

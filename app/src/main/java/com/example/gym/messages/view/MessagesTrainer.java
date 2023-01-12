@@ -1,4 +1,4 @@
-package com.example.gym.messages;
+package com.example.gym.messages.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
+import com.example.gym.messages.control.messagesController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class MessagesTrainer extends AppCompatActivity  {
         //Data transfer between departments
         listView.setOnItemClickListener((adapterView, view, pos, l) -> {
             Intent i = new Intent(MessagesTrainer.this, ResponseMessageTrainer.class);
-            i.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos), title_array.get(pos)});
+            i.putExtra("key_sender", new String[]{message_array.get(pos), answer_array.get(pos), title_array.get(pos),sub_array.get(pos)});
             //Create the bundle
             Bundle bundle = new Bundle();
             //Add your data to bundle

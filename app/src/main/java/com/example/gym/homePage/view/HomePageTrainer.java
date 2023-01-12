@@ -1,4 +1,4 @@
-package com.example.gym.homePage;
+package com.example.gym.homePage.view;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,20 +21,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.R;
 import com.example.gym.auth.LoginActivity;
-import com.example.gym.messages.MessagesTrainee;
-import com.example.gym.workouts.view.WorkoutList;
+import com.example.gym.messages.view.MessagesTrainer;
+import com.example.gym.workouts.view.getTrainee;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomePageTrainer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
     /**
-     * This class is responsible for the trainee's main page.
-     * this class contains a menu in which there are transitions to training,
-     * personal information, a system of inquiries and disconnection
-     */
+     * This class is responsible for the trainer's main page.
+     * this class contains a menu in which there are transitions to add train for trainee,
+     * a system of inquiries and disconnection
+     * */
     private Toast t;
     private Animation rotateOpen;
     private Animation rotateClose;
@@ -48,11 +49,10 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
     private FloatingActionButton callbtn;
     static int PERMISSION_CODE = 100;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page_trainee);
+        setContentView(R.layout.activity_home_page_trainer);
 
         // initialize animations
         if (rotateOpen == null) {
@@ -96,8 +96,8 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
 
         // call button
         callbtn = findViewById(R.id.call);
-        if (ContextCompat.checkSelfPermission(HomePageTrainee.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HomePageTrainee.this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_CODE);
+        if (ContextCompat.checkSelfPermission(HomePageTrainer.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HomePageTrainer.this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_CODE);
         }
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,23 +173,24 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
         }
         return super.onOptionsItemSelected(item);
     }
+    //a menu in which there are transitions to add train for trainee,
+    //  personal information, a system of inquiries and disconnection
 
-
-    //a menu in which there are transitions to training,
-    // personal information, a system of inquiries and disconnection
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_train) {
-            Intent intent = new Intent(getApplicationContext(), WorkoutList.class);
-            intent.putExtra("role", "trainee");
-            startActivity(intent);
-        } else if (id == R.id.nav_personal_details) {
-            startActivity(new Intent(getApplicationContext(), PrivateArea.class));
-        } else if (id == R.id.nav_message) {
-            startActivity(new Intent(getApplicationContext(), MessagesTrainee.class));
-        } else if (id == R.id.nav_logout) {
+//        if (id == R.id.nav_personal_details){
+//          startActivity(new Intent(getApplicationContext(), PrivateArea.class));
+//        }
+//        else
+         if (id == R.id.nav_message){
+            startActivity(new Intent(getApplicationContext(), MessagesTrainer.class));
+        }
+        else if (id == R.id.nav_add_train){
+            startActivity(new Intent(getApplicationContext(), getTrainee.class));
+        }
+        else if (id== R.id.nav_logout){
             AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -197,6 +198,7 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
                 }
             });
         }
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

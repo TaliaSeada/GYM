@@ -1,4 +1,4 @@
-package com.example.gym.homePage;
+package com.example.gym.homePage.controll;
 
 import com.example.gym.homePage.interfaces.I_privateAreaController;
 import com.google.android.gms.tasks.Task;

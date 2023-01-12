@@ -10,9 +10,7 @@ exports.getPersonalDetails = https.onCall(async (data, context) => {
     throw new https.HttpsError('failed-precondition', 'The function must be called ' +
         'while authenticated.');
   }
-  const email = context.auth.token.email;
-  logger.log(`email: "${email}"`);
-
+  const email = data.email;
   const userInfoRef = db.collection('user-info').doc(email);
   const doc = await userInfoRef.get();
   if(!doc.exists) {

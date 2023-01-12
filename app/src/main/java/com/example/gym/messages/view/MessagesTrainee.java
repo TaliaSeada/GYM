@@ -1,4 +1,4 @@
-package com.example.gym.messages;
+package com.example.gym.messages.view;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,12 +19,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
+import com.example.gym.messages.control.messagesController;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MessagesTrainee extends AppCompatActivity {
+public class
+
+
+
+
+
+
+
+MessagesTrainee extends AppCompatActivity {
     /**
      * This class is an application system where the trainee,
      * can send an application to the trainers

@@ -1,4 +1,4 @@
-package com.example.gym.messages;
+package com.example.gym.messages.control;
 
 import com.example.gym.messages.interfaces.I_messagesController;
 import com.google.android.gms.tasks.Task;
