@@ -47,7 +47,7 @@ public class PraivteAreaShow extends AppCompatActivity {
         input_heightTrainee=(TextView)findViewById(R.id.heightTrainee1);
         input_weightTrainee=(TextView)findViewById(R.id.weightTrainee2);
         input_genderTrainee= (TextView) findViewById(R.id.genderTrainee1);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        // Create an ArrayAdapterk using the string array and a default spinner layout
 
         managePrivateArea.getName(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
