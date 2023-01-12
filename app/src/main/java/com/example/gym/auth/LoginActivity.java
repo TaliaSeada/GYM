@@ -136,10 +136,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(GetTokenResult getTokenResult) {
                 String role = (String) getTokenResult.getClaims().get("role");
-//                String role = "trainer";
                 if(role == null){
                     AuthUI.getInstance().signOut(LoginActivity.this);
-                    finish();
+                    progressDialog.dismiss();
+                    return;
                 }
                 switch (role){
                     case ROLE_MANAGER:

@@ -1,5 +1,6 @@
 import { https, logger, auth } from 'firebase-functions';
 import { firestore } from 'firebase-admin';
+import { auth as adminAuth } from 'firebase-admin'
 
 const db = firestore();
 
@@ -62,9 +63,9 @@ exports.beforeSignIn = auth.user().beforeSignIn( async (user, context) => {
 
     if (!docSnapshot.exists) {
 //         auth().updateUser(user.uid, {disable: true});
-//         auth().deleteUser(user.uid);
-//         throw new https.HttpsError('invalid-argument', 'The user not allowed to connect, please talk to the manager');
-        throw new https.HttpsError('permission-denied', 'The user not allowed to connect,please talk to the manager');
+        adminAuth().deleteUser(user.uid);
+        throw new https.HttpsError('invalid-argument', 'The user not allowed to connect, please talk to the manager');
+//         throw new https.HttpsError('permission-denied', 'The user not allowed to connect,please talk to the manager');
     }
 
     //auth().updateUser(user.uid, {disable: false});
