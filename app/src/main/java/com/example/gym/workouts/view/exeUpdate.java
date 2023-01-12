@@ -285,7 +285,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
                         minteger_sets =(int) e.get("sets");
                         Object tmp = e.get("weight");
                         assert tmp != null;
-                        if(tmp.equals(0)){
+                        if(tmp instanceof Integer){
                             minteger_weight = (double)((Integer)(tmp));
                         }
                         else{

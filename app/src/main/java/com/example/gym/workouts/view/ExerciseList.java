@@ -33,7 +33,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
     private Toast t;
     // set fields for data display
     private GridView listView;
-    private ImageView add;
+    private ImageView add, refresh;
     private List<String> items = new ArrayList<>();
     private final ArrayList<Map<String, String>> show = new ArrayList<Map<String, String>>();
     private SimpleAdapter adap;
@@ -77,6 +77,15 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
         // set the exercises list
         listView = findViewById(R.id.grid_exe);
         items = new ArrayList<>();
+        // set refresh action
+        refresh = findViewById(R.id.refresh2);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadContent(email, MessageValue[2]);
+            }
+        });
+
         // set add button action
         add = findViewById(R.id.imageMenu);
         add.setOnClickListener(new View.OnClickListener() {
