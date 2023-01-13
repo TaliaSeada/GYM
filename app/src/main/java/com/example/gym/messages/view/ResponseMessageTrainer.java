@@ -49,13 +49,9 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         String email_trainee  = MessageValue[3];
         Log.d("try3", email_trainee);
         addUserButton.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ResponseMessageTrainer.this);
             Intent senderIntent = new Intent(ResponseMessageTrainer.this, PraivteAreaShow.class);
             senderIntent.putExtra("email", email_trainee);
             startActivity(senderIntent);
-            builder.setTitle("user details");
-            // Set up the buttons
-            builder.show(); //show the add user window
         });
         //Get the bundle
         Bundle bundle = getIntent().getExtras();

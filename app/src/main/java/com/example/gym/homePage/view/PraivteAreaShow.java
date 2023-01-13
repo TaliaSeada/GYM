@@ -1,16 +1,22 @@
 package com.example.gym.homePage.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.gym.R;
 import com.example.gym.homePage.controller.privateAreaController;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.functions.HttpsCallableResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PraivteAreaShow extends AppCompatActivity {
@@ -30,6 +36,11 @@ public class PraivteAreaShow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_praivte_area_show);
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        getWindow().setLayout((int) (width * .9), (int) (height * .8));
         Intent MessageIntent = getIntent();
         String email = MessageIntent.getStringExtra("email");
         input_ageTrainee=(TextView)findViewById(R.id.editTextDate1);
@@ -40,60 +51,41 @@ public class PraivteAreaShow extends AppCompatActivity {
         // Create an ArrayAdapter using the string array and a default spinner layout
         Log.d(TAG, email);
 
-        managePrivateArea.getPersonalDetails(email).addOnCompleteListener(task -> {
+        // load content from firebase
+        loadContent(email);
+
+    }
+
+    public void loadContent(String email) {
+        Task<HttpsCallableResult> exe = managePrivateArea.getPersonalDetails(email);
+        exe.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 HashMap<String, Object> data = (HashMap<String, Object>) task.getResult().getData();
                 double height;
-                try {
-                    height = (Double) data.get("height");
-                } catch (Exception e) {
-                    height = 0;
-                }
+                height = (Double) data.get("height");
                 String heightS = String.valueOf(height);
                 input_heightTrainee.setText(heightS);
                 double weight;
-                try {
                     weight = (Double) data.get("weight");
-                } catch (Exception e) {
-                    Log.d("TAG", e.toString());
-                    weight = 0;
-                }
                 String weightS = String.valueOf(weight);
                 input_weightTrainee.setText(weightS);
                 String DateBirth;
-                try {
                     DateBirth = (String) data.get("dateBirth");
-                } catch (Exception e) {
-                    DateBirth = "-";
-                }
                 input_ageTrainee.setText(DateBirth);
                 String genderString;
-                try {
                     genderString = (String) data.get("gender");
-                } catch (Exception e) {
-                    genderString = "_";
-
-                }
                 input_genderTrainee.setText(genderString);
             }
          });
         managePrivateArea.getName(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 HashMap data = (HashMap) task.getResult().getData();
-                try {
                     String fullName = (String) data.get("full_name");
                     full_name_text.setText(fullName);
-                } catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                    e.printStackTrace();
-                }
-//                    });
             } else {
                 Log.d(TAG, "Error getting documents: ", task.getException());
             }
 
         });
     }
-
-
 }
