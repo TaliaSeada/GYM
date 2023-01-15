@@ -72,7 +72,7 @@ public class exeUpdate extends AppCompatActivity implements I_updateExercise {
         if (MessageValue[0].equals("trainee")) {
             email = email_trainee;
         } else {
-            email = MessageValue[1];
+            email = MessageValue[3];
         }
         // load content from firebase
         loadContent(email, MessageValue[1], MessageValue[2]);

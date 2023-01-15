@@ -105,7 +105,7 @@ public class ExerciseList extends AppCompatActivity implements I_exerciseList {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 Intent i = new Intent(ExerciseList.this, exeUpdate.class);
 //                nameExe = items.get(pos);
-                i.putExtra("key_ex", new String[]{role, items.get(pos), MessageValue[2]});
+                i.putExtra("key_ex", new String[]{role, items.get(pos), MessageValue[2], email});
 //                i.putExtra("role", role);
                 startActivity(i);
             }
