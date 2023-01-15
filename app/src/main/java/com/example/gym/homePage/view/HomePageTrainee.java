@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.gym.R;
 import com.example.gym.auth.LoginActivity;
+import com.example.gym.auth.UserController;
 import com.example.gym.homePage.controller.privateAreaController;
 import com.example.gym.messages.view.MessagesTrainee;
 import com.example.gym.workouts.view.WorkoutList;
@@ -32,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomePageTrainee extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     /**
@@ -44,14 +48,19 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
     private Animation rotateClose;
     private Animation fromBottom;
     private Animation toBottom;
+    private TextView full_name_text;
     private boolean clicked = false;
+    private String email;
+
 
     private ActionBarDrawerToggle toggle;
     private FloatingActionButton contactbtn;
     private FloatingActionButton mailbtn;
     private FloatingActionButton callbtn;
-    static int PERMISSION_CODE = 100;
-    private final com.example.gym.homePage.controller.privateAreaController privateAreaController = new privateAreaController();
+    private int PERMISSION_CODE = 100;
+    private final privateAreaController privateAreaController = new privateAreaController();
+    private final UserController userController = new UserController();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +145,31 @@ public class HomePageTrainee extends AppCompatActivity implements NavigationView
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        email = userController.getConnectedUserMail();
+        full_name_text= (TextView) findViewById(R.id.text_name);
+        //Extracts the name from Firebase to activity_private_area.xml
+        privateAreaController.getName(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                HashMap data = (HashMap) task.getResult().getData();
+                try {
+                    assert data != null;
+                    String fullName="Hello ";
+                    fullName +=(String) data.get("full_name");
+                    full_name_text.setText(fullName);
+                } catch (Exception e) {
+                    Log.d("home page", e.toString());
+                    e.printStackTrace();
+                }
+//                    });
+            } else {
+                Log.d("home page", "Error getting documents: ", task.getException());
+            }
+
+        });
     }
+
 
     private void onContactButtonClick() {
         setVisiblity(clicked);

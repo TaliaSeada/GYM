@@ -34,7 +34,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     private EditText input_ageTrainee;
     private EditText input_heightTrainee;
     private TextView full_name_text;
-    static String email;
+    private String email;
     String date;
     private final String TAG = "PrivateArea";
     private final UserController userController = new UserController();
