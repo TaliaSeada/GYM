@@ -62,18 +62,28 @@ public class PraivteAreaShow extends AppCompatActivity {
             if (task.isSuccessful()) {
                 HashMap<String, Object> data = (HashMap<String, Object>) task.getResult().getData();
                 double height;
-                height = (Double) data.get("height");
+                if(data.get("height") instanceof Integer){
+                    height = (double)((Integer)(data.get("height")));
+                }
+                else{
+                    height = (double) data.get("height");
+                }
                 String heightS = String.valueOf(height);
                 input_heightTrainee.setText(heightS);
                 double weight;
-                    weight = (Double) data.get("weight");
+                if(data.get("weight") instanceof Integer){
+                    weight = (double)((Integer)(data.get("weight")));
+                }
+                else{
+                    weight = (double) data.get("weight");
+                }
                 String weightS = String.valueOf(weight);
                 input_weightTrainee.setText(weightS);
                 String DateBirth;
-                    DateBirth = (String) data.get("dateBirth");
+                DateBirth = (String) data.get("dateBirth");
                 input_ageTrainee.setText(DateBirth);
                 String genderString;
-                    genderString = (String) data.get("gender");
+                genderString = (String) data.get("gender");
                 input_genderTrainee.setText(genderString);
             }
          });
