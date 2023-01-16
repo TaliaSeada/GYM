@@ -54,7 +54,7 @@ MessagesTrainee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_messages_trainee);
-        listView =(ListView) findViewById(R.id.list_message);
+        listView = findViewById(R.id.list_message);
         email = userController.getConnectedUserMail();
         updateMessagesList();
         //plus button
@@ -62,10 +62,10 @@ MessagesTrainee extends AppCompatActivity {
         addUserButton.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(MessagesTrainee.this);
             builder.setTitle("Add Messages");
-            View viewInflated = LayoutInflater.from(MessagesTrainee.this).inflate(R.layout.add_new_message_window, (ViewGroup) listView, false);
+            View viewInflated = LayoutInflater.from(MessagesTrainee.this).inflate(R.layout.add_new_message_window, listView, false);
             // Set up the input box
-            final EditText title = (EditText) viewInflated.findViewById(R.id.Title);
-            final EditText message = (EditText) viewInflated.findViewById(R.id.message);
+            final EditText title = viewInflated.findViewById(R.id.Title);
+            final EditText message = viewInflated.findViewById(R.id.message);
             builder.setView(viewInflated);
 
             // Set up the buttons
@@ -91,7 +91,7 @@ MessagesTrainee extends AppCompatActivity {
 
 
         //data refresh
-        ImageView refresh = (ImageView) findViewById(R.id.imageRefresh);
+        ImageView refresh = findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(view -> {
             finish();
             startActivity(new Intent(getApplicationContext(), MessagesTrainee.class));
@@ -165,9 +165,9 @@ MessagesTrainee extends AppCompatActivity {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_my_item,null);
-            TextView titleMess = (TextView) view.findViewById(R.id.titleMess);
-            TextView dateMess = (TextView) view.findViewById(R.id.dateMess);
-            ImageView imageViewMail = (ImageView) view.findViewById(R.id.newMail);
+            TextView titleMess = view.findViewById(R.id.titleMess);
+            TextView dateMess = view.findViewById(R.id.dateMess);
+            ImageView imageViewMail = view.findViewById(R.id.newMail);
             titleMess.setText(title_array.get(i));
             imageViewMail.setImageResource(image_array.get(i));
             dateMess.setText(date_array.get(i));

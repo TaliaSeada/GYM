@@ -15,17 +15,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym.R;
 import com.example.gym.auth.UserController;
 import com.example.gym.messages.controller.messagesController;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * This class is an application system where the trainer,
+ * can response an application to the trainee
+ * **/
 public class MessagesTrainer extends AppCompatActivity  {
-    /**
-     * This class is an application system where the trainer,
-     * can response an application to the trainee
-     * **/
-    //Defining datasets for extracting the information
-    private final String TAG = "DBMess";
     private final messagesController ManageMessages = new messagesController();
     private ListView listView;
     private final ArrayList<String> title_array = new ArrayList<>();
@@ -42,11 +41,11 @@ public class MessagesTrainer extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_message_trainer);
-        listView = (ListView) findViewById(R.id.list_message);
+        listView = findViewById(R.id.list_message);
         String email = userController.getConnectedUserMail();
         updateMessagesList(email);
         //data refresh
-        ImageView refresh = (ImageView) findViewById(R.id.imageRefresh);
+        ImageView refresh = findViewById(R.id.imageRefresh);
         refresh.setOnClickListener(view -> {
             finish();
             startActivity(new Intent(getApplicationContext(), MessagesTrainer.class));
@@ -69,41 +68,45 @@ public class MessagesTrainer extends AppCompatActivity  {
     //connection to Firebase
 
     public void updateMessagesList(String email) {
-        ManageMessages.getMessageTrainer(email).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                title_array.clear();
-                message_array.clear();
-                date_array.clear();
-                sub_array.clear();
-                image_array.clear();
-                answer_array.clear();
-                ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
-                assert data != null;
-                data.forEach(m -> {
-                    title_array.add((String) m.get("title"));
-                    sub_array.add((String) m.get("trainee"));
-                    message_array.add((String) m.get("message"));
-                    String answer = (String) m.get("answer");
-                    answer_array.add(answer);
-                    //Indicates whether a new message has been received
-                    assert answer != null;
-                    if (answer.isEmpty()) {
-                        image_array.add(R.drawable.close_mail);
-                    } else {
-                        image_array.add(R.drawable.open_mail);
-                    }
-                    String strDate = (String) m.get("date");
-                    date_array.add(strDate);
-                    ////////////////check////////////////////
-                    id_array.add((String) m.get("id"));
-                    ////////////////////////////////////////
-                });
-                MessageAdapter messageAdapter = new MessageAdapter();
-                listView.setAdapter(messageAdapter);
-            } else {
-                Log.d(TAG, "Error getting documents: ", task.getException());
-            }
-        });
+        ManageMessages.getMessageTrainer(email).addOnCompleteListener(this::onComplete);
+    }
+
+    private void onComplete(Task<HttpsCallableResult> task) {
+        if (task.isSuccessful()) {
+            title_array.clear();
+            message_array.clear();
+            date_array.clear();
+            sub_array.clear();
+            image_array.clear();
+            answer_array.clear();
+            ArrayList<HashMap> data = (ArrayList<HashMap>) task.getResult().getData();
+            assert data != null;
+            data.forEach(m -> {
+                title_array.add((String) m.get("title"));
+                sub_array.add((String) m.get("trainee"));
+                message_array.add((String) m.get("message"));
+                String answer = (String) m.get("answer");
+                answer_array.add(answer);
+                //Indicates whether a new message has been received
+                assert answer != null;
+                if (answer.isEmpty()) {
+                    image_array.add(R.drawable.close_mail);
+                } else {
+                    image_array.add(R.drawable.open_mail);
+                }
+                String strDate = (String) m.get("date");
+                date_array.add(strDate);
+                ////////////////check////////////////////
+                id_array.add((String) m.get("id"));
+                ////////////////////////////////////////
+            });
+            MessageAdapter messageAdapter = new MessageAdapter();
+            listView.setAdapter(messageAdapter);
+        } else {
+            //Defining datasets for extracting the information
+            String TAG = "DBMess";
+            Log.d(TAG, "Error getting documents: ", task.getException());
+        }
     }
 
     // This class displays the messages as a list
@@ -128,10 +131,10 @@ public class MessagesTrainer extends AppCompatActivity  {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_my_item_t,null);
-            TextView titleMess = (TextView) view.findViewById(R.id.titleMess);
-            TextView subTitle = (TextView) view.findViewById(R.id.fromMess);
-            TextView dateMess = (TextView) view.findViewById(R.id.dateMess);
-            ImageView imageViewMail = (ImageView) view.findViewById(R.id.newMail);
+            TextView titleMess = view.findViewById(R.id.titleMess);
+            TextView subTitle = view.findViewById(R.id.fromMess);
+            TextView dateMess = view.findViewById(R.id.dateMess);
+            ImageView imageViewMail = view.findViewById(R.id.newMail);
             titleMess.setText(title_array.get(i));
             subTitle.setText(sub_array.get(i));
             imageViewMail.setImageResource(image_array.get(i));

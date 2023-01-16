@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,8 +61,8 @@ public class ResponseMessageTrainer extends AppCompatActivity {
         send.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponseMessageTrainer.this);
             builder.setTitle("Add Response");
-            View viewInflated = LayoutInflater.from(ResponseMessageTrainer.this).inflate(R.layout.add_new_response_window, (ViewGroup) null, false);
-            final EditText message = (EditText) viewInflated.findViewById(R.id.message);
+            View viewInflated = LayoutInflater.from(ResponseMessageTrainer.this).inflate(R.layout.add_new_response_window, null, false);
+            final EditText message = viewInflated.findViewById(R.id.message);
             builder.setView(viewInflated);
             builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
                 dialog.dismiss();

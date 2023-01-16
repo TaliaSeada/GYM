@@ -72,7 +72,7 @@ public class MyDatePickerDialog extends AlertDialog implements DialogInterface.O
                     mDatePicker.clearFocus();
                     if (mDateSetListener != null) {
                         mDateSetListener.onDateSet(mDatePicker, mDatePicker.getYear(),
-                                mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+                                mDatePicker.getMonth()+1, mDatePicker.getDayOfMonth());
                     }
                 }
                 break;
