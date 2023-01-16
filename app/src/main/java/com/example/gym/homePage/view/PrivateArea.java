@@ -114,8 +114,14 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
             if (task.isSuccessful()) {
                 HashMap<String, Object> data = (HashMap<String, Object>) task.getResult().getData();
                 double height;
+
             try {
-                height = (Double) data.get("height");
+                if(data.get("height") instanceof Integer){
+                    height = (double)((Integer)(data.get("height")));
+                }
+                else{
+                    height = (double) data.get("height");
+                }
             } catch (Exception e) {
                 height=0;
             }
@@ -123,7 +129,12 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
             input_heightTrainee.setText(heightS);
             double weight;
             try {
-                weight = (Double) data.get("weight");
+                if(data.get("weight") instanceof Integer){
+                    weight = (double)((Integer)(data.get("weight")));
+                }
+                else{
+                    weight = (double) data.get("weight");
+                }
             } catch (Exception e) {
                 Log.d("TAG", e.toString());
                 weight=0;
