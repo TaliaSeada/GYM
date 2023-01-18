@@ -36,20 +36,22 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
     private TextView full_name_text;
     private String email;
     String date;
+    String gender;
     private final String TAG = "PrivateArea";
     private final UserController userController = new UserController();
     privateAreaController managePrivateArea = new privateAreaController();
 
     //update data in  Firebase
-    public void addDetails(String email, double height, double weight) {
+    public void addDetails(String email, double height, double weight,String date, String gender ) {
         Log.d("aa", String.valueOf(height));
-        managePrivateArea.addDetails(email,height,weight);
+        managePrivateArea.addDetails(email,height,weight, date, gender);
     }
     public void addDate(String date) {
         managePrivateArea.addDate(email,date);
     }
-    public void addGender(String gender) {
-        managePrivateArea.addGender(email, gender);
+    public void addGender(String gender_string) {
+        gender = gender_string;
+//        managePrivateArea.addGender(email, gender);
     }
 
 
@@ -83,7 +85,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
             dialog.showDatePicker((view1, year, month, dayOfMonth) -> {
                 date = year + "/" + month + "/" + dayOfMonth;
                 input_ageTrainee.setText(date);
-                addDate(date);
+//                addDate(date);
 
             }, Calendar.getInstance());
         });
@@ -104,7 +106,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
 
 
             try{
-                addDetails(email, output_height ,output_weight);
+                addDetails(email, output_height ,output_weight, date, gender);
             } catch (NullPointerException e){
                 e.printStackTrace();
             }
@@ -158,7 +160,6 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
             }
             String[] baths = getResources().getStringArray(R.array.planets_array);
             try {
-                assert genderString != null;
                 if (genderString.equals("female"))
                     spinner.setSelection(Arrays.asList(baths).indexOf("female"));
 

@@ -27,10 +27,12 @@ public class privateAreaController implements I_privateAreaController {
         date_map.put("date", date);
         return Functions.getHttpsCallable("addDate").call(date_map);
     }
-    public Task<HttpsCallableResult> addDetails(String email, double height, double weight) {
+    public Task<HttpsCallableResult> addDetails(String email, double height, double weight, String date, String gender) {
         Map<String, Object> details_map = new HashMap<>();
         details_map.put("height", height);
         details_map.put("weight", weight);
+        details_map.put("dateBirth", date);
+        details_map.put("gender", gender);
         HashMap<String, Object> data = new HashMap<>();
         data.put("details", details_map);
         data.put("email", email);

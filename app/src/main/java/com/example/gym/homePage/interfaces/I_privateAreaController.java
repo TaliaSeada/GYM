@@ -15,7 +15,7 @@ public interface I_privateAreaController {
     Task<HttpsCallableResult> addDate(String email,String date);
 
     //add weight and height
-    Task<HttpsCallableResult> addDetails(String email, double height, double weight);
+    Task<HttpsCallableResult> addDetails(String email, double height, double weight, String date, String gender);
 
     // add gender
     Task<HttpsCallableResult> addGender(String email,String gender);
