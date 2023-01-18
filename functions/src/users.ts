@@ -65,6 +65,7 @@ exports.beforeSignIn = auth.user().beforeSignIn( async (user, context) => {
         adminAuth().updateUser(user.uid, {disabled: true});
         throw new https.HttpsError('permission-denied', 'The user not allowed to connect,please talk to the manager');
     }
+    adminAuth().updateUser(user.uid, {disabled: false});
     const userDoc = docSnapshot.data();
 
     return {
