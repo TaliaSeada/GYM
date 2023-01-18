@@ -5,6 +5,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +29,12 @@ public class privateAreaController implements I_privateAreaController {
     }
     public Task<HttpsCallableResult> addDetails(String email, double height, double weight) {
         Map<String, Object> details_map = new HashMap<>();
-        details_map.put("email", email);
         details_map.put("height", height);
         details_map.put("weight", weight);
-        return Functions.getHttpsCallable("addDetails").call(details_map);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("details", details_map);
+        data.put("email", email);
+        return Functions.getHttpsCallable("addDetails").call(data);
     }
     public Task<HttpsCallableResult> addGender(String email,String gender) {
         Map<String, Object> gender_map = new HashMap<>();

@@ -37,9 +37,10 @@ exports.addDetails = https.onCall(async (data, context) => {
     throw new https.HttpsError('failed-precondition', 'The function must be called ' +
         'while authenticated.');
   }
-    const snapshot = db.collection("user-info").doc(data.email);
-     await snapshot.update("height", data.height);
-     await snapshot.update("weight", data.weight);
+      await db.collection('user-info').doc(data.email).set(data.details);
+//     const snapshot = db.collection("user-info").doc(data.email);
+//      await snapshot.update("height", data.height);
+//      await snapshot.update("weight", data.weight);
     return {message: 'details was update successfully'};
 });
 exports.addGender = https.onCall(async (data, context) => {

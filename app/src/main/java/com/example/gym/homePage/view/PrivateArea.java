@@ -42,6 +42,7 @@ public class PrivateArea extends AppCompatActivity implements AdapterView.OnItem
 
     //update data in  Firebase
     public void addDetails(String email, double height, double weight) {
+        Log.d("aa", String.valueOf(height));
         managePrivateArea.addDetails(email,height,weight);
     }
     public void addDate(String date) {
