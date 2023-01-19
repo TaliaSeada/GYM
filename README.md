@@ -1,6 +1,4 @@
 # GYM RAT Application
-
-
 ## Problem Space
 Our problem space is divided into three parts: </br>
 * Building workouts and saving them in an orderly manner. </br>
@@ -30,3 +28,8 @@ In addition, each trainer or trainee has access to a phone call or Gmail aimed a
 
 ## Visualization
 https://www.youtube.com/watch?v=t77YER5Q7lA 
+Sign Up             |  Manager Update             |  Trainee Workout              |  Trainer Inquiry            
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/78349342/213433102-066b175e-6480-42c2-86ee-55a0bac1196d.gif)  |  ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/78349342/213435300-84fcf3d2-d14b-4020-8c4e-aa68767bd326.gif)  |  ![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/78349342/213439597-733b921e-d842-4f3b-877a-a405f6b02d7f.gif) | ![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/78349342/213441373-2c8c03c5-3c2f-4a9b-97a2-7dfb57d90c1e.gif)
+
+
