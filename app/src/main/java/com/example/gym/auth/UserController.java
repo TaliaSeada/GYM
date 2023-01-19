@@ -14,7 +14,6 @@ import java.util.Map;
 // This class have all the actions we can do to user
 
 public class UserController {
-    protected FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected FirebaseFunctions mFunctions = FirebaseFunctions.getInstance();
     public static final String ROLE_MANAGER = "manager";
     public static final String ROLE_TRAINER = "trainer";
@@ -30,11 +29,6 @@ public class UserController {
         user.put("email", email);
 
         return mFunctions.getHttpsCallable("createUser").call(user);
-    }
-
-    // Return the document= contain the role&full name, by email(id= email) from the collection
-    public Task<DocumentSnapshot> getUserDoc(String email) {
-        return db.collection("users").document(email).get();
     }
 
     // Return the email of the connected user from fb auth
