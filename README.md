@@ -1,4 +1,4 @@
-# GYM Application
+# GYM RAT Application
 
 ## Problem Space
 Our problem space is divided into three parts: </br>
@@ -27,3 +27,5 @@ Trainee: </br>
 
 In addition, each trainer or trainee has access to a phone call or Gmail aimed at the manager. </br>
 
+## Visualization
+https://www.youtube.com/watch?v=t77YER5Q7lA 
