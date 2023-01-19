@@ -38,7 +38,6 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private UserController userController = new UserController();
     private ProgressDialog progressDialog;
 
     // Launcher of the sign in screen (with google or email)
@@ -65,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createSignInIntent(); // create the sign in page
-
             }
         });
 
@@ -157,46 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        // check if the user exist
-//        userManager.getUserDoc(email).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot doc) {
-//                if(doc.exists()){
-//                    Log.d(TAG,"User exists");
-//                    String role = (String) doc.getData().get("role");
-//                    switch (role){
-//                        case ROLE_MANAGER:
-//                            Intent intent1=new Intent(LoginActivity.this, HomePageManager.class);
-//                            startActivity(intent1);
-//                            break;
-//                        case ROLE_TRAINER:
-//                            Intent intent2=new Intent(LoginActivity.this, HomePageTrainer.class);
-//                            startActivity(intent2);
-//                            break;
-//                        case ROLE_TRAINEE:
-//                            Intent intent3=new Intent(LoginActivity.this, HomePageTrainee.class);
-//                            startActivity(intent3);
-//                            break;
-//                    }
-//                } else {
-//                    Log.d(TAG,"User Not exists");
-//                    delete(); // Delete the user from the firebase auth
-//
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
-//                    builder1.setMessage("The user not exist.\nPlease talk to the manager");
-//                    builder1.setCancelable(true);
-//                    builder1.setPositiveButton(
-//                            "Ok", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//                    AlertDialog alertDialog = builder1.create();
-//                    alertDialog.show();
-//                }
-//                progressDialog.dismiss();
-//            }
-//        });
+
     }
 
     // Delete user that try to connect and not in the DB from the firebase auth
