@@ -1,6 +1,6 @@
 # GYM RAT Application
-## Problem Space
-Our problem space is divided into three parts: </br>
+## Problem Domain
+Our problem domain is divided into three parts: </br>
 * Building workouts and saving them in an orderly manner. </br>
 In cases when a trainee can't remember the last workout's details. </br>
 * Providing easy and convenient answers to questions about devices or a training program. </br>
